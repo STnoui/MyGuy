@@ -11,7 +11,7 @@ const SCALE_FACTOR = 0.06;
 const SCROLL_MULTIPLIER = 1.5;
 
 const Index = () => {
-  const { t, language } = useI18n();
+  const { t } = useI18n();
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     container: scrollContainerRef,
