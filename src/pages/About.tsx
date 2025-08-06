@@ -14,11 +14,11 @@ const About = () => {
       className="h-full overflow-y-auto"
     >
       <div className="container mx-auto px-4 pt-24 pb-12">
-        <Card className="max-w-2xl mx-auto">
+        <Card className="max-w-2xl mx-auto bg-black/5 dark:bg-white/5 backdrop-blur-2xl border border-neutral-200 dark:border-white/10 shadow-2xl rounded-3xl">
           <CardHeader>
             <CardTitle className="text-3xl font-bold text-center">{t("about.title")}</CardTitle>
           </CardHeader>
-          <CardContent className="space-y-4 text-muted-foreground">
+          <CardContent className="space-y-4 text-foreground/80">
             <p>{t("about.p1")}</p>
             <p>{t("about.p2")}</p>
           </CardContent>

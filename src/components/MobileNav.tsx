@@ -69,7 +69,18 @@ export const MobileNav = () => {
           className="w-12 h-12 relative z-10 flex items-center justify-center focus:outline-none"
           aria-label={t("aria.toggleNav")}
         >
-          {isOpen ? <X className="h-7 w-7" /> : <Menu className="h-7 w-7" />}
+          <AnimatePresence initial={false} mode="wait">
+            <motion.div
+              key={isOpen ? "x" : "menu"}
+              initial={{ rotate: -90, opacity: 0 }}
+              animate={{ rotate: 0, opacity: 1 }}
+              exit={{ rotate: 90, opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="absolute"
+            >
+              {isOpen ? <X className="h-7 w-7" /> : <Menu className="h-7 w-7" />}
+            </motion.div>
+          </AnimatePresence>
         </button>
 
         <AnimatePresence>

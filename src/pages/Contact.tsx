@@ -18,10 +18,10 @@ const Contact = () => {
       className="h-full overflow-y-auto"
     >
       <div className="container mx-auto px-4 pt-24 pb-12">
-        <Card className="max-w-lg mx-auto">
+        <Card className="max-w-lg mx-auto bg-black/5 dark:bg-white/5 backdrop-blur-2xl border border-neutral-200 dark:border-white/10 shadow-2xl rounded-3xl">
           <CardHeader className="text-center">
             <CardTitle className="text-3xl font-bold">{t("contact.title")}</CardTitle>
-            <CardDescription>{t("contact.description")}</CardDescription>
+            <CardDescription className="text-foreground/80">{t("contact.description")}</CardDescription>
           </CardHeader>
           <CardContent className="flex flex-col gap-4">
             <Button asChild variant="outline" size="lg">

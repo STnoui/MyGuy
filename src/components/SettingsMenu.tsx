@@ -65,7 +65,18 @@ export const SettingsMenu = () => {
           className="w-12 h-12 relative z-10 flex items-center justify-center focus:outline-none"
           aria-label={t("aria.toggleSettings")}
         >
-          {isOpen ? <X className="h-6 w-6" /> : <Settings className="h-6 w-6" />}
+          <AnimatePresence initial={false} mode="wait">
+            <motion.div
+              key={isOpen ? "x" : "settings"}
+              initial={{ rotate: -90, opacity: 0 }}
+              animate={{ rotate: 0, opacity: 1 }}
+              exit={{ rotate: 90, opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="absolute"
+            >
+              {isOpen ? <X className="h-6 w-6" /> : <Settings className="h-6 w-6" />}
+            </motion.div>
+          </AnimatePresence>
         </button>
 
         <AnimatePresence>

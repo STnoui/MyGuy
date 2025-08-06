@@ -7,7 +7,6 @@ import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import Contact from "./pages/Contact";
 import About from "./pages/About";
-import Test from "./pages/Test";
 import { ThemeProvider } from "./components/ThemeProvider";
 import { I18nProvider } from "./contexts/I18nProvider";
 import { CallToAction } from "./components/CallToAction";
@@ -45,7 +44,6 @@ const AppContent = () => {
           <Route path="/" element={<Index />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/about" element={<About />} />
-          <Route path="/test" element={<Test />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
