@@ -56,8 +56,8 @@ export const SettingsMenu = () => {
     closed: { y: 10, opacity: 0 }
   };
 
-  const activeClass = "bg-background/35 backdrop-blur-xl";
-  const hoverClass = "hover:bg-background/35 hover:backdrop-blur-xl";
+  const activeClass = "bg-black/20 dark:bg-white/20 backdrop-blur-xl";
+  const hoverClass = "hover:bg-black/20 dark:hover:bg-white/20 hover:backdrop-blur-xl";
 
   return (
     <div className="md:hidden">
@@ -66,7 +66,7 @@ export const SettingsMenu = () => {
         variants={containerVariants}
         initial={false}
         animate={isOpen ? "open" : "closed"}
-        className="fixed top-4 right-4 z-50 overflow-hidden bg-background/25 backdrop-blur-lg border border-neutral-200 dark:border-white/10 shadow-2xl"
+        className="fixed top-4 right-4 z-50 overflow-hidden bg-black/10 dark:bg-white/10 backdrop-blur-2xl border border-neutral-200 dark:border-white/10 shadow-2xl"
       >
         <button
           onClick={() => setIsOpen(!isOpen)}
@@ -97,7 +97,7 @@ export const SettingsMenu = () => {
             >
               <motion.div variants={itemVariants} className="space-y-2 pt-8">
                 <p className="text-sm font-medium text-muted-foreground px-1">{t("settings.theme")}</p>
-                <div className="grid grid-cols-3 gap-2 p-1 bg-background/15 backdrop-blur-sm rounded-lg">
+                <div className="grid grid-cols-3 gap-2 p-1 bg-black/5 dark:bg-white/5 backdrop-blur-sm rounded-lg">
                   <Button size="sm" variant="ghost" onClick={() => setTheme('light')} className={cn("h-8", hoverClass, theme === 'light' && activeClass)}>
                     <Sun className="h-5 w-5" />
                   </Button>
@@ -111,7 +111,7 @@ export const SettingsMenu = () => {
               </motion.div>
               <motion.div variants={itemVariants} className="space-y-2">
                 <p className="text-sm font-medium text-muted-foreground px-1">{t("settings.language")}</p>
-                <div className="grid grid-cols-2 gap-2 p-1 bg-background/15 backdrop-blur-sm rounded-lg">
+                <div className="grid grid-cols-2 gap-2 p-1 bg-black/5 dark:bg-white/5 backdrop-blur-sm rounded-lg">
                    <Button size="sm" variant="ghost" onClick={() => setLanguage('en')} className={cn("h-8 font-bold", hoverClass, language === 'en' && activeClass)}>EN</Button>
                    <Button size="sm" variant="ghost" onClick={() => setLanguage('bg')} className={cn("h-8 font-bold", hoverClass, language === 'bg' && activeClass)}>BG</Button>
                 </div>

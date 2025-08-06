@@ -15,7 +15,7 @@ export const ServiceCard = ({ icon, title, description, index }: ServiceCardProp
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: index * 0.1 + 0.2 }}
     >
-      <Card className="bg-muted/50 h-full">
+      <Card className="h-full bg-black/10 dark:bg-white/10 backdrop-blur-sm border border-white/20">
         <CardHeader className="flex flex-row items-start gap-4">
           <div className="text-secondary mt-1">{icon}</div>
           <div>
