@@ -68,7 +68,7 @@
 
 @layer base {
   body {
-    @apply bg-background text-foreground transition-none;
+    @apply bg-background text-foreground transition-colors duration-300 ease-in-out;
   }
 }
 

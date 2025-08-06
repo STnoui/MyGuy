@@ -12,6 +12,7 @@ import { I18nProvider } from "./contexts/I18nProvider";
 import { CallToAction } from "./components/CallToAction";
 import { MobileNav } from "./components/MobileNav";
 import { SettingsMenu } from "./components/SettingsMenu";
+import { AnimatePresence, motion } from "framer-motion";
 
 const queryClient = new QueryClient();
 
@@ -39,13 +40,24 @@ const AppContent = () => {
     <div className="flex flex-col h-screen bg-background">
       <MobileNav />
       <SettingsMenu />
-      <main className="flex-1 h-full">
-        <Routes location={location}>
-          <Route path="/" element={<Index />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/about" element={<About />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+      <main className="flex-1 h-full overflow-hidden">
+        <AnimatePresence mode="wait" initial={false}>
+          <motion.div
+            key={location.pathname}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+            className="h-full"
+          >
+            <Routes location={location}>
+              <Route path="/" element={<Index />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/about" element={<About />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </motion.div>
+        </AnimatePresence>
       </main>
       {showCallToAction && <CallToAction />}
     </div>
