@@ -73,7 +73,7 @@ export const MobileNav = () => {
         variants={containerVariants}
         initial={false}
         animate={isOpen ? "open" : "closed"}
-        className="fixed top-4 left-4 z-50 overflow-hidden bg-black/10 dark:bg-white/10 backdrop-blur-2xl border border-neutral-200 dark:border-white/10 shadow-2xl"
+        className="fixed top-4 left-4 z-50 overflow-hidden bg-black/5 dark:bg-white/5 backdrop-blur-2xl border border-neutral-200 dark:border-white/10 shadow-2xl"
       >
         <button
           onClick={() => setIsOpen(!isOpen)}
@@ -109,7 +109,7 @@ export const MobileNav = () => {
                 >
                   <Button
                     variant="ghost"
-                    className="w-full justify-start text-md py-3 rounded-md hover:bg-black/20 dark:hover:bg-white/20 hover:backdrop-blur-xl"
+                    className="w-full justify-start text-md py-3 rounded-md hover:bg-black/15 dark:hover:bg-white/15 hover:backdrop-blur-xl"
                     onClick={() => handleNavigate(item.href)}
                   >
                     {item.label}

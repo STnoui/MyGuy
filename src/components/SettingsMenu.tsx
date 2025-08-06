@@ -56,8 +56,8 @@ export const SettingsMenu = () => {
     closed: { y: 10, opacity: 0 }
   };
 
-  const activeClass = "bg-black/20 dark:bg-white/20 backdrop-blur-xl";
-  const hoverClass = "hover:bg-black/20 dark:hover:bg-white/20 hover:backdrop-blur-xl";
+  const activeClass = "bg-black/15 dark:bg-white/15 backdrop-blur-xl";
+  const hoverClass = "hover:bg-black/15 dark:hover:bg-white/15 hover:backdrop-blur-xl";
 
   return (
     <div className="md:hidden">
@@ -66,7 +66,7 @@ export const SettingsMenu = () => {
         variants={containerVariants}
         initial={false}
         animate={isOpen ? "open" : "closed"}
-        className="fixed top-4 right-4 z-50 overflow-hidden bg-black/10 dark:bg-white/10 backdrop-blur-2xl border border-neutral-200 dark:border-white/10 shadow-2xl"
+        className="fixed top-4 right-4 z-50 overflow-hidden bg-black/5 dark:bg-white/5 backdrop-blur-2xl border border-neutral-200 dark:border-white/10 shadow-2xl"
       >
         <button
           onClick={() => setIsOpen(!isOpen)}
