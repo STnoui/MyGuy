@@ -54,7 +54,7 @@ const Index = () => {
 
       <div className="flex-1 flex flex-col items-center justify-start pt-6 relative">
         <h2 className="text-3xl font-bold tracking-tight mb-6">{t("servicesTitle")}</h2>
-        <div className="relative mx-auto max-w-sm h-[140px]">
+        <div className="relative mx-auto max-w-sm h-[200px]">
           {services.map((service, i) => {
             const stackPosition = (i - activeIndex + numServices) % numServices;
 
