@@ -2,13 +2,15 @@ import { useState, useEffect, useRef } from "react";
 import { motion, Variants, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { useI18n } from "@/hooks/use-i18n";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Button } from "./ui/button";
+import { cn } from "@/lib/utils";
 
 export const MobileNav = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { t } = useI18n();
   const navigate = useNavigate();
+  const location = useLocation();
   const navRef = useRef<HTMLDivElement>(null);
 
   // Close menu on click outside
@@ -64,22 +66,18 @@ export const MobileNav = () => {
           className="w-12 h-12 relative flex items-center justify-center focus:outline-none"
           aria-label={t("aria.toggleNav")}
         >
-          <motion.div
-            className="absolute"
-            initial={{ opacity: 1, scale: 1 }}
-            animate={{ opacity: isOpen ? 0 : 1, scale: isOpen ? 0.5 : 1 }}
-            transition={{ duration: 0.15 }}
-          >
-            <Menu className="h-7 w-7" />
-          </motion.div>
-          <motion.div
-            className="absolute"
-            initial={{ opacity: 0, scale: 0.5 }}
-            animate={{ opacity: isOpen ? 1 : 0, scale: isOpen ? 1 : 0.5 }}
-            transition={{ duration: 0.15 }}
-          >
-            <X className="h-7 w-7" />
-          </motion.div>
+          <AnimatePresence mode="wait" initial={false}>
+            <motion.div
+              key={isOpen ? "x" : "menu"}
+              initial={{ opacity: 0, rotate: -90 }}
+              animate={{ opacity: 1, rotate: 0 }}
+              exit={{ opacity: 0, rotate: 90 }}
+              transition={{ duration: 0.2 }}
+              className="absolute"
+            >
+              {isOpen ? <X className="h-7 w-7" /> : <Menu className="h-7 w-7" />}
+            </motion.div>
+          </AnimatePresence>
         </button>
 
         <AnimatePresence>
@@ -113,7 +111,10 @@ export const MobileNav = () => {
                   >
                     <Button
                       variant="ghost"
-                      className="w-full justify-start text-md py-3 rounded-md hover:bg-black/15 dark:hover:bg-white/15 hover:backdrop-blur-xl"
+                      className={cn(
+                        "w-full justify-start text-md py-3 rounded-md hover:bg-black/15 dark:hover:bg-white/15 hover:backdrop-blur-xl",
+                        location.pathname === item.href && "text-secondary"
+                      )}
                       onClick={() => handleNavigate(item.href)}
                     >
                       {item.label}
