@@ -45,19 +45,33 @@ const Index = () => {
             {t("operatingHours")}
           </Badge>
         </motion.div>
+        <h2 className="text-3xl font-bold tracking-tight text-center mt-16 mb-8">{t("servicesTitle")}</h2>
       </div>
 
-      <section ref={containerRef} className="relative h-[300vh] mt-16">
+      <section ref={containerRef} className="relative h-[300vh]">
         <div className="sticky top-1/4">
-          <h2 className="text-3xl font-bold tracking-tight text-center mb-8">{t("servicesTitle")}</h2>
           <div className="relative mx-auto max-w-sm h-[200px]">
             {services.map((service, i) => {
-              const total = services.length;
-              const rangeStart = i / total;
-              const rangeEnd = (i + 1) / total;
+              const len = services.length;
+              const targetScale = 1 - (len - i) * 0.05;
 
-              const opacity = useTransform(scrollYProgress, [rangeStart, rangeEnd], [1, 0]);
-              const scale = useTransform(scrollYProgress, [rangeStart, rangeEnd], [1, 0.8]);
+              const scale = useTransform(
+                scrollYProgress,
+                [i / len, (i + 1) / len],
+                [1, targetScale]
+              );
+
+              const opacity = useTransform(
+                scrollYProgress,
+                [(i + 0.5) / len, (i + 1) / len],
+                [1, 0]
+              );
+              
+              const y = useTransform(
+                scrollYProgress,
+                [i / len, (i + 1) / len],
+                ['0%', `${-i * 50 - 50}%`]
+              );
 
               return (
                 <motion.div
@@ -67,10 +81,12 @@ const Index = () => {
                     top: 0,
                     left: 0,
                     right: 0,
-                    opacity,
                     scale,
-                    zIndex: total - i,
+                    opacity,
+                    y,
+                    zIndex: len - i,
                   }}
+                  className="origin-top"
                 >
                   <ServiceCard
                     icon={service.icon}
