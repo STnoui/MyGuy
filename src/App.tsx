@@ -41,7 +41,12 @@ const AppContent = () => {
   const showCallToAction = location.pathname === "/";
 
   return (
-    <div className="flex flex-col h-screen bg-background">
+    <motion.div
+      className="flex flex-col h-screen bg-background"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5, ease: "easeInOut" }}
+    >
       <MobileNav />
       <SettingsMenu />
       <main className="flex-1">
@@ -65,7 +70,7 @@ const AppContent = () => {
         </AnimatePresence>
       </main>
       {showCallToAction && <CallToAction />}
-    </div>
+    </motion.div>
   );
 };
 
