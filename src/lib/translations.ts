@@ -2,8 +2,7 @@ export const translations = {
   en: {
     language: "EN",
     heroTitle: "Your Guy for Sofia's Night",
-    heroSubtitle: "Your guy, for your needs!",
-    operatingHours: "Operating Hours: 19:30 - 05:30",
+    operatingHours: "Operating Hours: 20:00 - 06:00",
     servicesTitle: "What We Do",
     orderButton: "ORDER NOW",
     services: {
@@ -24,12 +23,13 @@ export const translations = {
         description: "Surprise someone with a late-night flower delivery.",
       },
     },
+    followFacebook: "Follow us on Facebook",
+    supportEmail: "Contact us via Email",
   },
   bg: {
     language: "БГ",
     heroTitle: "Твоят нощен доставчик в София",
-    heroSubtitle: "Твоят човек, за твоите нужди!",
-    operatingHours: "Работно време: 19:30 - 05:30",
+    operatingHours: "Работно време: 20:00 - 06:00",
     servicesTitle: "Какво предлагаме",
     orderButton: "ПОРЪЧАЙ СЕГА",
     services: {
@@ -47,9 +47,11 @@ export const translations = {
       },
       flowers: {
         title: "Доставка на цветя",
-        description: "Доставяне на цветя.",
+        description: "Изненадайте някого с късна доставка на цветя.",
       },
     },
+    followFacebook: "Последвайте ни във Facebook",
+    supportEmail: "Свържете се с нас по имейл",
   },
 };
 

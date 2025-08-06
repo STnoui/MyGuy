@@ -13,13 +13,13 @@ export const ServiceCard = ({ icon, title, description, index }: ServiceCardProp
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay: index * 0.1 }}
+      transition={{ duration: 0.5, delay: index * 0.1 + 0.2 }}
     >
-      <Card>
-        <CardHeader className="flex flex-row items-center gap-4">
-          <div className="text-secondary">{icon}</div>
+      <Card className="bg-muted/50 h-full">
+        <CardHeader className="flex flex-row items-start gap-4">
+          <div className="text-secondary mt-1">{icon}</div>
           <div>
-            <CardTitle>{title}</CardTitle>
+            <CardTitle className="mb-1">{title}</CardTitle>
             <CardDescription>{description}</CardDescription>
           </div>
         </CardHeader>
