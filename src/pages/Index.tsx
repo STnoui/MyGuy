@@ -53,7 +53,8 @@ const Index = () => {
         <Logo />
         <div
           className={cn(
-            "inline-block text-md font-semibold text-muted-foreground bg-muted",
+            "inline-block text-md font-semibold text-muted-foreground",
+            "bg-black/5 dark:bg-white/5 backdrop-blur-2xl border border-neutral-200 dark:border-white/10 shadow-xl",
             "rounded-full px-4 py-2"
           )}
         >
