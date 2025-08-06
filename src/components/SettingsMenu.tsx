@@ -9,7 +9,7 @@ import { cn } from "@/lib/utils";
 export const SettingsMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { t, language, setLanguage } = useI18n();
-  const { theme, setTheme } = useTheme();
+  const { theme, setTheme, resolvedTheme } = useTheme();
   const menuRef = useRef<HTMLDivElement>(null);
   const [mounted, setMounted] = useState(false);
 
@@ -62,18 +62,21 @@ export const SettingsMenu = () => {
           className="w-12 h-12 relative flex items-center justify-center focus:outline-none"
           aria-label={t("aria.toggleSettings")}
         >
-          <AnimatePresence mode="wait" initial={false}>
-            <motion.div
-              key={isOpen ? "x" : "settings"}
-              initial={{ opacity: 0, rotate: -90 }}
-              animate={{ opacity: 1, rotate: 0 }}
-              exit={{ opacity: 0, rotate: 90 }}
-              transition={{ duration: 0.2 }}
-              className="absolute"
-            >
-              {isOpen ? <X className="h-6 w-6" /> : <Settings className="h-6 w-6" />}
-            </motion.div>
-          </AnimatePresence>
+          <motion.div
+            className="absolute"
+            animate={{ opacity: isOpen ? 0 : 1, rotate: isOpen ? -90 : 0 }}
+            transition={{ duration: 0.2 }}
+          >
+            <Settings className="h-6 w-6" />
+          </motion.div>
+          <motion.div
+            className="absolute"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: isOpen ? 1 : 0, rotate: isOpen ? 0 : 90 }}
+            transition={{ duration: 0.2 }}
+          >
+            <X className="h-6 w-6" />
+          </motion.div>
         </button>
 
         <AnimatePresence>
@@ -105,10 +108,10 @@ export const SettingsMenu = () => {
                   <>
                     <motion.div variants={itemVariants}>
                       <div className="grid grid-cols-2 gap-2 p-1 bg-black/5 dark:bg-white/5 backdrop-blur-sm rounded-xl">
-                        <Button size="sm" variant="ghost" onClick={() => setTheme('light')} className={cn("h-10 rounded-lg", hoverClass, theme === 'light' && activeClass)}>
+                        <Button size="sm" variant="ghost" onClick={() => setTheme('light')} className={cn("h-10 rounded-lg", hoverClass, resolvedTheme === 'light' && activeClass)}>
                           <Sun className="h-5 w-5" />
                         </Button>
-                        <Button size="sm" variant="ghost" onClick={() => setTheme('dark')} className={cn("h-10 rounded-lg", hoverClass, theme === 'dark' && activeClass)}>
+                        <Button size="sm" variant="ghost" onClick={() => setTheme('dark')} className={cn("h-10 rounded-lg", hoverClass, resolvedTheme === 'dark' && activeClass)}>
                           <Moon className="h-5 w-5" />
                         </Button>
                       </div>
