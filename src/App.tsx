@@ -14,7 +14,6 @@ import { CallToAction } from "./components/CallToAction";
 import { MobileNav } from "./components/MobileNav";
 import { SettingsMenu } from "./components/SettingsMenu";
 import { AnimatePresence, motion } from "framer-motion";
-import { NativeThemeHandler } from "./components/NativeThemeHandler";
 
 const queryClient = new QueryClient();
 
@@ -41,7 +40,6 @@ const AppContent = () => {
 
   return (
     <div className="flex flex-col h-screen bg-background">
-      <NativeThemeHandler />
       <MobileNav />
       <SettingsMenu />
       <main className="flex-1 h-full overflow-hidden">
