@@ -12,7 +12,7 @@ const VISIBLE_CARDS = 4;
 const ANIMATION_DURATION_MS = 500;
 
 const Index = () => {
-  const { t, language } = useI18n();
+  const { t } = useI18n();
   const [activeIndex, setActiveIndex] = useState(0);
   const [isReady, setIsReady] = useState(false);
   const [isAnimationEnabled, setIsAnimationEnabled] = useState(false);
@@ -21,7 +21,7 @@ const Index = () => {
   useEffect(() => {
     const readyTimer = setTimeout(() => setIsReady(true), 400);
     // This timer ensures all CSS, including backdrop-filter, is rendered before enabling scroll.
-    const animationTimer = setTimeout(() => setIsAnimationEnabled(true), 600); 
+    const animationTimer = setTimeout(() => setIsAnimationEnabled(true), 600);
     return () => {
       clearTimeout(readyTimer);
       clearTimeout(animationTimer);
@@ -54,15 +54,9 @@ const Index = () => {
   };
 
   return (
-    <motion.div
-      key={language}
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.3 }}
-      className="h-full"
-    >
-      <div 
-        className="flex flex-col h-full w-full pt-16 pb-28 overflow-hidden" 
+    <div className="h-full">
+      <div
+        className="flex flex-col h-full w-full pt-16 pb-28 overflow-hidden"
         onWheel={isAnimationEnabled ? handleWheel : undefined}
       >
         <div className="text-center px-4 pt-8">
@@ -85,7 +79,7 @@ const Index = () => {
                 />
               )}
             </AnimatePresence>
-            
+
             {services.map((service, i) => {
               const stackPosition = (i - activeIndex + numServices) % numServices;
               return (
@@ -95,7 +89,7 @@ const Index = () => {
                     top: stackPosition * CARD_OFFSET,
                     scale: 1 - stackPosition * SCALE_FACTOR,
                     zIndex: numServices - stackPosition,
-                    opacity: stackPosition < VISIBLE_CARDS ? (isReady ? 1 : 0) : 0,
+                    opacity: stackPosition < VISIBLE_CARDS ? 1 : 0,
                   }}
                   transition={{ type: "spring", stiffness: 300, damping: 30 }}
                   style={{
@@ -120,7 +114,7 @@ const Index = () => {
           </div>
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 };
 

@@ -9,6 +9,7 @@ import Contact from "./pages/Contact";
 import About from "./pages/About";
 import { ThemeProvider } from "./components/ThemeProvider";
 import { I18nProvider } from "./contexts/I18nProvider";
+import { useI18n } from "./hooks/use-i18n";
 import { CallToAction } from "./components/CallToAction";
 import { MobileNav } from "./components/MobileNav";
 import { SettingsMenu } from "./components/SettingsMenu";
@@ -34,6 +35,7 @@ const App = () => (
 
 const AppContent = () => {
   const location = useLocation();
+  const { language } = useI18n();
   const showCallToAction = location.pathname === "/";
 
   return (
@@ -43,7 +45,7 @@ const AppContent = () => {
       <main className="flex-1 h-full overflow-hidden">
         <AnimatePresence mode="wait" initial={false}>
           <motion.div
-            key={location.pathname}
+            key={`${location.pathname}-${language}`}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}

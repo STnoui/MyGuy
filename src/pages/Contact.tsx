@@ -8,19 +8,13 @@ import { cn } from "@/lib/utils";
 const phoneNumber = "+359888309898";
 
 const Contact = () => {
-  const { t, language } = useI18n();
+  const { t } = useI18n();
   const buttonBaseClasses =
     "bg-black/10 dark:bg-white/10 backdrop-blur-lg border border-neutral-200 dark:border-white/10 hover:bg-black/20 dark:hover:bg-white/20 text-foreground";
   const buttonLayoutClasses = "h-14 rounded-3xl text-lg";
 
   return (
-    <motion.div
-      key={language}
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.3 }}
-      className="h-full overflow-y-auto"
-    >
+    <div className="h-full overflow-y-auto">
       <div className="container mx-auto px-4 pt-24 pb-12">
         <Card className="max-w-lg mx-auto bg-black/5 dark:bg-white/5 backdrop-blur-2xl border border-neutral-200 dark:border-white/10 shadow-2xl rounded-3xl">
           <CardHeader className="text-center">
@@ -53,7 +47,7 @@ const Contact = () => {
           </CardContent>
         </Card>
       </div>
-    </motion.div>
+    </div>
   );
 };
 

@@ -3,16 +3,10 @@ import { motion } from "framer-motion";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 const About = () => {
-  const { t, language } = useI18n();
+  const { t } = useI18n();
 
   return (
-    <motion.div
-      key={language}
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.3 }}
-      className="h-full overflow-y-auto"
-    >
+    <div className="h-full overflow-y-auto">
       <div className="container mx-auto px-4 pt-24 pb-12">
         <Card className="max-w-2xl mx-auto bg-black/5 dark:bg-white/5 backdrop-blur-2xl border border-neutral-200 dark:border-white/10 shadow-2xl rounded-3xl">
           <CardHeader>
@@ -28,7 +22,7 @@ const About = () => {
           </CardContent>
         </Card>
       </div>
-    </motion.div>
+    </div>
   );
 };
 
