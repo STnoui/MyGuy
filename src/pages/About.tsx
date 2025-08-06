@@ -18,7 +18,7 @@ const About = () => {
           <CardHeader>
             <CardTitle className="text-3xl font-bold text-center">{t("about.title")}</CardTitle>
           </CardHeader>
-          <CardContent className="space-y-4 text-foreground/80">
+          <CardContent className="space-y-4 text-foreground/80 text-center">
             <p>{t("about.p1")}</p>
             <p>{t("about.p2")}</p>
           </CardContent>

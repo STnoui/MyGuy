@@ -37,8 +37,10 @@ export const ServiceCard = ({ icon, title, description, activeIndex, totalServic
             <div
               key={dotIndex}
               className={cn(
-                "w-2.5 h-2.5 rounded-full transition-colors",
-                activeIndex === dotIndex ? "bg-secondary" : "bg-foreground/30"
+                "rounded-full transition-all duration-300",
+                activeIndex === dotIndex
+                  ? "w-2.5 h-2.5 bg-secondary"
+                  : "w-2 h-2 bg-foreground/30"
               )}
             />
           ))}
