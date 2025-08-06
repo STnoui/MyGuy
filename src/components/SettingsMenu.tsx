@@ -1,9 +1,10 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, Variants, AnimatePresence } from "framer-motion";
-import { Settings, X, Sun, Moon } from "lucide-react";
+import { Settings, X, Sun, Moon, Monitor } from "lucide-react";
 import { useI18n } from "@/hooks/use-i18n";
 import { useTheme } from "next-themes";
 import { Button } from "./ui/button";
+import { cn } from "@/lib/utils";
 
 export const SettingsMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -24,14 +25,6 @@ export const SettingsMenu = () => {
     };
   }, [isOpen]);
 
-  const toggleLanguage = () => {
-    setLanguage(language === "en" ? "bg" : "en");
-  };
-
-  const toggleTheme = () => {
-    setTheme(theme === "dark" || theme === "system" ? "light" : "dark");
-  };
-
   const containerVariants: Variants = {
     closed: {
       width: "48px",
@@ -40,8 +33,8 @@ export const SettingsMenu = () => {
       transition: { type: "spring", stiffness: 400, damping: 35, when: "afterChildren" }
     },
     open: {
-      width: "160px",
-      height: "140px",
+      width: "200px",
+      height: "210px",
       borderRadius: "24px",
       transition: { type: "spring", stiffness: 400, damping: 30, when: "beforeChildren" }
     }
@@ -70,11 +63,11 @@ export const SettingsMenu = () => {
         variants={containerVariants}
         initial={false}
         animate={isOpen ? "open" : "closed"}
-        className="fixed top-4 right-4 z-50 overflow-hidden bg-background/75 backdrop-blur-3xl border border-white/10 shadow-2xl"
+        className="fixed top-4 right-4 z-50 overflow-hidden bg-background/50 backdrop-blur-2xl border border-white/10 shadow-2xl"
       >
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="w-12 h-12 absolute top-0 left-0 flex items-center justify-center focus:outline-none"
+          className="w-12 h-12 absolute top-0 right-0 flex items-center justify-center focus:outline-none"
           aria-label="Toggle settings menu"
         >
           <AnimatePresence initial={false} mode="wait">
@@ -82,7 +75,7 @@ export const SettingsMenu = () => {
               key={isOpen ? "x" : "settings"}
               initial={{ rotate: -90, opacity: 0 }}
               animate={{ rotate: 0, opacity: 1 }}
-              exit={{ rotate: 90, opacity: 0 }}
+              exit={{ rotate: -90, opacity: 0 }}
               transition={{ duration: 0.2 }}
             >
               {isOpen ? <X className="h-6 w-6" /> : <Settings className="h-6 w-6" />}
@@ -97,31 +90,28 @@ export const SettingsMenu = () => {
               initial="closed"
               animate="open"
               exit="closed"
-              className="flex flex-col gap-2 w-full pt-12 p-4"
+              className="flex flex-col gap-4 w-full pt-4 p-4"
             >
-              <motion.div variants={itemVariants}>
-                <Button
-                  variant="ghost"
-                  className="w-full justify-start text-md py-3"
-                  onClick={toggleLanguage}
-                >
-                  <span className="w-6 mr-2 font-bold">{language === "en" ? "BG" : "EN"}</span>
-                  <span>Language</span>
-                </Button>
+              <motion.div variants={itemVariants} className="space-y-2 pt-8">
+                <p className="text-sm font-medium text-muted-foreground px-1">Theme</p>
+                <div className="grid grid-cols-3 gap-2 p-1 bg-muted rounded-lg">
+                  <Button size="sm" variant={theme === 'light' ? 'outline' : 'ghost'} onClick={() => setTheme('light')} className="h-8">
+                    <Sun className="h-5 w-5" />
+                  </Button>
+                  <Button size="sm" variant={theme === 'dark' ? 'outline' : 'ghost'} onClick={() => setTheme('dark')} className="h-8">
+                    <Moon className="h-5 w-5" />
+                  </Button>
+                  <Button size="sm" variant={theme === 'system' ? 'outline' : 'ghost'} onClick={() => setTheme('system')} className="h-8">
+                    <Monitor className="h-5 w-5" />
+                  </Button>
+                </div>
               </motion.div>
-              <motion.div variants={itemVariants}>
-                <Button
-                  variant="ghost"
-                  className="w-full justify-start text-md py-3"
-                  onClick={toggleTheme}
-                >
-                  {theme === "dark" ? (
-                    <Sun className="w-6 h-6 mr-2" />
-                  ) : (
-                    <Moon className="w-6 h-6 mr-2" />
-                  )}
-                  <span>Theme</span>
-                </Button>
+              <motion.div variants={itemVariants} className="space-y-2">
+                <p className="text-sm font-medium text-muted-foreground px-1">Language</p>
+                <div className="grid grid-cols-2 gap-2 p-1 bg-muted rounded-lg">
+                   <Button size="sm" variant={language === 'en' ? 'outline' : 'ghost'} onClick={() => setLanguage('en')} className="h-8 font-bold">EN</Button>
+                   <Button size="sm" variant={language === 'bg' ? 'outline' : 'ghost'} onClick={() => setLanguage('bg')} className="h-8 font-bold">BG</Button>
+                </div>
               </motion.div>
             </motion.div>
           )}

@@ -73,7 +73,7 @@ export const MobileNav = () => {
         variants={containerVariants}
         initial={false}
         animate={isOpen ? "open" : "closed"}
-        className="fixed top-4 left-4 z-50 overflow-hidden bg-background/75 backdrop-blur-3xl border border-white/10 shadow-2xl"
+        className="fixed top-4 left-4 z-50 overflow-hidden bg-background/50 backdrop-blur-2xl border border-white/10 shadow-2xl"
       >
         <button
           onClick={() => setIsOpen(!isOpen)}
@@ -85,7 +85,7 @@ export const MobileNav = () => {
               key={isOpen ? "x" : "menu"}
               initial={{ rotate: -90, opacity: 0 }}
               animate={{ rotate: 0, opacity: 1 }}
-              exit={{ rotate: 90, opacity: 0 }}
+              exit={{ rotate: -90, opacity: 0 }}
               transition={{ duration: 0.2 }}
             >
               {isOpen ? <X className="h-7 w-7" /> : <Menu className="h-7 w-7" />}
