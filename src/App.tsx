@@ -11,7 +11,6 @@ import { ThemeProvider } from "./components/ThemeProvider";
 import { I18nProvider } from "./contexts/I18nProvider";
 import { CallToAction } from "./components/CallToAction";
 import { AnimatePresence, motion } from "framer-motion";
-import { useTheme } from "next-themes";
 import { useI18n } from "./hooks/use-i18n";
 import { MobileNav } from "./components/MobileNav";
 import { SettingsMenu } from "./components/SettingsMenu";
@@ -37,7 +36,6 @@ const App = () => (
 const AppContent = () => {
   const location = useLocation();
   const { language } = useI18n();
-  const { theme } = useTheme();
 
   const showCallToAction = location.pathname === "/";
 
@@ -48,7 +46,7 @@ const AppContent = () => {
       <main className="flex-1">
         <AnimatePresence mode="wait">
           <motion.div
-            key={location.pathname + language + (theme || "system")}
+            key={location.pathname + language}
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
