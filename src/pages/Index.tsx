@@ -75,12 +75,11 @@ const Index = () => {
             return (
               <motion.div
                 key={service.key}
-                initial={false}
                 animate={{
                   top: stackPosition * CARD_OFFSET,
                   scale: 1 - stackPosition * SCALE_FACTOR,
                   zIndex: numServices - stackPosition,
-                  opacity: stackPosition < VISIBLE_CARDS ? 1 : 0,
+                  opacity: stackPosition < VISIBLE_CARDS ? (isReady ? 1 : 0) : 0,
                 }}
                 transition={{ type: "spring", stiffness: 300, damping: 30 }}
                 style={{
