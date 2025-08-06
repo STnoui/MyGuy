@@ -82,6 +82,8 @@ const Index = () => {
                   title={t(`services.${service.key}.title`)}
                   description={t(`services.${service.key}.description`)}
                   index={i}
+                  activeIndex={activeIndex}
+                  totalServices={numServices}
                 />
               </motion.div>
             );
