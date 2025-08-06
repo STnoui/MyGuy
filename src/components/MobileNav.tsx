@@ -95,28 +95,39 @@ export const MobileNav = () => {
 
         <AnimatePresence>
           {isOpen && (
-            <motion.nav
-              variants={navListVariants}
-              initial="closed"
-              animate="open"
-              exit="closed"
-              className="flex flex-col gap-1 w-full pt-12 p-4"
-            >
-              {navItems.map((item) => (
-                <motion.div
-                  key={item.href}
-                  variants={navItemVariants}
-                >
-                  <Button
-                    variant="ghost"
-                    className="w-full justify-start text-md py-3 rounded-md hover:bg-black/15 dark:hover:bg-white/15 hover:backdrop-blur-xl"
-                    onClick={() => handleNavigate(item.href)}
+            <>
+              <motion.p
+                initial={{ x: -20, opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                exit={{ x: -20, opacity: 0 }}
+                transition={{ delay: 0.1, ease: "easeOut", duration: 0.3 }}
+                className="absolute top-3.5 left-14 text-lg font-bold pointer-events-none"
+              >
+                Menu
+              </motion.p>
+              <motion.nav
+                variants={navListVariants}
+                initial="closed"
+                animate="open"
+                exit="closed"
+                className="flex flex-col gap-1 w-full pt-12 p-4"
+              >
+                {navItems.map((item) => (
+                  <motion.div
+                    key={item.href}
+                    variants={navItemVariants}
                   >
-                    {item.label}
-                  </Button>
-                </motion.div>
-              ))}
-            </motion.nav>
+                    <Button
+                      variant="ghost"
+                      className="w-full justify-start text-md py-3 rounded-md hover:bg-black/15 dark:hover:bg-white/15 hover:backdrop-blur-xl"
+                      onClick={() => handleNavigate(item.href)}
+                    >
+                      {item.label}
+                    </Button>
+                  </motion.div>
+                ))}
+              </motion.nav>
+            </>
           )}
         </AnimatePresence>
       </motion.div>

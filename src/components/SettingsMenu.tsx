@@ -88,35 +88,46 @@ export const SettingsMenu = () => {
 
         <AnimatePresence>
           {isOpen && (
-            <motion.div
-              variants={listVariants}
-              initial="closed"
-              animate="open"
-              exit="closed"
-              className="flex flex-col gap-4 w-full pt-4 p-4"
-            >
-              <motion.div variants={itemVariants} className="space-y-2 pt-8">
-                <p className="text-sm font-medium text-muted-foreground px-1">{t("settings.theme")}</p>
-                <div className="grid grid-cols-3 gap-2 p-1 bg-black/5 dark:bg-white/5 backdrop-blur-sm rounded-lg">
-                  <Button size="sm" variant="ghost" onClick={() => setTheme('light')} className={cn("h-8", hoverClass, theme === 'light' && activeClass)}>
-                    <Sun className="h-5 w-5" />
-                  </Button>
-                  <Button size="sm" variant="ghost" onClick={() => setTheme('dark')} className={cn("h-8", hoverClass, theme === 'dark' && activeClass)}>
-                    <Moon className="h-5 w-5" />
-                  </Button>
-                  <Button size="sm" variant="ghost" onClick={() => setTheme('system')} className={cn("h-8", hoverClass, theme === 'system' && activeClass)}>
-                    <Monitor className="h-5 w-5" />
-                  </Button>
-                </div>
+            <>
+              <motion.p
+                initial={{ x: 20, opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                exit={{ x: 20, opacity: 0 }}
+                transition={{ delay: 0.1, ease: "easeOut", duration: 0.3 }}
+                className="absolute top-3.5 right-14 text-lg font-bold pointer-events-none"
+              >
+                {t("settings.title")}
+              </motion.p>
+              <motion.div
+                variants={listVariants}
+                initial="closed"
+                animate="open"
+                exit="closed"
+                className="flex flex-col gap-4 w-full pt-4 p-4"
+              >
+                <motion.div variants={itemVariants} className="space-y-2 pt-8">
+                  <p className="text-sm font-medium text-muted-foreground px-1">{t("settings.theme")}</p>
+                  <div className="grid grid-cols-3 gap-2 p-1 bg-black/5 dark:bg-white/5 backdrop-blur-sm rounded-lg">
+                    <Button size="sm" variant="ghost" onClick={() => setTheme('light')} className={cn("h-8", hoverClass, theme === 'light' && activeClass)}>
+                      <Sun className="h-5 w-5" />
+                    </Button>
+                    <Button size="sm" variant="ghost" onClick={() => setTheme('dark')} className={cn("h-8", hoverClass, theme === 'dark' && activeClass)}>
+                      <Moon className="h-5 w-5" />
+                    </Button>
+                    <Button size="sm" variant="ghost" onClick={() => setTheme('system')} className={cn("h-8", hoverClass, theme === 'system' && activeClass)}>
+                      <Monitor className="h-5 w-5" />
+                    </Button>
+                  </div>
+                </motion.div>
+                <motion.div variants={itemVariants} className="space-y-2">
+                  <p className="text-sm font-medium text-muted-foreground px-1">{t("settings.language")}</p>
+                  <div className="grid grid-cols-2 gap-2 p-1 bg-black/5 dark:bg-white/5 backdrop-blur-sm rounded-lg">
+                    <Button size="sm" variant="ghost" onClick={() => setLanguage('en')} className={cn("h-8 font-bold", hoverClass, language === 'en' && activeClass)}>EN</Button>
+                    <Button size="sm" variant="ghost" onClick={() => setLanguage('bg')} className={cn("h-8 font-bold", hoverClass, language === 'bg' && activeClass)}>BG</Button>
+                  </div>
+                </motion.div>
               </motion.div>
-              <motion.div variants={itemVariants} className="space-y-2">
-                <p className="text-sm font-medium text-muted-foreground px-1">{t("settings.language")}</p>
-                <div className="grid grid-cols-2 gap-2 p-1 bg-black/5 dark:bg-white/5 backdrop-blur-sm rounded-lg">
-                   <Button size="sm" variant="ghost" onClick={() => setLanguage('en')} className={cn("h-8 font-bold", hoverClass, language === 'en' && activeClass)}>EN</Button>
-                   <Button size="sm" variant="ghost" onClick={() => setLanguage('bg')} className={cn("h-8 font-bold", hoverClass, language === 'bg' && activeClass)}>BG</Button>
-                </div>
-              </motion.div>
-            </motion.div>
+            </>
           )}
         </AnimatePresence>
       </motion.div>

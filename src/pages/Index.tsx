@@ -47,15 +47,15 @@ const Index = () => {
           className="mt-16"
         >
           <h2 className="text-3xl font-bold tracking-tight mb-8">{t("servicesTitle")}</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 text-left">
-            {services.map((service, index) => (
-              <ServiceCard
-                key={service.key}
-                index={index}
-                icon={service.icon}
-                title={t(`services.${service.key}.title`)}
-                description={t(`services.${service.key}.description`)}
-              />
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+            {services.map((service) => (
+              <div key={service.key} className="flex justify-center">
+                <ServiceCard
+                  icon={service.icon}
+                  title={t(`services.${service.key}.title`)}
+                  description={t(`services.${service.key}.description`)}
+                />
+              </div>
             ))}
           </div>
         </motion.section>
