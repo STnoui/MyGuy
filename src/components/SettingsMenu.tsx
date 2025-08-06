@@ -92,7 +92,7 @@ export const SettingsMenu = () => {
               <motion.p
                 initial={{ x: 20, opacity: 0 }}
                 animate={{ x: 0, opacity: 1 }}
-                exit={{ x: 20, opacity: 0 }}
+                exit={{ x: 20, opacity: 0, transition: { duration: 0.1 } }}
                 transition={{ delay: 0.1, ease: "easeOut", duration: 0.3 }}
                 className="absolute top-0 right-14 h-12 flex items-center text-lg font-bold pointer-events-none"
               >
@@ -105,20 +105,20 @@ export const SettingsMenu = () => {
                 exit="closed"
                 className="flex flex-col gap-4 w-full pt-12 p-4"
               >
-                <motion.div variants={itemVariants} className="space-y-2">
-                  <div className="grid grid-cols-2 gap-2 p-1 bg-black/5 dark:bg-white/5 backdrop-blur-sm rounded-2xl">
-                    <Button size="sm" variant="ghost" onClick={() => setTheme('light')} className={cn("h-8", hoverClass, theme === 'light' && activeClass)}>
+                <motion.div variants={itemVariants}>
+                  <div className="grid grid-cols-2 gap-2 p-1 bg-black/5 dark:bg-white/5 backdrop-blur-sm rounded-xl">
+                    <Button size="sm" variant="ghost" onClick={() => setTheme('light')} className={cn("h-10 rounded-lg", hoverClass, theme === 'light' && activeClass)}>
                       <Sun className="h-5 w-5" />
                     </Button>
-                    <Button size="sm" variant="ghost" onClick={() => setTheme('dark')} className={cn("h-8", hoverClass, theme === 'dark' && activeClass)}>
+                    <Button size="sm" variant="ghost" onClick={() => setTheme('dark')} className={cn("h-10 rounded-lg", hoverClass, theme === 'dark' && activeClass)}>
                       <Moon className="h-5 w-5" />
                     </Button>
                   </div>
                 </motion.div>
-                <motion.div variants={itemVariants} className="space-y-2">
-                  <div className="grid grid-cols-2 gap-2 p-1 bg-black/5 dark:bg-white/5 backdrop-blur-sm rounded-2xl">
-                    <Button size="sm" variant="ghost" onClick={() => setLanguage('en')} className={cn("h-8 font-bold", hoverClass, language === 'en' && activeClass)}>EN</Button>
-                    <Button size="sm" variant="ghost" onClick={() => setLanguage('bg')} className={cn("h-8 font-bold", hoverClass, language === 'bg' && activeClass)}>BG</Button>
+                <motion.div variants={itemVariants}>
+                  <div className="grid grid-cols-2 gap-2 p-1 bg-black/5 dark:bg-white/5 backdrop-blur-sm rounded-xl">
+                    <Button size="sm" variant="ghost" onClick={() => setLanguage('en')} className={cn("h-10 rounded-lg font-bold", hoverClass, language === 'en' && activeClass)}>EN</Button>
+                    <Button size="sm" variant="ghost" onClick={() => setLanguage('bg')} className={cn("h-10 rounded-lg font-bold", hoverClass, language === 'bg' && activeClass)}>BG</Button>
                   </div>
                 </motion.div>
               </motion.div>
