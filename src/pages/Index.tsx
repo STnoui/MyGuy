@@ -63,7 +63,7 @@ const Index = () => {
                 key={service.key}
                 initial={false}
                 animate={{
-                  y: stackPosition * CARD_OFFSET,
+                  top: stackPosition * CARD_OFFSET,
                   scale: 1 - stackPosition * SCALE_FACTOR,
                   zIndex: numServices - stackPosition,
                   opacity: stackPosition < VISIBLE_CARDS ? 1 : 0,
@@ -71,7 +71,6 @@ const Index = () => {
                 transition={{ type: "spring", stiffness: 300, damping: 30 }}
                 style={{
                   position: "absolute",
-                  top: 0,
                   left: 0,
                   right: 0,
                   transformOrigin: "center",
