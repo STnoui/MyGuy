@@ -45,7 +45,7 @@ const AppContent = () => {
     <div className="flex flex-col h-screen bg-background overflow-hidden">
       <MobileNav />
       <SettingsMenu />
-      <main className="flex flex-col flex-grow pt-16 pb-28 overflow-y-auto">
+      <main className="flex flex-col flex-grow pt-16 pb-28 overflow-y-auto mt-[-1px]">
         <AnimatePresence mode="wait">
           <motion.div
             key={location.pathname + language + (theme || "system")}
