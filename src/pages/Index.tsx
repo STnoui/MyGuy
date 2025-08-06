@@ -80,7 +80,7 @@ const Index = () => {
                   right: 0,
                   transformOrigin: "center",
                 }}
-                className="w-full"
+                className="w-full will-change-transform"
               >
                 <ServiceCard
                   icon={service.icon}
