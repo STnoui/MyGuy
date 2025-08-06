@@ -2,7 +2,9 @@ import { useI18n } from "@/hooks/use-i18n";
 import { motion } from "framer-motion";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Facebook, Mail } from "lucide-react";
+import { Facebook, Mail, Phone } from "lucide-react";
+
+const phoneNumber = "+359888309898";
 
 const Contact = () => {
   const { t, language } = useI18n();
@@ -21,6 +23,12 @@ const Contact = () => {
             <CardDescription>{t("contact.description")}</CardDescription>
           </CardHeader>
           <CardContent className="flex flex-col gap-4">
+            <Button asChild variant="outline" size="lg">
+              <a href={`tel:${phoneNumber}`}>
+                <Phone className="mr-2 h-5 w-5" />
+                {t("contact.callUs")}
+              </a>
+            </Button>
             <Button asChild variant="outline" size="lg">
               <a
                 href="https://www.facebook.com/profile.php?id=100092615905479"

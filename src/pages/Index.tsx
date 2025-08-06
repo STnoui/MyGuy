@@ -3,10 +3,16 @@ import { ServiceCard } from "@/components/ServiceCard";
 import { useI18n } from "@/hooks/use-i18n";
 import { Badge } from "@/components/ui/badge";
 import { ShoppingBag, Wallet, Package, Flower2 } from "lucide-react";
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { useRef } from "react";
 
 const Index = () => {
   const { t, language } = useI18n();
+  const containerRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end end"],
+  });
 
   const services = [
     { icon: <ShoppingBag className="h-8 w-8" />, key: "deliveries" },
@@ -39,28 +45,45 @@ const Index = () => {
             {t("operatingHours")}
           </Badge>
         </motion.div>
-
-        <motion.section
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          className="mt-16"
-        >
-          <h2 className="text-3xl font-bold tracking-tight mb-8">{t("servicesTitle")}</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
-            {services.map((service, index) => (
-              <div key={service.key} className="flex justify-center">
-                <ServiceCard
-                  icon={service.icon}
-                  title={t(`services.${service.key}.title`)}
-                  description={t(`services.${service.key}.description`)}
-                  index={index}
-                />
-              </div>
-            ))}
-          </div>
-        </motion.section>
       </div>
+
+      <section ref={containerRef} className="relative h-[300vh] mt-16">
+        <div className="sticky top-1/4">
+          <h2 className="text-3xl font-bold tracking-tight text-center mb-8">{t("servicesTitle")}</h2>
+          <div className="relative mx-auto max-w-sm h-[200px]">
+            {services.map((service, i) => {
+              const total = services.length;
+              const rangeStart = i / total;
+              const rangeEnd = (i + 1) / total;
+
+              const opacity = useTransform(scrollYProgress, [rangeStart, rangeEnd], [1, 0]);
+              const scale = useTransform(scrollYProgress, [rangeStart, rangeEnd], [1, 0.8]);
+
+              return (
+                <motion.div
+                  key={service.key}
+                  style={{
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    opacity,
+                    scale,
+                    zIndex: total - i,
+                  }}
+                >
+                  <ServiceCard
+                    icon={service.icon}
+                    title={t(`services.${service.key}.title`)}
+                    description={t(`services.${service.key}.description`)}
+                    index={i}
+                  />
+                </motion.div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
     </motion.div>
   );
 };

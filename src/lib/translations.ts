@@ -23,6 +23,7 @@ export const translations = {
       description: "Follow us on social media or send us an email.",
       followFacebook: "Follow us on Facebook",
       supportEmail: "Contact us via Email",
+      callUs: "Call us directly",
     },
     about: {
       title: "About MyGuy",
@@ -76,6 +77,7 @@ export const translations = {
       description: "Последвайте ни в социалните мрежи или ни изпратете имейл.",
       followFacebook: "Последвайте ни във Facebook",
       supportEmail: "Свържете се с нас по имейл",
+      callUs: "Обадете ни се директно",
     },
     about: {
       title: "За MyGuy",

@@ -39,11 +39,13 @@ const AppContent = () => {
   const { language } = useI18n();
   const { theme } = useTheme();
 
+  const showCallToAction = location.pathname === "/";
+
   return (
     <div className="flex flex-col min-h-screen bg-background">
       <MobileNav />
       <SettingsMenu />
-      <main className="flex-grow pt-20">
+      <main className="flex-grow pt-20 pb-28">
         <AnimatePresence mode="wait">
           <motion.div
             key={location.pathname + language + (theme || "system")}
@@ -61,8 +63,7 @@ const AppContent = () => {
           </motion.div>
         </AnimatePresence>
       </main>
-      <div className="h-28" /> {/* Spacer for the CTA button */}
-      <CallToAction />
+      {showCallToAction && <CallToAction />}
     </div>
   );
 };
