@@ -2,7 +2,10 @@ export const translations = {
   en: {
     language: "EN",
     heroTitle: "MyGuy",
-    operatingHours: "Operating Hours: 20:00 - 06:00",
+    operatingHours: {
+      label: "Operating Hours:",
+      time: "20:00 - 06:00",
+    },
     servicesTitle: "What We Do",
     orderButton: "ORDER NOW",
     nav: {
@@ -56,7 +59,10 @@ export const translations = {
   bg: {
     language: "БГ",
     heroTitle: "MyGuy",
-    operatingHours: "Работно време: 20:00 - 06:00",
+    operatingHours: {
+      label: "Работно време:",
+      time: "20:00 - 06:00",
+    },
     servicesTitle: "Какво предлагаме",
     orderButton: "ПОРЪЧАЙ СЕГА",
     nav: {

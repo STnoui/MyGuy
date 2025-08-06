@@ -1,7 +1,6 @@
 import { Logo } from "@/components/Logo";
 import { ServiceCard } from "@/components/ServiceCard";
 import { useI18n } from "@/hooks/use-i18n";
-import { Badge } from "@/components/ui/badge";
 import { ShoppingBag, Wallet, Package, Flower2 } from "lucide-react";
 import { motion } from "framer-motion";
 import { useState, useRef } from "react";
@@ -48,19 +47,25 @@ const Index = () => {
     <div className="flex flex-col h-full w-full pt-16 pb-28 overflow-hidden" onWheel={handleWheel}>
       <div className="text-center px-4 pt-8">
         <Logo />
-        <Badge
+        <div
           className={cn(
-            "text-md font-semibold text-secondary border-none",
-            "bg-black/5 dark:bg-white/5 backdrop-blur-2xl px-4 py-1"
+            "inline-block text-md font-semibold rounded-md border-none",
+            "bg-black/5 dark:bg-white/5 backdrop-blur-2xl px-3 py-1"
           )}
         >
-          {t("operatingHours")}
-        </Badge>
+          <span>{t("operatingHours.label")} </span>
+          <span className="text-secondary">{t("operatingHours.time")}</span>
+        </div>
       </div>
 
       <div className="flex-1 flex flex-col items-center justify-start pt-20 relative">
         <h2 className="text-3xl font-bold tracking-tight mb-6">{t("servicesTitle")}</h2>
-        <div className="relative w-full max-w-sm mx-auto h-[220px]">
+        <motion.div
+          className="relative w-full max-w-sm mx-auto h-[220px]"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.2, duration: 0.3 }}
+        >
           {services.map((service, i) => {
             const stackPosition = (i - activeIndex + numServices) % numServices;
 
@@ -94,7 +99,7 @@ const Index = () => {
               </motion.div>
             );
           })}
-        </div>
+        </motion.div>
       </div>
     </div>
   );

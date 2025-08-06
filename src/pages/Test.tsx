@@ -41,7 +41,12 @@ const Test = () => {
 
   return (
     <div className="flex flex-col h-full w-full items-center justify-center overflow-hidden" onWheel={handleWheel}>
-      <div className="relative w-full max-w-sm mx-auto h-[220px]">
+      <motion.div
+        className="relative w-full max-w-sm mx-auto h-[220px]"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.2, duration: 0.3 }}
+      >
         {services.map((service, i) => {
           const stackPosition = (i - activeIndex + numServices) % numServices;
 
@@ -75,7 +80,7 @@ const Test = () => {
             </motion.div>
           );
         })}
-      </div>
+      </motion.div>
     </div>
   );
 };
