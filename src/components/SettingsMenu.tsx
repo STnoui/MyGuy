@@ -30,6 +30,14 @@ export const SettingsMenu = () => {
     };
   }, [isOpen]);
 
+  // Close menu on scroll
+  useEffect(() => {
+    if (!isOpen) return;
+    const handleScroll = () => setIsOpen(false);
+    document.addEventListener("scroll", handleScroll, true);
+    return () => document.removeEventListener("scroll", handleScroll, true);
+  }, [isOpen]);
+
   const listVariants: Variants = {
     open: {
       opacity: 1,
@@ -62,17 +70,31 @@ export const SettingsMenu = () => {
           className="w-12 h-12 relative flex items-center justify-center focus:outline-none"
           aria-label={t("aria.toggleSettings")}
         >
-          <AnimatePresence mode="wait" initial={false}>
-            <motion.div
-              key={isOpen ? "x" : "settings"}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.2 }}
-              className="absolute"
-            >
-              {isOpen ? <X className="h-6 w-6" /> : <Settings className="h-6 w-6" />}
-            </motion.div>
+          <AnimatePresence mode="wait">
+            {!isOpen && (
+              <motion.div
+                key="settings"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.2 }}
+                className="absolute"
+              >
+                <Settings className="h-6 w-6" />
+              </motion.div>
+            )}
+            {isOpen && (
+              <motion.div
+                key="x"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.2 }}
+                className="absolute"
+              >
+                <X className="h-6 w-6" />
+              </motion.div>
+            )}
           </AnimatePresence>
         </button>
 

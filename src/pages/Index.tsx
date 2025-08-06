@@ -54,7 +54,7 @@ const Index = () => {
         <div
           className={cn(
             "inline-block text-md font-semibold text-muted-foreground",
-            "bg-black/5 dark:bg-white/5 backdrop-blur-2xl border border-neutral-200 dark:border-white/10 shadow-xl",
+            "bg-neutral-400/10 dark:bg-neutral-800/10 backdrop-blur-md border border-neutral-300/20 dark:border-neutral-700/30 shadow-lg",
             "rounded-full px-4 py-2"
           )}
         >
