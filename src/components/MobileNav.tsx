@@ -35,21 +35,6 @@ export const MobileNav = () => {
     setIsOpen(false);
   };
 
-  const containerVariants: Variants = {
-    closed: {
-      width: "48px",
-      height: "48px",
-      borderRadius: "24px",
-      transition: { type: "spring", stiffness: 500, damping: 40, when: "afterChildren" }
-    },
-    open: {
-      width: "224px",
-      height: "196px",
-      borderRadius: "24px",
-      transition: { type: "spring", stiffness: 400, damping: 30, when: "beforeChildren" }
-    }
-  };
-
   const navListVariants: Variants = {
     open: {
       opacity: 1,
@@ -70,14 +55,13 @@ export const MobileNav = () => {
     <div className="md:hidden">
       <motion.div
         ref={navRef}
-        variants={containerVariants}
         initial={false}
         animate={isOpen ? "open" : "closed"}
-        className="fixed top-4 left-4 z-50 overflow-hidden bg-black/5 dark:bg-white/5 backdrop-blur-2xl border border-neutral-200 dark:border-white/10 shadow-2xl"
+        className="fixed top-4 left-4 z-50"
       >
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="w-12 h-12 absolute top-0 left-0 flex items-center justify-center focus:outline-none"
+          className="w-12 h-12 relative flex items-center justify-center focus:outline-none"
           aria-label={t("aria.toggleNav")}
         >
           <AnimatePresence initial={false} mode="wait">
@@ -95,7 +79,13 @@ export const MobileNav = () => {
 
         <AnimatePresence>
           {isOpen && (
-            <>
+            <motion.div
+              initial={{ width: 0, height: 0, opacity: 0 }}
+              animate={{ width: "224px", height: "196px", opacity: 1 }}
+              exit={{ width: 0, height: 0, opacity: 0, transition: { duration: 0.2 } }}
+              transition={{ type: "spring", stiffness: 400, damping: 30 }}
+              className="absolute top-0 left-0 overflow-hidden bg-black/5 dark:bg-white/5 backdrop-blur-2xl border border-neutral-200 dark:border-white/10 shadow-2xl rounded-2xl"
+            >
               <motion.p
                 initial={{ x: -20, opacity: 0 }}
                 animate={{ x: 0, opacity: 1, transition: { delay: 0.1, ease: "easeOut", duration: 0.3 } }}
@@ -126,7 +116,7 @@ export const MobileNav = () => {
                   </motion.div>
                 ))}
               </motion.nav>
-            </>
+            </motion.div>
           )}
         </AnimatePresence>
       </motion.div>

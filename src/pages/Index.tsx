@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { ShoppingBag, Wallet, Package, Flower2 } from "lucide-react";
 import { motion } from "framer-motion";
 import { useState, useRef } from "react";
+import { cn } from "@/lib/utils";
 
 const CARD_OFFSET = 24;
 const SCALE_FACTOR = 0.06;
@@ -47,7 +48,12 @@ const Index = () => {
     <div className="flex flex-col h-full w-full pt-16 pb-28 overflow-hidden" onWheel={handleWheel}>
       <div className="text-center px-4 pt-8">
         <Logo />
-        <Badge variant="secondary" className="text-md font-semibold">
+        <Badge
+          className={cn(
+            "text-md font-semibold text-secondary border-none",
+            "bg-black/5 dark:bg-white/5 backdrop-blur-2xl px-4 py-1"
+          )}
+        >
           {t("operatingHours")}
         </Badge>
       </div>

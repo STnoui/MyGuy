@@ -19,12 +19,9 @@ export const CallToAction = () => {
         <a
           href={`tel:${phoneNumber}`}
           className={cn(
-            "pointer-events-auto inline-flex items-center justify-center whitespace-nowrap rounded-2xl text-xl font-bold ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
-            "h-16 px-8",
-            "text-foreground",
-            "bg-primary/15 backdrop-blur-2xl",
-            "hover:bg-primary/25",
-            "shadow-lg shadow-primary/30"
+            "pointer-events-auto inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
+            "bg-primary text-primary-foreground hover:bg-primary/90",
+            "h-12 px-8 text-xl font-bold rounded-2xl"
           )}
         >
           <Phone className="mr-3 h-6 w-6" />

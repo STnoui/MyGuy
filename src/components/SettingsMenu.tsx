@@ -25,21 +25,6 @@ export const SettingsMenu = () => {
     };
   }, [isOpen]);
 
-  const containerVariants: Variants = {
-    closed: {
-      width: "48px",
-      height: "48px",
-      borderRadius: "24px",
-      transition: { type: "spring", stiffness: 500, damping: 40, when: "afterChildren" }
-    },
-    open: {
-      width: "200px",
-      height: "180px",
-      borderRadius: "24px",
-      transition: { type: "spring", stiffness: 400, damping: 30, when: "beforeChildren" }
-    }
-  };
-
   const listVariants: Variants = {
     open: {
       opacity: 1,
@@ -63,14 +48,13 @@ export const SettingsMenu = () => {
     <div className="md:hidden">
       <motion.div
         ref={menuRef}
-        variants={containerVariants}
         initial={false}
         animate={isOpen ? "open" : "closed"}
-        className="fixed top-4 right-4 z-50 overflow-hidden bg-black/5 dark:bg-white/5 backdrop-blur-2xl border border-neutral-200 dark:border-white/10 shadow-2xl"
+        className="fixed top-4 right-4 z-50"
       >
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="w-12 h-12 absolute top-0 right-0 flex items-center justify-center focus:outline-none"
+          className="w-12 h-12 relative flex items-center justify-center focus:outline-none"
           aria-label={t("aria.toggleSettings")}
         >
           <AnimatePresence initial={false} mode="wait">
@@ -88,7 +72,13 @@ export const SettingsMenu = () => {
 
         <AnimatePresence>
           {isOpen && (
-            <>
+            <motion.div
+              initial={{ width: 0, height: 0, opacity: 0 }}
+              animate={{ width: "200px", height: "180px", opacity: 1 }}
+              exit={{ width: 0, height: 0, opacity: 0, transition: { duration: 0.2 } }}
+              transition={{ type: "spring", stiffness: 400, damping: 30 }}
+              className="absolute top-0 right-0 overflow-hidden bg-black/5 dark:bg-white/5 backdrop-blur-2xl border border-neutral-200 dark:border-white/10 shadow-2xl rounded-2xl"
+            >
               <motion.p
                 initial={{ x: 20, opacity: 0 }}
                 animate={{ x: 0, opacity: 1 }}
@@ -122,7 +112,7 @@ export const SettingsMenu = () => {
                   </div>
                 </motion.div>
               </motion.div>
-            </>
+            </motion.div>
           )}
         </AnimatePresence>
       </motion.div>
