@@ -73,7 +73,7 @@ export const MobileNav = () => {
         variants={containerVariants}
         initial={false}
         animate={isOpen ? "open" : "closed"}
-        className="fixed top-4 left-4 z-50 overflow-hidden bg-background/50 backdrop-blur-2xl border border-neutral-200 dark:border-white/10 shadow-2xl"
+        className="fixed top-4 left-4 z-50 overflow-hidden bg-background/40 backdrop-blur-2xl border border-neutral-200 dark:border-white/10 shadow-2xl"
       >
         <button
           onClick={() => setIsOpen(!isOpen)}

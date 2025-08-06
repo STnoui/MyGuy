@@ -1,7 +1,7 @@
 export const translations = {
   en: {
     language: "EN",
-    heroTitle: "Your Guy for Sofia's Night",
+    heroTitle: "MyGuy",
     operatingHours: "Operating Hours: 20:00 - 06:00",
     servicesTitle: "What We Do",
     orderButton: "ORDER NOW",
@@ -54,7 +54,7 @@ export const translations = {
   },
   bg: {
     language: "БГ",
-    heroTitle: "Твоят нощен доставчик в София",
+    heroTitle: "MyGuy",
     operatingHours: "Работно време: 20:00 - 06:00",
     servicesTitle: "Какво предлагаме",
     orderButton: "ПОРЪЧАЙ СЕГА",
