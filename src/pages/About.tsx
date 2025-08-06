@@ -12,7 +12,7 @@ const About = () => {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.3 }}
     >
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-4 pt-24 pb-12">
         <Card className="max-w-2xl mx-auto">
           <CardHeader>
             <CardTitle className="text-3xl font-bold text-center">{t("about.title")}</CardTitle>

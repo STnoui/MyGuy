@@ -45,7 +45,7 @@ const AppContent = () => {
     <div className="flex flex-col h-screen bg-background overflow-hidden">
       <MobileNav />
       <SettingsMenu />
-      <main className="flex flex-col flex-grow pt-16 pb-28 overflow-y-auto mt-[-1px]">
+      <main className="flex-1 overflow-y-auto">
         <AnimatePresence mode="wait">
           <motion.div
             key={location.pathname + language + (theme || "system")}
@@ -53,7 +53,6 @@ const AppContent = () => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.2 }}
-            className="h-full"
           >
             <Routes location={location}>
               <Route path="/" element={<Index />} />
