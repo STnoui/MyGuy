@@ -14,10 +14,10 @@ export const CallToAction = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.5 }}
-        className="max-w-md mx-auto"
+        className="flex justify-center"
       >
-        <a href={`tel:${phoneNumber}`} className="w-full">
-          <Button className="w-full h-16 text-xl font-bold rounded-2xl shadow-lg" size="lg">
+        <a href={`tel:${phoneNumber}`}>
+          <Button className="h-16 px-8 text-xl font-bold rounded-2xl shadow-lg">
             <Phone className="mr-3 h-6 w-6" />
             {t("orderButton")}
           </Button>

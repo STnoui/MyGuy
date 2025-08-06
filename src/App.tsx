@@ -47,10 +47,10 @@ const AppContent = () => {
         <AnimatePresence mode="wait">
           <motion.div
             key={location.pathname + language}
-            initial={{ y: 10 }}
-            animate={{ y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.2 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.4 }}
             className="h-full"
           >
             <Routes location={location}>

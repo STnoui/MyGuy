@@ -98,9 +98,8 @@ export const MobileNav = () => {
             <>
               <motion.p
                 initial={{ x: -20, opacity: 0 }}
-                animate={{ x: 0, opacity: 1 }}
-                exit={{ x: -20, opacity: 0 }}
-                transition={{ delay: 0.1, ease: "easeOut", duration: 0.3 }}
+                animate={{ x: 0, opacity: 1, transition: { delay: 0.1, ease: "easeOut", duration: 0.3 } }}
+                exit={{ x: -20, opacity: 0, transition: { duration: 0.1, ease: "easeIn" } }}
                 className="absolute top-0 left-14 h-12 flex items-center text-lg font-bold pointer-events-none"
               >
                 Menu
