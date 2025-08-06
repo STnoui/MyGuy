@@ -54,7 +54,12 @@ const Index = () => {
 
       <div className="flex-1 flex flex-col items-center justify-start pt-20 relative">
         <h2 className="text-3xl font-bold tracking-tight mb-6">{t("servicesTitle")}</h2>
-        <div className="relative w-full max-w-sm mx-auto h-[220px]">
+        <motion.div
+          className="relative w-full max-w-sm mx-auto h-[220px]"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.2, duration: 0.3 }}
+        >
           {services.map((service, i) => {
             const stackPosition = (i - activeIndex + numServices) % numServices;
 
@@ -88,7 +93,7 @@ const Index = () => {
               </motion.div>
             );
           })}
-        </div>
+        </motion.div>
       </div>
     </div>
   );
