@@ -1,49 +1,21 @@
-<svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-<g id="19">
-<g id="Group 1">
-<g id="Group">
-<path id="Vector" d="M100 200C155.228 200 200 155.228 200 100C200 44.7715 155.228 0 100 0C44.7715 0 0 44.7715 0 100C0 155.228 44.7715 200 100 200Z" fill="url(#paint0_linear_1_25)"/>
-</g>
-</g>
-<g id="Group 2">
-<g id="Group_2">
-<path id="Vector_2" d="M100.24 149.04L123.28 135.28L123.28 107.76L100.24 121.52L100.24 149.04Z" fill="url(#paint1_linear_1_25)"/>
-<path id="Vector_3" d="M124.48 104.4L147.52 90.64L124.48 76.88L101.44 90.64L124.48 104.4Z" fill="url(#paint2_linear_1_25)"/>
-<path id="Vector_4" d="M77.2 107.76L77.2 135.28L100.24 149.04L100.24 121.52L77.2 107.76Z" fill="url(#paint3_linear_1_25)"/>
-<path id="Vector_5" d="M52.48 76.88L75.52 90.64L98.56 76.88L75.52 63.12L52.48 76.88Z" fill="url(#paint4_linear_1_25)"/>
-<path id="Vector_6" d="M101.44 90.64L124.48 76.88V51.92L101.44 65.68V90.64Z" fill="url(#paint5_linear_1_25)"/>
-<path id="Vector_7" d="M98.56 65.68L75.52 51.92V76.88L98.56 90.64V65.68Z" fill="url(#paint6_linear_1_25)"/>
-</g>
-</g>
-</g>
-<defs>
-<linearGradient id="paint0_linear_1_25" x1="100" y1="0" x2="100" y2="200" gradientUnits="userSpaceOnUse">
-<stop stop-color="#F3A261"/>
-<stop offset="1" stop-color="#F3A261" stop-opacity="0.8"/>
-</linearGradient>
-<linearGradient id="paint1_linear_1_25" x1="100.24" y1="107.76" x2="100.24" y2="149.04" gradientUnits="userSpaceOnUse">
-<stop stop-color="white"/>
-<stop offset="1" stop-color="white" stop-opacity="0.7"/>
-</linearGradient>
-<linearGradient id="paint2_linear_1_25" x1="124.48" y1="76.88" x2="124.48" y2="104.4" gradientUnits="userSpaceOnUse">
-<stop stop-color="white"/>
-<stop offset="1" stop-color="white" stop-opacity="0.7"/>
-</linearGradient>
-<linearGradient id="paint3_linear_1_25" x1="88.7199" y1="107.76" x2="88.7199" y2="149.04" gradientUnits="userSpaceOnUse">
-<stop stop-color="white"/>
-<stop offset="1" stop-color="white" stop-opacity="0.7"/>
-</linearGradient>
-<linearGradient id="paint4_linear_1_25" x1="75.52" y1="63.12" x2="75.52" y2="90.64" gradientUnits="userSpaceOnUse">
-<stop stop-color="white"/>
-<stop offset="1" stop-color="white" stop-opacity="0.7"/>
-</linearGradient>
-<linearGradient id="paint5_linear_1_25" x1="112.96" y1="51.92" x2="112.96" y2="90.64" gradientUnits="userSpaceOnUse">
-<stop stop-color="white"/>
-<stop offset="1" stop-color="white" stop-opacity="0.7"/>
-</linearGradient>
-<linearGradient id="paint6_linear_1_25" x1="87.04" y1="51.92" x2="87.04" y2="90.64" gradientUnits="userSpaceOnUse">
-<stop stop-color="white"/>
-<stop offset="1" stop-color="white" stop-opacity="0.7"/>
-</linearGradient>
-</defs>
+<svg viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="logo-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#F3A261;"/>
+      <stop offset="100%" style="stop-color:#EAA94A;"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="3"/>
+      <feOffset dx="2" dy="2" result="offsetblur"/>
+      <feComponentTransfer>
+        <feFuncA type="linear" slope="0.5"/>
+      </feComponentTransfer>
+      <feMerge>
+        <feMergeNode/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <circle cx="64" cy="64" r="60" fill="url(#logo-gradient)" filter="url(#shadow)"/>
+  <path d="M 35 88 L 35 40 L 50 40 L 64 58 L 78 40 L 93 40 L 93 88 L 80 88 L 80 55 L 69 70 L 64 76 L 59 70 L 48 55 L 48 88 Z" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="2" stroke-linejoin="round"/>
 </svg>
