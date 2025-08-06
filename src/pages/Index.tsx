@@ -66,7 +66,7 @@ const Index = () => {
                   y: stackPosition * CARD_OFFSET,
                   scale: 1 - stackPosition * SCALE_FACTOR,
                   zIndex: numServices - stackPosition,
-                  opacity: stackPosition < VISIBLE_CARDS ? 1 : 0.5,
+                  opacity: stackPosition < VISIBLE_CARDS ? 1 : 0,
                 }}
                 transition={{ type: "spring", stiffness: 300, damping: 30 }}
                 style={{
@@ -76,7 +76,7 @@ const Index = () => {
                   right: 0,
                   transformOrigin: "center",
                 }}
-                className="w-full h-full flex items-center justify-center"
+                className="w-full h-full"
               >
                 <ServiceCard
                   icon={service.icon}
