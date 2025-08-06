@@ -16,8 +16,6 @@ import { useI18n } from "./hooks/use-i18n";
 import { MobileNav } from "./components/MobileNav";
 import { SettingsMenu } from "./components/SettingsMenu";
 import { useTheme } from "next-themes";
-import { useState, useEffect } from "react";
-import { Loader } from "./components/Loader";
 
 const queryClient = new QueryClient();
 
@@ -41,19 +39,15 @@ const AppContent = () => {
   const location = useLocation();
   const { language } = useI18n();
   const { theme } = useTheme();
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    const timer = setTimeout(() => setIsLoading(false), 500);
-    return () => clearTimeout(timer);
-  }, []);
 
   const showCallToAction = location.pathname === "/";
 
   return (
-    <>
-      <AnimatePresence>{isLoading && <Loader />}</AnimatePresence>
-
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5, ease: "easeInOut" }}
+    >
       <div className="flex flex-col h-screen bg-background">
         <MobileNav />
         <SettingsMenu />
@@ -79,7 +73,7 @@ const AppContent = () => {
         </main>
         {showCallToAction && <CallToAction />}
       </div>
-    </>
+    </motion.div>
   );
 };
 

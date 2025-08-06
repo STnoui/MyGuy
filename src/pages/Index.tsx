@@ -2,7 +2,7 @@ import { Logo } from "@/components/Logo";
 import { ServiceCard } from "@/components/ServiceCard";
 import { useI18n } from "@/hooks/use-i18n";
 import { ShoppingBag, Wallet, Package, Flower2 } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { useState, useRef, useEffect } from "react";
 import { cn } from "@/lib/utils";
 
@@ -14,13 +14,7 @@ const ANIMATION_DURATION_MS = 500;
 const Index = () => {
   const { t } = useI18n();
   const [activeIndex, setActiveIndex] = useState(0);
-  const [isReady, setIsReady] = useState(false);
   const isScrolling = useRef(false);
-
-  useEffect(() => {
-    const timer = setTimeout(() => setIsReady(true), 500); // Increased delay for smoother effect
-    return () => clearTimeout(timer);
-  }, []);
 
   const services = [
     { icon: <ShoppingBag className="h-8 w-8" />, key: "deliveries" },
@@ -32,7 +26,7 @@ const Index = () => {
 
   const handleWheel = (e: React.WheelEvent) => {
     e.preventDefault();
-    if (isScrolling.current || !isReady) return;
+    if (isScrolling.current) return;
 
     isScrolling.current = true;
 
@@ -70,7 +64,7 @@ const Index = () => {
                   top: stackPosition * CARD_OFFSET,
                   scale: 1 - stackPosition * SCALE_FACTOR,
                   zIndex: numServices - stackPosition,
-                  opacity: isReady ? (stackPosition < VISIBLE_CARDS ? 1 : 0) : 0,
+                  opacity: stackPosition < VISIBLE_CARDS ? 1 : 0,
                 }}
                 transition={{ type: "spring", stiffness: 300, damping: 30 }}
                 style={{
@@ -92,15 +86,6 @@ const Index = () => {
               </motion.div>
             );
           })}
-          <AnimatePresence>
-            {!isReady && (
-              <motion.div
-                className="absolute inset-0 bg-background z-20"
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.5 }}
-              />
-            )}
-          </AnimatePresence>
         </div>
       </div>
     </div>

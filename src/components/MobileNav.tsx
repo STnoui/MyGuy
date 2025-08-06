@@ -71,6 +71,7 @@ export const MobileNav = () => {
         >
           <motion.div
             className="absolute"
+            initial={false}
             animate={{ opacity: isOpen ? 0 : 1, rotate: isOpen ? -90 : 0 }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
           >
@@ -78,7 +79,7 @@ export const MobileNav = () => {
           </motion.div>
           <motion.div
             className="absolute"
-            initial={{ opacity: 0 }}
+            initial={false}
             animate={{ opacity: isOpen ? 1 : 0, rotate: isOpen ? 0 : 90 }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
           >
