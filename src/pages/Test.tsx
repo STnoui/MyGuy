@@ -2,7 +2,7 @@ import { ServiceCard } from "@/components/ServiceCard";
 import { useI18n } from "@/hooks/use-i18n";
 import { ShoppingBag, Wallet, Package, Flower2 } from "lucide-react";
 import { motion } from "framer-motion";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 
 const CARD_OFFSET = 24;
 const SCALE_FACTOR = 0.06;
@@ -12,7 +12,13 @@ const ANIMATION_DURATION_MS = 500;
 const Test = () => {
   const { t } = useI18n();
   const [activeIndex, setActiveIndex] = useState(0);
+  const [isReady, setIsReady] = useState(false);
   const isScrolling = useRef(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setIsReady(true), 300);
+    return () => clearTimeout(timer);
+  }, []);
 
   const services = [
     { icon: <ShoppingBag className="h-8 w-8" />, key: "deliveries" },
@@ -41,46 +47,43 @@ const Test = () => {
 
   return (
     <div className="flex flex-col h-full w-full items-center justify-center overflow-hidden" onWheel={handleWheel}>
-      <motion.div
-        className="relative w-full max-w-sm mx-auto h-[220px]"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.2, duration: 0.3 }}
-      >
-        {services.map((service, i) => {
-          const stackPosition = (i - activeIndex + numServices) % numServices;
+      {isReady && (
+        <div className="relative w-full max-w-sm mx-auto h-[220px]">
+          {services.map((service, i) => {
+            const stackPosition = (i - activeIndex + numServices) % numServices;
 
-          return (
-            <motion.div
-              key={service.key}
-              initial={false}
-              animate={{
-                top: stackPosition * CARD_OFFSET,
-                scale: 1 - stackPosition * SCALE_FACTOR,
-                zIndex: numServices - stackPosition,
-                opacity: stackPosition < VISIBLE_CARDS ? 1 : 0,
-              }}
-              transition={{ type: "spring", stiffness: 300, damping: 30 }}
-              style={{
-                position: "absolute",
-                left: 0,
-                right: 0,
-                transformOrigin: "center",
-              }}
-              className="w-full will-change-transform"
-            >
-              <ServiceCard
-                icon={service.icon}
-                title={t(`services.${service.key}.title`)}
-                description={t(`services.${service.key}.description`)}
-                index={i}
-                activeIndex={activeIndex}
-                totalServices={numServices}
-              />
-            </motion.div>
-          );
-        })}
-      </motion.div>
+            return (
+              <motion.div
+                key={service.key}
+                initial={false}
+                animate={{
+                  top: stackPosition * CARD_OFFSET,
+                  scale: 1 - stackPosition * SCALE_FACTOR,
+                  zIndex: numServices - stackPosition,
+                  opacity: stackPosition < VISIBLE_CARDS ? 1 : 0,
+                }}
+                transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                style={{
+                  position: "absolute",
+                  left: 0,
+                  right: 0,
+                  transformOrigin: "center",
+                }}
+                className="w-full will-change-transform"
+              >
+                <ServiceCard
+                  icon={service.icon}
+                  title={t(`services.${service.key}.title`)}
+                  description={t(`services.${service.key}.description`)}
+                  index={i}
+                  activeIndex={activeIndex}
+                  totalServices={numServices}
+                />
+              </motion.div>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 };
