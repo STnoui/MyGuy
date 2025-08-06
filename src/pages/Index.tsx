@@ -45,9 +45,6 @@ const Index = () => {
             transition={{ duration: 0.5 }}
             className="mt-4"
           >
-            <h1 className="text-4xl font-extrabold tracking-tight lg:text-5xl text-primary">
-              {t("heroTitle")}
-            </h1>
             <Badge variant="secondary" className="mt-6 text-md font-semibold">
               {t("operatingHours")}
             </Badge>
