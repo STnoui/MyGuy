@@ -42,10 +42,10 @@ const AppContent = () => {
   const showCallToAction = location.pathname === "/";
 
   return (
-    <div className="flex flex-col h-screen bg-background overflow-hidden">
+    <div className="flex flex-col h-screen bg-background">
       <MobileNav />
       <SettingsMenu />
-      <main className="flex-1 overflow-y-auto">
+      <main className="flex-1">
         <AnimatePresence mode="wait">
           <motion.div
             key={location.pathname + language + (theme || "system")}
@@ -53,6 +53,7 @@ const AppContent = () => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.2 }}
+            className="h-full"
           >
             <Routes location={location}>
               <Route path="/" element={<Index />} />

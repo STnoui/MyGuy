@@ -44,7 +44,7 @@ const Index = () => {
   };
 
   return (
-    <div className="flex flex-col h-screen w-full pt-16 pb-28" onWheel={handleWheel}>
+    <div className="flex flex-col h-full w-full pt-16 pb-28 overflow-hidden" onWheel={handleWheel}>
       <div className="text-center px-4 pt-8">
         <Logo />
         <Badge variant="secondary" className="text-md font-semibold">
