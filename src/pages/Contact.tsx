@@ -9,8 +9,9 @@ const phoneNumber = "+359888309898";
 
 const Contact = () => {
   const { t, language } = useI18n();
-  const buttonClasses =
+  const buttonBaseClasses =
     "bg-black/10 dark:bg-white/10 backdrop-blur-lg border border-neutral-200 dark:border-white/10 hover:bg-black/20 dark:hover:bg-white/20 text-foreground";
+  const buttonLayoutClasses = "h-14 rounded-3xl text-lg";
 
   return (
     <motion.div
@@ -27,13 +28,13 @@ const Contact = () => {
             <CardDescription className="text-foreground/80">{t("contact.description")}</CardDescription>
           </CardHeader>
           <CardContent className="flex flex-col gap-4">
-            <Button asChild variant="ghost" size="lg" className={buttonClasses}>
+            <Button asChild variant="ghost" className={cn(buttonBaseClasses, buttonLayoutClasses)}>
               <a href={`tel:${phoneNumber}`}>
                 <Phone className="mr-2 h-5 w-5" />
                 {t("contact.callUs")}
               </a>
             </Button>
-            <Button asChild variant="ghost" size="lg" className={buttonClasses}>
+            <Button asChild variant="ghost" className={cn(buttonBaseClasses, buttonLayoutClasses)}>
               <a
                 href="https://www.facebook.com/profile.php?id=100092615905479"
                 target="_blank"
@@ -43,7 +44,7 @@ const Contact = () => {
                 {t("contact.followFacebook")}
               </a>
             </Button>
-            <Button asChild variant="ghost" size="lg" className={buttonClasses}>
+            <Button asChild variant="ghost" className={cn(buttonBaseClasses, buttonLayoutClasses)}>
               <a href="mailto:myguyyy@gmail.com">
                 <Mail className="mr-2 h-5 w-5" />
                 {t("contact.supportEmail")}
