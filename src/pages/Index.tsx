@@ -15,11 +15,17 @@ const Index = () => {
   const { t } = useI18n();
   const [activeIndex, setActiveIndex] = useState(0);
   const [isReady, setIsReady] = useState(false);
+  const [isAnimationEnabled, setIsAnimationEnabled] = useState(false);
   const isScrolling = useRef(false);
 
   useEffect(() => {
-    const timer = setTimeout(() => setIsReady(true), 400);
-    return () => clearTimeout(timer);
+    const readyTimer = setTimeout(() => setIsReady(true), 400);
+    // This timer ensures all CSS, including backdrop-filter, is rendered before enabling scroll.
+    const animationTimer = setTimeout(() => setIsAnimationEnabled(true), 600); 
+    return () => {
+      clearTimeout(readyTimer);
+      clearTimeout(animationTimer);
+    };
   }, []);
 
   const services = [
@@ -32,7 +38,7 @@ const Index = () => {
 
   const handleWheel = (e: React.WheelEvent) => {
     e.preventDefault();
-    if (isScrolling.current || !isReady) return;
+    if (isScrolling.current) return;
 
     isScrolling.current = true;
 
@@ -48,7 +54,10 @@ const Index = () => {
   };
 
   return (
-    <div className="flex flex-col h-full w-full pt-16 pb-28 overflow-hidden" onWheel={handleWheel}>
+    <div 
+      className="flex flex-col h-full w-full pt-16 pb-28 overflow-hidden" 
+      onWheel={isAnimationEnabled ? handleWheel : undefined}
+    >
       <div className="text-center px-4 pt-8">
         <Logo />
         <div className={cn("inline-block text-md font-semibold text-muted-foreground", "rounded-full px-4 py-2")}>
