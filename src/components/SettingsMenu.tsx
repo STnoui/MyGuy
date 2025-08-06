@@ -59,7 +59,7 @@ export const SettingsMenu = () => {
 
   return (
     <div className="md:hidden">
-      <div ref={menuRef} className="fixed top-4 right-4 z-50">
+      <div ref={menuRef} className="fixed top-[20%] right-4 z-50">
         <button
           onClick={() => setIsOpen(!isOpen)}
           className="w-12 h-12 relative z-10 flex items-center justify-center focus:outline-none"

@@ -9,7 +9,7 @@ export const CallToAction = () => {
   const { t } = useI18n();
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-background to-transparent pointer-events-none">
+    <div className="fixed bottom-[15%] left-0 right-0 p-4 bg-gradient-to-t from-background to-transparent pointer-events-none">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
