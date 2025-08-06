@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import { useTheme } from "next-themes";
 import { Capacitor } from "@capacitor/core";
 import { StatusBar, Style } from "@capacitor/status-bar";
-import { NavigationBar } from "@capacitor/navigation-bar";
 
 // Using colors from globals.css
 const colors = {
@@ -19,18 +18,16 @@ export const NativeThemeHandler = () => {
     }
 
     const applyTheme = async () => {
-      if (resolvedTheme === "dark") {
-        await StatusBar.setStyle({ style: Style.Dark });
-        await StatusBar.setBackgroundColor({ color: colors.dark });
-        if (Capacitor.getPlatform() === "android") {
-          await NavigationBar.setColor({ color: colors.dark, darkButtons: false });
+      try {
+        if (resolvedTheme === "dark") {
+          await StatusBar.setStyle({ style: Style.Dark });
+          await StatusBar.setBackgroundColor({ color: colors.dark });
+        } else {
+          await StatusBar.setStyle({ style: Style.Light });
+          await StatusBar.setBackgroundColor({ color: colors.light });
         }
-      } else {
-        await StatusBar.setStyle({ style: Style.Light });
-        await StatusBar.setBackgroundColor({ color: colors.light });
-        if (Capacitor.getPlatform() === "android") {
-          await NavigationBar.setColor({ color: colors.light, darkButtons: true });
-        }
+      } catch (error) {
+        console.error("Failed to apply native theme styles:", error);
       }
     };
 
