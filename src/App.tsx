@@ -12,6 +12,8 @@ import { I18nProvider } from "./contexts/I18nProvider";
 import { Header } from "./components/Header";
 import { CallToAction } from "./components/CallToAction";
 import { AnimatePresence, motion } from "framer-motion";
+import { useTheme } from "next-themes";
+import { useI18n } from "./hooks/use-i18n";
 
 const queryClient = new QueryClient();
 
@@ -33,13 +35,16 @@ const App = () => (
 
 const AppContent = () => {
   const location = useLocation();
+  const { language } = useI18n();
+  const { theme } = useTheme();
+
   return (
     <div className="flex flex-col min-h-screen bg-background">
       <Header />
       <main className="flex-grow">
         <AnimatePresence mode="wait">
           <motion.div
-            key={location.pathname}
+            key={location.pathname + language + (theme || "system")}
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
