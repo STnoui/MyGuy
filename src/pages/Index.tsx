@@ -17,10 +17,11 @@ const Index = () => {
   const [isReady, setIsReady] = useState(false);
   const [isAnimationEnabled, setIsAnimationEnabled] = useState(false);
   const isScrolling = useRef(false);
+  const touchStartY = useRef(0);
+  const isSwiping = useRef(false);
 
   useEffect(() => {
     const readyTimer = setTimeout(() => setIsReady(true), 400);
-    // This timer ensures all CSS, including backdrop-filter, is rendered before enabling scroll.
     const animationTimer = setTimeout(() => setIsAnimationEnabled(true), 600);
     return () => {
       clearTimeout(readyTimer);
@@ -53,11 +54,46 @@ const Index = () => {
     }, ANIMATION_DURATION_MS);
   };
 
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartY.current = e.touches[0].clientY;
+    isSwiping.current = false;
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (isScrolling.current || isSwiping.current) return;
+
+    const touchEndY = e.touches[0].clientY;
+    const deltaY = touchStartY.current - touchEndY;
+    const swipeThreshold = 50;
+
+    if (Math.abs(deltaY) > swipeThreshold) {
+      isScrolling.current = true;
+      isSwiping.current = true;
+
+      if (deltaY > 0) {
+        setActiveIndex((prev) => (prev + 1) % numServices);
+      } else {
+        setActiveIndex((prev) => (prev - 1 + numServices) % numServices);
+      }
+
+      setTimeout(() => {
+        isScrolling.current = false;
+      }, ANIMATION_DURATION_MS);
+    }
+  };
+
+  const handleTouchEnd = () => {
+    isSwiping.current = false;
+  };
+
   return (
     <div className="h-full">
       <div
         className="flex flex-col h-full w-full pt-16 pb-28 overflow-hidden"
         onWheel={isAnimationEnabled ? handleWheel : undefined}
+        onTouchStart={isAnimationEnabled ? handleTouchStart : undefined}
+        onTouchMove={isAnimationEnabled ? handleTouchMove : undefined}
+        onTouchEnd={isAnimationEnabled ? handleTouchEnd : undefined}
       >
         <div className="text-center px-4 pt-8">
           <Logo />

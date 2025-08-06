@@ -67,6 +67,9 @@
 }
 
 @layer base {
+  html, body, #root {
+    @apply h-full overflow-hidden;
+  }
   body {
     @apply bg-background text-foreground transition-colors duration-300 ease-in-out;
   }
