@@ -48,12 +48,13 @@ const Index = () => {
         >
           <h2 className="text-3xl font-bold tracking-tight mb-8">{t("servicesTitle")}</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
-            {services.map((service) => (
+            {services.map((service, index) => (
               <div key={service.key} className="flex justify-center">
                 <ServiceCard
                   icon={service.icon}
                   title={t(`services.${service.key}.title`)}
                   description={t(`services.${service.key}.description`)}
+                  index={index}
                 />
               </div>
             ))}

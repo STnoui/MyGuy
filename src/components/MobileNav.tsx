@@ -40,7 +40,7 @@ export const MobileNav = () => {
       width: "48px",
       height: "48px",
       borderRadius: "24px",
-      transition: { type: "spring", stiffness: 400, damping: 35, when: "afterChildren" }
+      transition: { type: "spring", stiffness: 500, damping: 40, when: "afterChildren" }
     },
     open: {
       width: "224px",
@@ -101,7 +101,7 @@ export const MobileNav = () => {
                 animate={{ x: 0, opacity: 1 }}
                 exit={{ x: -20, opacity: 0 }}
                 transition={{ delay: 0.1, ease: "easeOut", duration: 0.3 }}
-                className="absolute top-3.5 left-14 text-lg font-bold pointer-events-none"
+                className="absolute top-0 left-14 h-12 flex items-center text-lg font-bold pointer-events-none"
               >
                 Menu
               </motion.p>

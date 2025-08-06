@@ -5,15 +5,16 @@ interface ServiceCardProps {
   icon: React.ReactNode;
   title: string;
   description: string;
+  index: number;
 }
 
-export const ServiceCard = ({ icon, title, description }: ServiceCardProps) => {
+export const ServiceCard = ({ icon, title, description, index }: ServiceCardProps) => {
   return (
     <motion.div
-      initial={{ opacity: 0, scale: 0.9 }}
-      whileInView={{ opacity: 1, scale: 1 }}
+      initial={{ opacity: 0, y: 20, scale: 0.95 }}
+      whileInView={{ opacity: 1, y: 0, scale: 1 }}
       viewport={{ once: true, amount: 0.5 }}
-      transition={{ duration: 0.5, ease: "easeOut" }}
+      transition={{ type: "spring", stiffness: 200, damping: 30, delay: index * 0.1 }}
       className="w-full max-w-sm"
     >
       <Card className="h-full bg-black/5 dark:bg-white/5 backdrop-blur-sm border-white/20">
