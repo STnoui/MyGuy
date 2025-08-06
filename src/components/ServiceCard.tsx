@@ -9,7 +9,7 @@ interface ServiceCardProps {
 
 export const ServiceCard = ({ icon, title, description }: ServiceCardProps) => {
   return (
-    <Card className="h-28 text-card-foreground bg-black/10 dark:bg-white/10 backdrop-blur-xl shadow-2xl border-0">
+    <Card className="h-28 text-card-foreground bg-muted shadow-2xl border-0 rounded-3xl">
       <CardHeader className="flex flex-row items-center gap-4 p-4 h-full">
         <div className="flex items-center justify-center h-14 w-14 rounded-full bg-secondary/20 text-secondary shrink-0">
           {icon}
