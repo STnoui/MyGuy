@@ -1,0 +1,30 @@
+import { useI18n } from "@/hooks/use-i18n";
+import { motion } from "framer-motion";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+
+const About = () => {
+  const { t, language } = useI18n();
+
+  return (
+    <motion.div
+      key={language}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.3 }}
+    >
+      <div className="container mx-auto px-4 py-8">
+        <Card className="max-w-2xl mx-auto">
+          <CardHeader>
+            <CardTitle className="text-3xl font-bold text-center">{t("about.title")}</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4 text-muted-foreground">
+            <p>{t("about.p1")}</p>
+            <p>{t("about.p2")}</p>
+          </CardContent>
+        </Card>
+      </div>
+    </motion.div>
+  );
+};
+
+export default About;

@@ -4,7 +4,7 @@ import { translations, Language } from "@/lib/translations";
 type I18nContextType = {
   language: Language;
   t: (key: string) => string;
-  toggleLanguage: () => void;
+  setLanguage: (lang: Language) => void;
 };
 
 export const I18nContext = createContext<I18nContextType | undefined>(undefined);
@@ -21,10 +21,6 @@ export const I18nProvider = ({ children }: { children: React.ReactNode }) => {
     }
   }, []);
 
-  const toggleLanguage = () => {
-    setLanguage((prevLang) => (prevLang === "en" ? "bg" : "en"));
-  };
-
   const t = useMemo(
     () => (key: string) => {
       const keys = key.split(".");
@@ -40,7 +36,7 @@ export const I18nProvider = ({ children }: { children: React.ReactNode }) => {
   const value = {
     language,
     t,
-    toggleLanguage,
+    setLanguage,
   };
 
   return <I18nContext.Provider value={value}>{children}</I18nContext.Provider>;

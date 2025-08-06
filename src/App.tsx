@@ -2,11 +2,16 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
+import Contact from "./pages/Contact";
+import About from "./pages/About";
 import { ThemeProvider } from "./components/ThemeProvider";
 import { I18nProvider } from "./contexts/I18nProvider";
+import { Header } from "./components/Header";
+import { CallToAction } from "./components/CallToAction";
+import { AnimatePresence, motion } from "framer-motion";
 
 const queryClient = new QueryClient();
 
@@ -18,15 +23,41 @@ const App = () => (
           <Toaster />
           <Sonner />
           <BrowserRouter>
-            <Routes>
-              <Route path="/" element={<Index />} />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
+            <AppContent />
           </BrowserRouter>
         </I18nProvider>
       </TooltipProvider>
     </QueryClientProvider>
   </ThemeProvider>
 );
+
+const AppContent = () => {
+  const location = useLocation();
+  return (
+    <div className="flex flex-col min-h-screen bg-background">
+      <Header />
+      <main className="flex-grow">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={location.pathname}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.2 }}
+          >
+            <Routes location={location}>
+              <Route path="/" element={<Index />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/about" element={<About />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </motion.div>
+        </AnimatePresence>
+      </main>
+      <div className="h-28" /> {/* Spacer for the CTA button */}
+      <CallToAction />
+    </div>
+  );
+};
 
 export default App;
