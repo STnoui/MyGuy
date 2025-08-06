@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 import { Menu } from "lucide-react";
 import { useI18n } from "@/hooks/use-i18n";
 import { useNavigate } from "react-router-dom";
@@ -35,82 +35,73 @@ export const MobileNav = () => {
     setIsOpen(false);
   };
 
-  const navVariants = {
-    hidden: {
-      opacity: 0,
-      transition: {
-        staggerChildren: 0.05,
-        staggerDirection: -1,
-        when: "afterChildren",
-        duration: 0.1,
-      },
+  const containerVariants: Variants = {
+    closed: {
+      width: "48px",
+      height: "48px",
+      borderRadius: "24px",
+      transition: { type: "spring", stiffness: 400, damping: 35, duration: 0.4 }
     },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.1,
-        when: "beforeChildren",
-      },
-    },
+    open: {
+      width: "224px",
+      height: "196px",
+      borderRadius: "24px",
+      transition: { type: "spring", stiffness: 400, damping: 30, duration: 0.5 }
+    }
   };
 
-  const itemVariants = {
-    hidden: { opacity: 0, y: -10 },
-    visible: { opacity: 1, y: 0 },
+  const navListVariants: Variants = {
+    open: {
+      opacity: 1,
+      transition: { staggerChildren: 0.07, delayChildren: 0.2 }
+    },
+    closed: {
+      opacity: 0,
+      transition: { staggerChildren: 0.05, staggerDirection: -1, when: "afterChildren", duration: 0.1 }
+    }
+  };
+
+  const navItemVariants: Variants = {
+    open: { y: 0, opacity: 1 },
+    closed: { y: 10, opacity: 0 }
   };
 
   return (
     <div className="md:hidden">
       <motion.div
         ref={navRef}
-        layout
-        transition={{ type: "spring", stiffness: 500, damping: 40 }}
-        style={{
-          width: isOpen ? "224px" : "48px",
-          height: isOpen ? "auto" : "48px",
-        }}
-        className="fixed top-4 left-4 z-50 overflow-hidden rounded-full bg-black/5 dark:bg-white/10 backdrop-blur-3xl border border-white/10 shadow-2xl"
+        variants={containerVariants}
+        initial={false}
+        animate={isOpen ? "open" : "closed"}
+        onClick={() => !isOpen && setIsOpen(true)}
+        className="fixed top-4 left-4 z-50 overflow-hidden bg-background/75 backdrop-blur-2xl border border-white/10 shadow-2xl cursor-pointer"
       >
-        <AnimatePresence>
-          {!isOpen && (
-            <motion.button
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.1 }}
-              onClick={() => setIsOpen(true)}
-              className="w-full h-full flex items-center justify-center focus:outline-none"
-              aria-label="Open navigation menu"
-            >
-              <Menu className="h-7 w-7" />
-            </motion.button>
-          )}
-        </AnimatePresence>
+        <motion.div
+          className="w-12 h-12 absolute top-0 left-0 flex items-center justify-center"
+          animate={{ opacity: isOpen ? 0 : 1, transition: { delay: isOpen ? 0 : 0.3 } }}
+        >
+          <Menu className="h-7 w-7" />
+        </motion.div>
 
-        <AnimatePresence>
-          {isOpen && (
-            <motion.nav
-              variants={navVariants}
-              initial="hidden"
-              animate="visible"
-              exit="hidden"
-              className="flex flex-col gap-1 w-full p-4"
+        <motion.nav
+          variants={navListVariants}
+          className="flex flex-col gap-1 w-full pt-12 p-4"
+        >
+          {navItems.map((item) => (
+            <motion.div
+              key={item.href}
+              variants={navItemVariants}
             >
-              {navItems.map((item) => (
-                <motion.div key={item.href} variants={itemVariants}>
-                  <Button
-                    variant="ghost"
-                    className="w-full justify-start text-md py-3"
-                    onClick={() => handleNavigate(item.href)}
-                  >
-                    {item.label}
-                  </Button>
-                </motion.div>
-              ))}
-            </motion.nav>
-          )}
-        </AnimatePresence>
+              <Button
+                variant="ghost"
+                className="w-full justify-start text-md py-3"
+                onClick={() => handleNavigate(item.href)}
+              >
+                {item.label}
+              </Button>
+            </motion.div>
+          ))}
+        </motion.nav>
       </motion.div>
     </div>
   );
