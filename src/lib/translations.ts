@@ -47,6 +47,10 @@ export const translations = {
         description: "Surprise someone with a late-night flower delivery.",
       },
     },
+    aria: {
+      toggleNav: "Toggle navigation menu",
+      toggleSettings: "Toggle settings menu",
+    },
   },
   bg: {
     language: "БГ",
@@ -95,6 +99,10 @@ export const translations = {
         title: "Доставка на цветя",
         description: "Изненадайте някого с късна доставка на цветя.",
       },
+    },
+    aria: {
+      toggleNav: "Превключване на навигационното меню",
+      toggleSettings: "Превключване на менюто с настройки",
     },
   },
 };

@@ -78,7 +78,7 @@ export const MobileNav = () => {
         <button
           onClick={() => setIsOpen(!isOpen)}
           className="w-12 h-12 absolute top-0 left-0 flex items-center justify-center focus:outline-none"
-          aria-label="Toggle navigation menu"
+          aria-label={t("aria.toggleNav")}
         >
           <AnimatePresence initial={false} mode="wait">
             <motion.div

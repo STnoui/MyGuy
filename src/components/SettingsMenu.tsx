@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils";
 
 export const SettingsMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const { language, setLanguage } = useI18n();
+  const { t, language, setLanguage } = useI18n();
   const { theme, setTheme } = useTheme();
   const menuRef = useRef<HTMLDivElement>(null);
 
@@ -68,7 +68,7 @@ export const SettingsMenu = () => {
         <button
           onClick={() => setIsOpen(!isOpen)}
           className="w-12 h-12 absolute top-0 right-0 flex items-center justify-center focus:outline-none"
-          aria-label="Toggle settings menu"
+          aria-label={t("aria.toggleSettings")}
         >
           <AnimatePresence initial={false} mode="wait">
             <motion.div
@@ -93,24 +93,24 @@ export const SettingsMenu = () => {
               className="flex flex-col gap-4 w-full pt-4 p-4"
             >
               <motion.div variants={itemVariants} className="space-y-2 pt-8">
-                <p className="text-sm font-medium text-muted-foreground px-1">Theme</p>
-                <div className="grid grid-cols-3 gap-2 p-1 bg-muted rounded-lg">
-                  <Button size="sm" variant={theme === 'light' ? 'outline' : 'ghost'} onClick={() => setTheme('light')} className="h-8">
+                <p className="text-sm font-medium text-muted-foreground px-1">{t("settings.theme")}</p>
+                <div className="grid grid-cols-3 gap-2 p-1 bg-background/30 backdrop-blur-sm rounded-lg">
+                  <Button size="sm" variant="ghost" onClick={() => setTheme('light')} className={cn("h-8", theme === 'light' && 'bg-background/70 backdrop-blur-md')}>
                     <Sun className="h-5 w-5" />
                   </Button>
-                  <Button size="sm" variant={theme === 'dark' ? 'outline' : 'ghost'} onClick={() => setTheme('dark')} className="h-8">
+                  <Button size="sm" variant="ghost" onClick={() => setTheme('dark')} className={cn("h-8", theme === 'dark' && 'bg-background/70 backdrop-blur-md')}>
                     <Moon className="h-5 w-5" />
                   </Button>
-                  <Button size="sm" variant={theme === 'system' ? 'outline' : 'ghost'} onClick={() => setTheme('system')} className="h-8">
+                  <Button size="sm" variant="ghost" onClick={() => setTheme('system')} className={cn("h-8", theme === 'system' && 'bg-background/70 backdrop-blur-md')}>
                     <Monitor className="h-5 w-5" />
                   </Button>
                 </div>
               </motion.div>
               <motion.div variants={itemVariants} className="space-y-2">
-                <p className="text-sm font-medium text-muted-foreground px-1">Language</p>
-                <div className="grid grid-cols-2 gap-2 p-1 bg-muted rounded-lg">
-                   <Button size="sm" variant={language === 'en' ? 'outline' : 'ghost'} onClick={() => setLanguage('en')} className="h-8 font-bold">EN</Button>
-                   <Button size="sm" variant={language === 'bg' ? 'outline' : 'ghost'} onClick={() => setLanguage('bg')} className="h-8 font-bold">BG</Button>
+                <p className="text-sm font-medium text-muted-foreground px-1">{t("settings.language")}</p>
+                <div className="grid grid-cols-2 gap-2 p-1 bg-background/30 backdrop-blur-sm rounded-lg">
+                   <Button size="sm" variant="ghost" onClick={() => setLanguage('en')} className={cn("h-8 font-bold", language === 'en' && 'bg-background/70 backdrop-blur-md')}>EN</Button>
+                   <Button size="sm" variant="ghost" onClick={() => setLanguage('bg')} className={cn("h-8 font-bold", language === 'bg' && 'bg-background/70 backdrop-blur-md')}>BG</Button>
                 </div>
               </motion.div>
             </motion.div>
