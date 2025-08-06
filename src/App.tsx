@@ -9,11 +9,12 @@ import Contact from "./pages/Contact";
 import About from "./pages/About";
 import { ThemeProvider } from "./components/ThemeProvider";
 import { I18nProvider } from "./contexts/I18nProvider";
-import { Header } from "./components/Header";
 import { CallToAction } from "./components/CallToAction";
 import { AnimatePresence, motion } from "framer-motion";
 import { useTheme } from "next-themes";
 import { useI18n } from "./hooks/use-i18n";
+import { MobileNav } from "./components/MobileNav";
+import { SettingsMenu } from "./components/SettingsMenu";
 
 const queryClient = new QueryClient();
 
@@ -40,8 +41,9 @@ const AppContent = () => {
 
   return (
     <div className="flex flex-col min-h-screen bg-background">
-      <Header />
-      <main className="flex-grow">
+      <MobileNav />
+      <SettingsMenu />
+      <main className="flex-grow pt-20">
         <AnimatePresence mode="wait">
           <motion.div
             key={location.pathname + language + (theme || "system")}
