@@ -35,28 +35,30 @@ export const MobileNav = () => {
     setIsOpen(false);
   };
 
-  const navListVariants = {
-    visible: {
-      opacity: 1,
-      transition: {
-        when: "beforeChildren",
-        staggerChildren: 0.07,
-        delayChildren: 0.1,
-      },
-    },
+  const navVariants = {
     hidden: {
       opacity: 0,
       transition: {
+        duration: 0.2,
         when: "afterChildren",
         staggerChildren: 0.05,
         staggerDirection: -1,
       },
     },
+    visible: {
+      opacity: 1,
+      transition: {
+        duration: 0.2,
+        when: "beforeChildren",
+        staggerChildren: 0.08,
+        delayChildren: 0.15,
+      },
+    },
   };
 
   const navItemVariants = {
-    visible: { y: 0, opacity: 1 },
     hidden: { y: 10, opacity: 0 },
+    visible: { y: 0, opacity: 1 },
   };
 
   return (
@@ -65,42 +67,45 @@ export const MobileNav = () => {
         ref={navRef}
         layout
         transition={{ type: "spring", stiffness: 400, damping: 35 }}
-        className={`fixed top-4 left-4 z-50 overflow-hidden bg-background/60 backdrop-blur-2xl border border-white/10 shadow-2xl
-          ${isOpen ? "w-56 rounded-3xl" : "w-12 h-12 rounded-full"}`}
+        className="fixed top-4 left-4 z-50 flex items-center justify-center overflow-hidden bg-neutral-100/20 dark:bg-neutral-900/20 backdrop-blur-2xl shadow-2xl border border-white/10"
+        style={{ borderRadius: isOpen ? "24px" : "9999px" }}
       >
-        <div className="w-full h-full flex flex-col">
-          <button
-            onClick={() => setIsOpen(!isOpen)}
-            className="w-full h-12 flex-shrink-0 flex items-center justify-center focus:outline-none"
-            aria-label="Toggle navigation menu"
-          >
-            <Menu className="h-7 w-7" />
-          </button>
-
-          <AnimatePresence>
-            {isOpen && (
-              <motion.nav
-                variants={navListVariants}
-                initial="hidden"
-                animate="visible"
-                exit="hidden"
-                className="flex flex-col gap-1 w-full px-4 pb-4"
-              >
-                {navItems.map((item) => (
-                  <motion.div key={item.href} variants={navItemVariants}>
-                    <Button
-                      variant="ghost"
-                      className="w-full justify-start text-md py-3"
-                      onClick={() => handleNavigate(item.href)}
-                    >
-                      {item.label}
-                    </Button>
-                  </motion.div>
-                ))}
-              </motion.nav>
-            )}
-          </AnimatePresence>
-        </div>
+        <AnimatePresence mode="wait">
+          {isOpen ? (
+            <motion.nav
+              key="nav"
+              variants={navVariants}
+              initial="hidden"
+              animate="visible"
+              exit="hidden"
+              className="flex flex-col gap-1 p-4 w-56"
+            >
+              {navItems.map((item) => (
+                <motion.div key={item.href} variants={navItemVariants}>
+                  <Button
+                    variant="ghost"
+                    className="w-full justify-start text-md py-3"
+                    onClick={() => handleNavigate(item.href)}
+                  >
+                    {item.label}
+                  </Button>
+                </motion.div>
+              ))}
+            </motion.nav>
+          ) : (
+            <motion.button
+              key="button"
+              onClick={() => setIsOpen(true)}
+              className="w-12 h-12 flex items-center justify-center"
+              aria-label="Open navigation menu"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1, transition: { delay: 0.2 } }}
+              exit={{ opacity: 0, transition: { duration: 0.1 } }}
+            >
+              <Menu className="h-7 w-7" />
+            </motion.button>
+          )}
+        </AnimatePresence>
       </motion.div>
     </div>
   );
