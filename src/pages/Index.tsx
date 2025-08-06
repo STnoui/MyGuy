@@ -3,7 +3,7 @@ import { ServiceCard } from "@/components/ServiceCard";
 import { useI18n } from "@/hooks/use-i18n";
 import { ShoppingBag, Wallet, Package, Flower2 } from "lucide-react";
 import { motion } from "framer-motion";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { cn } from "@/lib/utils";
 
 const CARD_OFFSET = 24;
@@ -14,7 +14,13 @@ const ANIMATION_DURATION_MS = 500;
 const Index = () => {
   const { t } = useI18n();
   const [activeIndex, setActiveIndex] = useState(0);
+  const [isReady, setIsReady] = useState(false);
   const isScrolling = useRef(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setIsReady(true), 100);
+    return () => clearTimeout(timer);
+  }, []);
 
   const services = [
     { icon: <ShoppingBag className="h-8 w-8" />, key: "deliveries" },
@@ -26,15 +32,13 @@ const Index = () => {
 
   const handleWheel = (e: React.WheelEvent) => {
     e.preventDefault();
-    if (isScrolling.current) return;
+    if (isScrolling.current || !isReady) return;
 
     isScrolling.current = true;
 
     if (e.deltaY > 0) {
-      // Scroll Down
       setActiveIndex((prev) => (prev + 1) % numServices);
     } else {
-      // Scroll Up
       setActiveIndex((prev) => (prev - 1 + numServices) % numServices);
     }
 
@@ -49,20 +53,19 @@ const Index = () => {
         <Logo />
         <div
           className={cn(
-            "inline-block text-md font-semibold",
-            "bg-black/5 dark:bg-white/5 backdrop-blur-2xl border border-neutral-200 dark:border-white/10 shadow-2xl rounded-3xl",
-            "px-4 py-2"
+            "inline-block text-md font-semibold text-muted-foreground bg-muted",
+            "rounded-full px-4 py-2"
           )}
         >
           <span>{t("operatingHours.label")} </span>
-          <span className="text-secondary">{t("operatingHours.time")}</span>
+          <span className="text-secondary font-bold">{t("operatingHours.time")}</span>
         </div>
       </div>
 
       <div className="flex-1 flex flex-col items-center justify-start pt-20 relative">
         <h2 className="text-3xl font-bold tracking-tight mb-6">{t("servicesTitle")}</h2>
         <div className="relative w-full max-w-sm mx-auto h-[220px]">
-          {services.map((service, i) => {
+          {isReady && services.map((service, i) => {
             const stackPosition = (i - activeIndex + numServices) % numServices;
 
             return (
