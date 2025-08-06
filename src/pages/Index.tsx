@@ -105,7 +105,7 @@ const Index = () => {
 
         <div className="flex-1 flex flex-col items-center justify-start pt-20 relative">
           <h2 className="text-3xl font-bold tracking-tight mb-6">{t("servicesTitle")}</h2>
-          <div className="relative w-full max-w-[21.6rem] mx-auto h-[220px]">
+          <div className="relative w-full max-w-[19.5rem] mx-auto h-[250px]">
             <AnimatePresence>
               {!isReady && (
                 <motion.div

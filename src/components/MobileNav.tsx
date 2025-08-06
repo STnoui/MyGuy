@@ -63,7 +63,7 @@ export const MobileNav = () => {
 
   return (
     <div className="md:hidden">
-      <div ref={navRef} className="fixed top-[20%] left-4 z-50">
+      <div ref={navRef} className="fixed top-[5%] left-4 z-50">
         <button
           onClick={() => setIsOpen(!isOpen)}
           className="w-12 h-12 relative z-10 flex items-center justify-center focus:outline-none"

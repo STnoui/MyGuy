@@ -14,7 +14,7 @@ export const ServiceCard = ({ icon, title, description, activeIndex, totalServic
   return (
     <Card
       className={cn(
-        "h-40 text-card-foreground bg-black/5 dark:bg-white/5 backdrop-blur-2xl border border-neutral-200 dark:border-white/10 shadow-2xl rounded-3xl transition-all"
+        "h-44 text-card-foreground bg-black/10 dark:bg-white/10 backdrop-blur-2xl border border-neutral-200 dark:border-white/10 shadow-2xl rounded-3xl transition-all"
       )}
     >
       <CardHeader className="flex flex-row items-center justify-between p-4 h-full gap-4">
