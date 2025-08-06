@@ -56,6 +56,9 @@ export const SettingsMenu = () => {
     closed: { y: 10, opacity: 0 }
   };
 
+  const activeClass = "bg-background/70 backdrop-blur-md";
+  const hoverClass = "hover:bg-background/70 hover:backdrop-blur-md";
+
   return (
     <div className="md:hidden">
       <motion.div
@@ -63,7 +66,7 @@ export const SettingsMenu = () => {
         variants={containerVariants}
         initial={false}
         animate={isOpen ? "open" : "closed"}
-        className="fixed top-4 right-4 z-50 overflow-hidden bg-background/50 backdrop-blur-2xl border border-white/10 shadow-2xl"
+        className="fixed top-4 right-4 z-50 overflow-hidden bg-background/50 backdrop-blur-2xl border border-neutral-200 dark:border-white/10 shadow-2xl"
       >
         <button
           onClick={() => setIsOpen(!isOpen)}
@@ -95,13 +98,13 @@ export const SettingsMenu = () => {
               <motion.div variants={itemVariants} className="space-y-2 pt-8">
                 <p className="text-sm font-medium text-muted-foreground px-1">{t("settings.theme")}</p>
                 <div className="grid grid-cols-3 gap-2 p-1 bg-background/30 backdrop-blur-sm rounded-lg">
-                  <Button size="sm" variant="ghost" onClick={() => setTheme('light')} className={cn("h-8", theme === 'light' && 'bg-background/70 backdrop-blur-md')}>
+                  <Button size="sm" variant="ghost" onClick={() => setTheme('light')} className={cn("h-8", hoverClass, theme === 'light' && activeClass)}>
                     <Sun className="h-5 w-5" />
                   </Button>
-                  <Button size="sm" variant="ghost" onClick={() => setTheme('dark')} className={cn("h-8", theme === 'dark' && 'bg-background/70 backdrop-blur-md')}>
+                  <Button size="sm" variant="ghost" onClick={() => setTheme('dark')} className={cn("h-8", hoverClass, theme === 'dark' && activeClass)}>
                     <Moon className="h-5 w-5" />
                   </Button>
-                  <Button size="sm" variant="ghost" onClick={() => setTheme('system')} className={cn("h-8", theme === 'system' && 'bg-background/70 backdrop-blur-md')}>
+                  <Button size="sm" variant="ghost" onClick={() => setTheme('system')} className={cn("h-8", hoverClass, theme === 'system' && activeClass)}>
                     <Monitor className="h-5 w-5" />
                   </Button>
                 </div>
@@ -109,8 +112,8 @@ export const SettingsMenu = () => {
               <motion.div variants={itemVariants} className="space-y-2">
                 <p className="text-sm font-medium text-muted-foreground px-1">{t("settings.language")}</p>
                 <div className="grid grid-cols-2 gap-2 p-1 bg-background/30 backdrop-blur-sm rounded-lg">
-                   <Button size="sm" variant="ghost" onClick={() => setLanguage('en')} className={cn("h-8 font-bold", language === 'en' && 'bg-background/70 backdrop-blur-md')}>EN</Button>
-                   <Button size="sm" variant="ghost" onClick={() => setLanguage('bg')} className={cn("h-8 font-bold", language === 'bg' && 'bg-background/70 backdrop-blur-md')}>BG</Button>
+                   <Button size="sm" variant="ghost" onClick={() => setLanguage('en')} className={cn("h-8 font-bold", hoverClass, language === 'en' && activeClass)}>EN</Button>
+                   <Button size="sm" variant="ghost" onClick={() => setLanguage('bg')} className={cn("h-8 font-bold", hoverClass, language === 'bg' && activeClass)}>BG</Button>
                 </div>
               </motion.div>
             </motion.div>
