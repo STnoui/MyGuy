@@ -18,7 +18,8 @@ const Index = () => {
   const isScrolling = useRef(false);
 
   useEffect(() => {
-    const timer = setTimeout(() => setIsReady(true), 300);
+    // Increased delay to 500ms to ensure it runs after the main page fade-in (400ms)
+    const timer = setTimeout(() => setIsReady(true), 500);
     return () => clearTimeout(timer);
   }, []);
 

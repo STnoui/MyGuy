@@ -62,21 +62,18 @@ export const SettingsMenu = () => {
           className="w-12 h-12 relative flex items-center justify-center focus:outline-none"
           aria-label={t("aria.toggleSettings")}
         >
-          <motion.div
-            className="absolute"
-            animate={{ opacity: isOpen ? 0 : 1, rotate: isOpen ? -90 : 0 }}
-            transition={{ duration: 0.2 }}
-          >
-            <Settings className="h-6 w-6" />
-          </motion.div>
-          <motion.div
-            className="absolute"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: isOpen ? 1 : 0, rotate: isOpen ? 0 : 90 }}
-            transition={{ duration: 0.2 }}
-          >
-            <X className="h-6 w-6" />
-          </motion.div>
+          <AnimatePresence mode="wait" initial={false}>
+            <motion.div
+              key={isOpen ? "x" : "settings"}
+              initial={{ opacity: 0, rotate: -90 }}
+              animate={{ opacity: 1, rotate: 0 }}
+              exit={{ opacity: 0, rotate: 90 }}
+              transition={{ duration: 0.2, ease: "easeInOut" }}
+              className="absolute"
+            >
+              {isOpen ? <X className="h-6 w-6" /> : <Settings className="h-6 w-6" />}
+            </motion.div>
+          </AnimatePresence>
         </button>
 
         <AnimatePresence>
