@@ -3,18 +3,17 @@ import { ServiceCard } from "@/components/ServiceCard";
 import { useI18n } from "@/hooks/use-i18n";
 import { Badge } from "@/components/ui/badge";
 import { ShoppingBag, Wallet, Package, Flower2 } from "lucide-react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform, MotionValue } from "framer-motion";
 import { useRef } from "react";
 
-const CARD_OFFSET = 32; // More space between cards
-const SCALE_FACTOR = 0.05;
-const SCROLL_MULTIPLIER = 1.5;
+const CARD_OFFSET = 16;
+const SCALE_FACTOR = 0.06;
 
 const Index = () => {
   const { t } = useI18n();
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
-    container: scrollContainerRef,
+    target: scrollRef,
     offset: ["start start", "end end"],
   });
 
@@ -25,60 +24,65 @@ const Index = () => {
     { icon: <Flower2 className="h-8 w-8" />, key: "flowers" },
   ];
   const numCards = services.length;
+  const scrollRange = useTransform(scrollYProgress, [0, 1], [0, numCards]);
 
   return (
-    <div className="flex flex-col h-full w-full">
+    <div ref={scrollRef} className="flex flex-col h-full w-full">
       {/* Static Header */}
       <div className="text-center px-4 pt-2">
         <Logo />
-        <Badge variant="secondary" className="text-md font-semibold">
+        <Badge variant="secondary" className="text-md font-semibold mt-2">
           {t("operatingHours")}
         </Badge>
       </div>
 
-      {/* Contained Scrollable Area */}
-      <div ref={scrollContainerRef} className="flex-1 overflow-y-auto relative mt-8">
-        {/* This div creates the scrollable space */}
-        <div className="relative h-[250vh]">
-          {/* This div sticks to the viewport */}
-          <div className="sticky top-24 text-center">
-            <h2 className="text-3xl font-bold tracking-tight mb-8">{t("servicesTitle")}</h2>
-            <div className="relative mx-auto max-w-sm h-[200px]">
-              {services.map((service, i) => {
-                const totalProgress = useTransform(scrollYProgress, (pos) => pos * (numCards - 1) * SCROLL_MULTIPLIER);
-                
-                const y = useTransform(totalProgress, (pos) => Math.max(0, i - pos) * -CARD_OFFSET);
-                const scale = useTransform(totalProgress, (pos) => 1 - Math.max(0, i - pos) * SCALE_FACTOR);
-                
-                // Fixed opacity range
-                const opacity = useTransform(totalProgress, [i - 0.5, i, i + 0.7], [0.5, 1, 0]);
+      {/* Card Stack Area */}
+      <div className="flex-1 flex flex-col items-center justify-center relative">
+        <h2 className="text-3xl font-bold tracking-tight mb-6">{t("servicesTitle")}</h2>
+        <div className="relative h-[250px] w-full max-w-sm">
+          {services.map((service, i) => {
+            const pos = useTransform(scrollRange, (latest) => latest - i);
 
-                return (
-                  <motion.div
-                    key={service.key}
-                    style={{
-                      position: "absolute",
-                      top: 0,
-                      left: 0,
-                      right: 0,
-                      y,
-                      scale,
-                      opacity,
-                      zIndex: numCards - i,
-                    }}
-                    className="origin-bottom center"
-                  >
-                    <ServiceCard
-                      icon={service.icon}
-                      title={t(`services.${service.key}.title`)}
-                      description={t(`services.${service.key}.description`)}
-                      index={i}
-                    />
-                  </motion.div>
-                );
-              })}
-            </div>
-          </div>
+            const opacity = useTransform(pos, [-1, 0, 0.5, 1], [1, 1, 1, 0]);
+
+            const y = useTransform(pos, (p) => {
+              if (p <= 0) {
+                return -p * CARD_OFFSET;
+              }
+              return -CARD_OFFSET;
+            });
+
+            const scale = useTransform(pos, (p) => {
+              if (p <= 0) {
+                return 1 + p * SCALE_FACTOR;
+              }
+              return 1 - SCALE_FACTOR;
+            });
+
+            return (
+              <motion.div
+                key={service.key}
+                style={{
+                  position: "absolute",
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  opacity,
+                  scale,
+                  y,
+                  zIndex: numCards - i,
+                }}
+                className="origin-top"
+              >
+                <ServiceCard
+                  icon={service.icon}
+                  title={t(`services.${service.key}.title`)}
+                  description={t(`services.${service.key}.description`)}
+                  index={i}
+                />
+              </motion.div>
+            );
+          })}
         </div>
       </div>
     </div>
