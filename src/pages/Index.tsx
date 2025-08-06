@@ -52,7 +52,7 @@ const Index = () => {
         </Badge>
       </div>
 
-      <div className="flex-1 flex flex-col items-center justify-start pt-16 relative">
+      <div className="flex-1 flex flex-col items-center justify-start pt-20 relative">
         <h2 className="text-3xl font-bold tracking-tight mb-6">{t("servicesTitle")}</h2>
         <div className="relative w-full max-w-sm mx-auto h-[220px]">
           {services.map((service, i) => {
