@@ -1,5 +1,6 @@
 import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
+import { useState, useEffect } from "react";
 
 interface ServiceCardProps {
   icon: React.ReactNode;
@@ -11,8 +12,20 @@ interface ServiceCardProps {
 }
 
 export const ServiceCard = ({ icon, title, description, activeIndex, totalServices }: ServiceCardProps) => {
+  const [isBlurred, setIsBlurred] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setIsBlurred(true), 50);
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
-    <Card className="h-36 text-card-foreground bg-white/20 dark:bg-black/20 backdrop-blur-lg border border-white/10 shadow-2xl rounded-3xl">
+    <Card
+      className={cn(
+        "h-36 text-card-foreground bg-white/20 dark:bg-black/20 border border-white/10 shadow-2xl rounded-3xl transition-all",
+        isBlurred && "backdrop-blur-lg"
+      )}
+    >
       <CardHeader className="flex flex-row items-center justify-between p-4 h-full gap-4">
         {/* Left side: Icon and Text */}
         <div className="flex items-center gap-4">
