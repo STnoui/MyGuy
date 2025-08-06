@@ -41,17 +41,17 @@ export const SettingsMenu = () => {
   const listVariants: Variants = {
     open: {
       opacity: 1,
-      transition: { staggerChildren: 0.07, delayChildren: 0.2 }
+      transition: { staggerChildren: 0.07, delayChildren: 0.2 },
     },
     closed: {
       opacity: 0,
-      transition: { staggerChildren: 0.05, staggerDirection: -1, duration: 0.1 }
-    }
+      transition: { staggerChildren: 0.05, staggerDirection: -1, duration: 0.1 },
+    },
   };
 
   const itemVariants: Variants = {
     open: { y: 0, opacity: 1 },
-    closed: { y: 10, opacity: 0 }
+    closed: { y: 10, opacity: 0 },
   };
 
   const activeClass = "bg-black/15 dark:bg-white/15 backdrop-blur-xl text-secondary";
@@ -59,43 +59,27 @@ export const SettingsMenu = () => {
 
   return (
     <div className="md:hidden">
-      <motion.div
-        ref={menuRef}
-        initial={false}
-        animate={isOpen ? "open" : "closed"}
-        className="fixed top-4 right-4 z-50"
-      >
+      <motion.div ref={menuRef} initial={false} animate={isOpen ? "open" : "closed"} className="fixed top-4 right-4 z-50">
         <button
           onClick={() => setIsOpen(!isOpen)}
           className="w-12 h-12 relative flex items-center justify-center focus:outline-none"
           aria-label={t("aria.toggleSettings")}
         >
-          <AnimatePresence mode="wait">
-            {!isOpen && (
-              <motion.div
-                key="settings"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.2 }}
-                className="absolute"
-              >
-                <Settings className="h-6 w-6" />
-              </motion.div>
-            )}
-            {isOpen && (
-              <motion.div
-                key="x"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.2 }}
-                className="absolute"
-              >
-                <X className="h-6 w-6" />
-              </motion.div>
-            )}
-          </AnimatePresence>
+          <motion.div
+            className="absolute"
+            animate={{ opacity: isOpen ? 0 : 1, rotate: isOpen ? -90 : 0 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+          >
+            <Settings className="h-6 w-6" />
+          </motion.div>
+          <motion.div
+            className="absolute"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: isOpen ? 1 : 0, rotate: isOpen ? 0 : 90 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+          >
+            <X className="h-6 w-6" />
+          </motion.div>
         </button>
 
         <AnimatePresence>
@@ -127,18 +111,42 @@ export const SettingsMenu = () => {
                   <>
                     <motion.div variants={itemVariants}>
                       <div className="grid grid-cols-2 gap-2 p-1 bg-black/5 dark:bg-white/5 backdrop-blur-sm rounded-xl">
-                        <Button size="sm" variant="ghost" onClick={() => setTheme('light')} className={cn("h-10 rounded-lg", hoverClass, resolvedTheme === 'light' && activeClass)}>
+                        <Button
+                          size="sm"
+                          variant="ghost"
+                          onClick={() => setTheme("light")}
+                          className={cn("h-10 rounded-lg", hoverClass, resolvedTheme === "light" && activeClass)}
+                        >
                           <Sun className="h-5 w-5" />
                         </Button>
-                        <Button size="sm" variant="ghost" onClick={() => setTheme('dark')} className={cn("h-10 rounded-lg", hoverClass, resolvedTheme === 'dark' && activeClass)}>
+                        <Button
+                          size="sm"
+                          variant="ghost"
+                          onClick={() => setTheme("dark")}
+                          className={cn("h-10 rounded-lg", hoverClass, resolvedTheme === "dark" && activeClass)}
+                        >
                           <Moon className="h-5 w-5" />
                         </Button>
                       </div>
                     </motion.div>
                     <motion.div variants={itemVariants}>
                       <div className="grid grid-cols-2 gap-2 p-1 bg-black/5 dark:bg-white/5 backdrop-blur-sm rounded-xl">
-                        <Button size="sm" variant="ghost" onClick={() => setLanguage('en')} className={cn("h-10 rounded-lg font-bold", hoverClass, language === 'en' && activeClass)}>EN</Button>
-                        <Button size="sm" variant="ghost" onClick={() => setLanguage('bg')} className={cn("h-10 rounded-lg font-bold", hoverClass, language === 'bg' && activeClass)}>BG</Button>
+                        <Button
+                          size="sm"
+                          variant="ghost"
+                          onClick={() => setLanguage("en")}
+                          className={cn("h-10 rounded-lg font-bold", hoverClass, language === "en" && activeClass)}
+                        >
+                          EN
+                        </Button>
+                        <Button
+                          size="sm"
+                          variant="ghost"
+                          onClick={() => setLanguage("bg")}
+                          className={cn("h-10 rounded-lg font-bold", hoverClass, language === "bg" && activeClass)}
+                        >
+                          BG
+                        </Button>
                       </div>
                     </motion.div>
                   </>

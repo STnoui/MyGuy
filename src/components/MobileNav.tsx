@@ -48,58 +48,42 @@ export const MobileNav = () => {
   const navListVariants: Variants = {
     open: {
       opacity: 1,
-      transition: { staggerChildren: 0.07, delayChildren: 0.2 }
+      transition: { staggerChildren: 0.07, delayChildren: 0.2 },
     },
     closed: {
       opacity: 0,
-      transition: { staggerChildren: 0.05, staggerDirection: -1, duration: 0.1 }
-    }
+      transition: { staggerChildren: 0.05, staggerDirection: -1, duration: 0.1 },
+    },
   };
 
   const navItemVariants: Variants = {
     open: { y: 0, opacity: 1 },
-    closed: { y: 10, opacity: 0 }
+    closed: { y: 10, opacity: 0 },
   };
 
   return (
     <div className="md:hidden">
-      <motion.div
-        ref={navRef}
-        initial={false}
-        animate={isOpen ? "open" : "closed"}
-        className="fixed top-4 left-4 z-50"
-      >
+      <motion.div ref={navRef} initial={false} animate={isOpen ? "open" : "closed"} className="fixed top-4 left-4 z-50">
         <button
           onClick={() => setIsOpen(!isOpen)}
           className="w-12 h-12 relative flex items-center justify-center focus:outline-none"
           aria-label={t("aria.toggleNav")}
         >
-          <AnimatePresence mode="wait">
-            {!isOpen && (
-              <motion.div
-                key="menu"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.2 }}
-                className="absolute"
-              >
-                <Menu className="h-7 w-7" />
-              </motion.div>
-            )}
-            {isOpen && (
-              <motion.div
-                key="x"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.2 }}
-                className="absolute"
-              >
-                <X className="h-7 w-7" />
-              </motion.div>
-            )}
-          </AnimatePresence>
+          <motion.div
+            className="absolute"
+            animate={{ opacity: isOpen ? 0 : 1, rotate: isOpen ? -90 : 0 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+          >
+            <Menu className="h-7 w-7" />
+          </motion.div>
+          <motion.div
+            className="absolute"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: isOpen ? 1 : 0, rotate: isOpen ? 0 : 90 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+          >
+            <X className="h-7 w-7" />
+          </motion.div>
         </button>
 
         <AnimatePresence>
@@ -127,10 +111,7 @@ export const MobileNav = () => {
                 className="flex flex-col gap-1 w-full pt-12 p-4"
               >
                 {navItems.map((item) => (
-                  <motion.div
-                    key={item.href}
-                    variants={navItemVariants}
-                  >
+                  <motion.div key={item.href} variants={navItemVariants}>
                     <Button
                       variant="ghost"
                       className={cn(

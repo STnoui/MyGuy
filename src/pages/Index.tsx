@@ -2,7 +2,7 @@ import { Logo } from "@/components/Logo";
 import { ServiceCard } from "@/components/ServiceCard";
 import { useI18n } from "@/hooks/use-i18n";
 import { ShoppingBag, Wallet, Package, Flower2 } from "lucide-react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { useState, useRef, useEffect } from "react";
 import { cn } from "@/lib/utils";
 
@@ -18,7 +18,7 @@ const Index = () => {
   const isScrolling = useRef(false);
 
   useEffect(() => {
-    const timer = setTimeout(() => setIsReady(true), 100);
+    const timer = setTimeout(() => setIsReady(true), 500); // Increased delay for smoother effect
     return () => clearTimeout(timer);
   }, []);
 
@@ -51,13 +51,7 @@ const Index = () => {
     <div className="flex flex-col h-full w-full pt-16 pb-28 overflow-hidden" onWheel={handleWheel}>
       <div className="text-center px-4 pt-8">
         <Logo />
-        <div
-          className={cn(
-            "inline-block text-md font-semibold text-muted-foreground",
-            "bg-neutral-400/10 dark:bg-neutral-800/10 backdrop-blur-md border border-neutral-300/20 dark:border-neutral-700/30 shadow-lg",
-            "rounded-full px-4 py-2"
-          )}
-        >
+        <div className={cn("inline-block text-md font-semibold text-muted-foreground", "rounded-full px-4 py-2")}>
           <span>{t("operatingHours.label")} </span>
           <span className="text-secondary font-bold">{t("operatingHours.time")}</span>
         </div>
@@ -66,9 +60,8 @@ const Index = () => {
       <div className="flex-1 flex flex-col items-center justify-start pt-20 relative">
         <h2 className="text-3xl font-bold tracking-tight mb-6">{t("servicesTitle")}</h2>
         <div className="relative w-full max-w-sm mx-auto h-[220px]">
-          {isReady && services.map((service, i) => {
+          {services.map((service, i) => {
             const stackPosition = (i - activeIndex + numServices) % numServices;
-
             return (
               <motion.div
                 key={service.key}
@@ -77,7 +70,7 @@ const Index = () => {
                   top: stackPosition * CARD_OFFSET,
                   scale: 1 - stackPosition * SCALE_FACTOR,
                   zIndex: numServices - stackPosition,
-                  opacity: stackPosition < VISIBLE_CARDS ? 1 : 0,
+                  opacity: isReady ? (stackPosition < VISIBLE_CARDS ? 1 : 0) : 0,
                 }}
                 transition={{ type: "spring", stiffness: 300, damping: 30 }}
                 style={{
@@ -99,6 +92,15 @@ const Index = () => {
               </motion.div>
             );
           })}
+          <AnimatePresence>
+            {!isReady && (
+              <motion.div
+                className="absolute inset-0 bg-background z-20"
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.5 }}
+              />
+            )}
+          </AnimatePresence>
         </div>
       </div>
     </div>
