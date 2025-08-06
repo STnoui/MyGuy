@@ -44,7 +44,7 @@ const Index = () => {
   };
 
   return (
-    <div className="flex flex-col h-full w-full pt-16 pb-28" onWheel={handleWheel}>
+    <div className="flex flex-col h-full w-full pt-16 pb-28 overflow-hidden" onWheel={handleWheel}>
       <div className="text-center px-4 pt-8">
         <Logo />
         <Badge variant="secondary" className="text-md font-semibold">
@@ -54,7 +54,7 @@ const Index = () => {
 
       <div className="flex-1 flex flex-col items-center justify-start pt-6 relative">
         <h2 className="text-3xl font-bold tracking-tight mb-6">{t("servicesTitle")}</h2>
-        <div className="relative mx-auto max-w-sm h-[200px]">
+        <div className="relative w-full max-w-sm mx-auto h-[200px]">
           {services.map((service, i) => {
             const stackPosition = (i - activeIndex + numServices) % numServices;
 

@@ -1,3 +1,5 @@
+import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+
 interface ServiceCardProps {
   icon: React.ReactNode;
   title: string;
@@ -5,13 +7,18 @@ interface ServiceCardProps {
   index: number;
 }
 
-export const ServiceCard = ({ title, description }: ServiceCardProps) => {
+export const ServiceCard = ({ icon, title, description }: ServiceCardProps) => {
   return (
-    <div className="h-24 w-full bg-red-500 rounded-lg flex items-center justify-center text-white p-4">
-      <div>
-        <h3 className="font-bold text-lg">{title}</h3>
-        <p>{description}</p>
-      </div>
-    </div>
+    <Card className="text-card-foreground bg-black/10 dark:bg-white/10 backdrop-blur-xl shadow-2xl border-0">
+      <CardHeader className="flex flex-row items-center gap-4 p-4">
+        <div className="flex items-center justify-center h-14 w-14 rounded-full bg-secondary/20 text-secondary shrink-0">
+          {icon}
+        </div>
+        <div className="text-left flex-1">
+          <CardTitle className="mb-1 text-lg">{title}</CardTitle>
+          <CardDescription className="text-muted-foreground text-sm">{description}</CardDescription>
+        </div>
+      </CardHeader>
+    </Card>
   );
 };
