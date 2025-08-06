@@ -6,13 +6,13 @@ import { ShoppingBag, Wallet, Package, Flower2 } from "lucide-react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 
-const CARD_OFFSET = 32; // More space between cards
-const SCALE_FACTOR = 0.05;
-const SCROLL_MULTIPLIER = 1.5;
+const CARD_OFFSET = 16; // Vertical distance between stacked cards
+const SCALE_FACTOR = 0.06; // How much smaller each stacked card is
 
 const Index = () => {
   const { t } = useI18n();
   const scrollContainerRef = useRef<HTMLDivElement>(null);
+
   const { scrollYProgress } = useScroll({
     container: scrollContainerRef,
     offset: ["start start", "end end"],
@@ -24,7 +24,8 @@ const Index = () => {
     { icon: <Package className="h-8 w-8" />, key: "parcels" },
     { icon: <Flower2 className="h-8 w-8" />, key: "flowers" },
   ];
-  const numCards = services.length;
+
+  const scrollRange = useTransform(scrollYProgress, [0, 1], [0, services.length]);
 
   return (
     <div className="flex flex-col h-full w-full">
@@ -37,21 +38,19 @@ const Index = () => {
       </div>
 
       {/* Contained Scrollable Area */}
-      <div ref={scrollContainerRef} className="flex-1 overflow-y-auto relative mt-8">
-        {/* This div creates the scrollable space */}
-        <div className="relative h-[250vh]">
-          {/* This div sticks to the viewport */}
-          <div className="sticky top-24 text-center">
-            <h2 className="text-3xl font-bold tracking-tight mb-8">{t("servicesTitle")}</h2>
-            <div className="relative mx-auto max-w-sm h-[200px]">
+      <div ref={scrollContainerRef} className="flex-1 overflow-y-auto relative mt-4 no-scrollbar">
+        {/* This div creates the necessary scroll height */}
+        <div className="relative h-[200vh]">
+          {/* This div sticks to the viewport and centers the card stack */}
+          <div className="sticky top-1/2 -translate-y-1/2 text-center">
+            <h2 className="text-3xl font-bold tracking-tight mb-6">{t("servicesTitle")}</h2>
+            <div className="relative mx-auto max-w-sm h-[120px]">
               {services.map((service, i) => {
-                const totalProgress = useTransform(scrollYProgress, (pos) => pos * (numCards - 1) * SCROLL_MULTIPLIER);
+                const input = [i - 1, i, i + 1];
                 
-                const y = useTransform(totalProgress, (pos) => Math.max(0, i - pos) * -CARD_OFFSET);
-                const scale = useTransform(totalProgress, (pos) => 1 - Math.max(0, i - pos) * SCALE_FACTOR);
-                
-                // Fixed opacity range
-                const opacity = useTransform(totalProgress, [i - 0.5, i, i + 0.7], [0.5, 1, 0]);
+                const y = useTransform(scrollRange, input, [CARD_OFFSET, 0, -50]);
+                const scale = useTransform(scrollRange, input, [1 - SCALE_FACTOR, 1, 0.5]);
+                const opacity = useTransform(scrollRange, [i - 1, i, i + 0.75], [0.4, 1, 0]);
 
                 return (
                   <motion.div
@@ -61,12 +60,13 @@ const Index = () => {
                       top: 0,
                       left: 0,
                       right: 0,
-                      y,
                       scale,
+                      y,
                       opacity,
-                      zIndex: numCards - i,
+                      zIndex: services.length - i,
+                      transformOrigin: "center",
                     }}
-                    className="origin-bottom center"
+                    className="w-full h-full flex items-center justify-center"
                   >
                     <ServiceCard
                       icon={service.icon}
