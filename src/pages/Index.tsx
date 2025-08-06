@@ -2,7 +2,7 @@ import { Logo } from "@/components/Logo";
 import { ServiceCard } from "@/components/ServiceCard";
 import { useI18n } from "@/hooks/use-i18n";
 import { ShoppingBag, Wallet, Package, Flower2 } from "lucide-react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { useState, useRef, useEffect } from "react";
 import { cn } from "@/lib/utils";
 
@@ -14,7 +14,13 @@ const ANIMATION_DURATION_MS = 500;
 const Index = () => {
   const { t } = useI18n();
   const [activeIndex, setActiveIndex] = useState(0);
+  const [isReady, setIsReady] = useState(false);
   const isScrolling = useRef(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setIsReady(true), 400);
+    return () => clearTimeout(timer);
+  }, []);
 
   const services = [
     { icon: <ShoppingBag className="h-8 w-8" />, key: "deliveries" },
@@ -26,7 +32,7 @@ const Index = () => {
 
   const handleWheel = (e: React.WheelEvent) => {
     e.preventDefault();
-    if (isScrolling.current) return;
+    if (isScrolling.current || !isReady) return;
 
     isScrolling.current = true;
 
@@ -54,6 +60,16 @@ const Index = () => {
       <div className="flex-1 flex flex-col items-center justify-start pt-20 relative">
         <h2 className="text-3xl font-bold tracking-tight mb-6">{t("servicesTitle")}</h2>
         <div className="relative w-full max-w-sm mx-auto h-[220px]">
+          <AnimatePresence>
+            {!isReady && (
+              <motion.div
+                className="absolute inset-0 bg-background z-20"
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.5 }}
+              />
+            )}
+          </AnimatePresence>
+          
           {services.map((service, i) => {
             const stackPosition = (i - activeIndex + numServices) % numServices;
             return (

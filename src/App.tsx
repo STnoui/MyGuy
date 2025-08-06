@@ -43,37 +43,31 @@ const AppContent = () => {
   const showCallToAction = location.pathname === "/";
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.5, ease: "easeInOut" }}
-    >
-      <div className="flex flex-col h-screen bg-background">
-        <MobileNav />
-        <SettingsMenu />
-        <main className="flex-1">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={location.pathname + language + theme}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.4 }}
-              className="h-full"
-            >
-              <Routes location={location}>
-                <Route path="/" element={<Index />} />
-                <Route path="/contact" element={<Contact />} />
-                <Route path="/about" element={<About />} />
-                <Route path="/test" element={<Test />} />
-                <Route path="*" element={<NotFound />} />
-              </Routes>
-            </motion.div>
-          </AnimatePresence>
-        </main>
-        {showCallToAction && <CallToAction />}
-      </div>
-    </motion.div>
+    <div className="flex flex-col h-screen bg-background">
+      <MobileNav />
+      <SettingsMenu />
+      <main className="flex-1">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={location.pathname + language + theme}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.4 }}
+            className="h-full"
+          >
+            <Routes location={location}>
+              <Route path="/" element={<Index />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/test" element={<Test />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </motion.div>
+        </AnimatePresence>
+      </main>
+      {showCallToAction && <CallToAction />}
+    </div>
   );
 };
 

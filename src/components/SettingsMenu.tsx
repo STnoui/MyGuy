@@ -59,28 +59,18 @@ export const SettingsMenu = () => {
 
   return (
     <div className="md:hidden">
-      <motion.div ref={menuRef} initial={false} animate={isOpen ? "open" : "closed"} className="fixed top-4 right-4 z-50">
+      <div ref={menuRef} className="fixed top-4 right-4 z-50">
         <button
           onClick={() => setIsOpen(!isOpen)}
           className="w-12 h-12 relative flex items-center justify-center focus:outline-none"
           aria-label={t("aria.toggleSettings")}
         >
-          <motion.div
-            className="absolute"
-            initial={false}
-            animate={{ opacity: isOpen ? 0 : 1, rotate: isOpen ? -90 : 0 }}
-            transition={{ duration: 0.3, ease: "easeInOut" }}
-          >
+          <div className={cn("absolute transition-all duration-300 ease-in-out", isOpen ? "opacity-0 -rotate-90" : "opacity-100 rotate-0")}>
             <Settings className="h-6 w-6" />
-          </motion.div>
-          <motion.div
-            className="absolute"
-            initial={false}
-            animate={{ opacity: isOpen ? 1 : 0, rotate: isOpen ? 0 : 90 }}
-            transition={{ duration: 0.3, ease: "easeInOut" }}
-          >
+          </div>
+          <div className={cn("absolute transition-all duration-300 ease-in-out", isOpen ? "opacity-100 rotate-0" : "opacity-0 rotate-90")}>
             <X className="h-6 w-6" />
-          </motion.div>
+          </div>
         </button>
 
         <AnimatePresence>
@@ -156,7 +146,7 @@ export const SettingsMenu = () => {
             </motion.div>
           )}
         </AnimatePresence>
-      </motion.div>
+      </div>
     </div>
   );
 };
