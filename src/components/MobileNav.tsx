@@ -66,15 +66,10 @@ export const MobileNav = () => {
       <div ref={navRef} className="fixed top-4 left-4 z-50">
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="w-12 h-12 relative flex items-center justify-center focus:outline-none"
+          className="w-12 h-12 flex items-center justify-center focus:outline-none"
           aria-label={t("aria.toggleNav")}
         >
-          <div className={cn("absolute transition-all duration-300 ease-in-out", isOpen ? "opacity-0 -rotate-90" : "opacity-100 rotate-0")}>
-            <Menu className="h-7 w-7" />
-          </div>
-          <div className={cn("absolute transition-all duration-300 ease-in-out", isOpen ? "opacity-100 rotate-0" : "opacity-0 rotate-90")}>
-            <X className="h-7 w-7" />
-          </div>
+          {isOpen ? <X className="h-7 w-7" /> : <Menu className="h-7 w-7" />}
         </button>
 
         <AnimatePresence>

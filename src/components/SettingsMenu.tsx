@@ -62,15 +62,10 @@ export const SettingsMenu = () => {
       <div ref={menuRef} className="fixed top-4 right-4 z-50">
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="w-12 h-12 relative flex items-center justify-center focus:outline-none"
+          className="w-12 h-12 flex items-center justify-center focus:outline-none"
           aria-label={t("aria.toggleSettings")}
         >
-          <div className={cn("absolute transition-all duration-300 ease-in-out", isOpen ? "opacity-0 -rotate-90" : "opacity-100 rotate-0")}>
-            <Settings className="h-6 w-6" />
-          </div>
-          <div className={cn("absolute transition-all duration-300 ease-in-out", isOpen ? "opacity-100 rotate-0" : "opacity-0 rotate-90")}>
-            <X className="h-6 w-6" />
-          </div>
+          {isOpen ? <X className="h-6 w-6" /> : <Settings className="h-6 w-6" />}
         </button>
 
         <AnimatePresence>
