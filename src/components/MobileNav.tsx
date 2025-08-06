@@ -35,28 +35,29 @@ export const MobileNav = () => {
     setIsOpen(false);
   };
 
-  const navListVariants = {
-    visible: {
-      opacity: 1,
-      transition: {
-        when: "beforeChildren",
-        staggerChildren: 0.07,
-        delayChildren: 0.1,
-      },
-    },
+  const navVariants = {
     hidden: {
       opacity: 0,
       transition: {
-        when: "afterChildren",
         staggerChildren: 0.05,
         staggerDirection: -1,
+        when: "afterChildren",
+        duration: 0.1,
+      },
+    },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        delayChildren: 0.1,
+        when: "beforeChildren",
       },
     },
   };
 
-  const navItemVariants = {
-    visible: { y: 0, opacity: 1 },
-    hidden: { y: 10, opacity: 0 },
+  const itemVariants = {
+    hidden: { opacity: 0, y: -10 },
+    visible: { opacity: 1, y: 0 },
   };
 
   return (
@@ -64,43 +65,52 @@ export const MobileNav = () => {
       <motion.div
         ref={navRef}
         layout
-        transition={{ type: "spring", stiffness: 400, damping: 35 }}
-        className={`fixed top-4 left-4 z-50 overflow-hidden bg-background/60 backdrop-blur-2xl border border-white/10 shadow-2xl
-          ${isOpen ? "w-56 rounded-3xl" : "w-12 h-12 rounded-full"}`}
+        transition={{ type: "spring", stiffness: 500, damping: 40 }}
+        style={{
+          width: isOpen ? "224px" : "48px",
+          height: isOpen ? "auto" : "48px",
+        }}
+        className="fixed top-4 left-4 z-50 overflow-hidden rounded-full bg-black/5 dark:bg-white/10 backdrop-blur-3xl border border-white/10 shadow-2xl"
       >
-        <div className="w-full h-full flex flex-col">
-          <button
-            onClick={() => setIsOpen(!isOpen)}
-            className="w-full h-12 flex-shrink-0 flex items-center justify-center focus:outline-none"
-            aria-label="Toggle navigation menu"
-          >
-            <Menu className="h-7 w-7" />
-          </button>
+        <AnimatePresence>
+          {!isOpen && (
+            <motion.button
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.1 }}
+              onClick={() => setIsOpen(true)}
+              className="w-full h-full flex items-center justify-center focus:outline-none"
+              aria-label="Open navigation menu"
+            >
+              <Menu className="h-7 w-7" />
+            </motion.button>
+          )}
+        </AnimatePresence>
 
-          <AnimatePresence>
-            {isOpen && (
-              <motion.nav
-                variants={navListVariants}
-                initial="hidden"
-                animate="visible"
-                exit="hidden"
-                className="flex flex-col gap-1 w-full px-4 pb-4"
-              >
-                {navItems.map((item) => (
-                  <motion.div key={item.href} variants={navItemVariants}>
-                    <Button
-                      variant="ghost"
-                      className="w-full justify-start text-md py-3"
-                      onClick={() => handleNavigate(item.href)}
-                    >
-                      {item.label}
-                    </Button>
-                  </motion.div>
-                ))}
-              </motion.nav>
-            )}
-          </AnimatePresence>
-        </div>
+        <AnimatePresence>
+          {isOpen && (
+            <motion.nav
+              variants={navVariants}
+              initial="hidden"
+              animate="visible"
+              exit="hidden"
+              className="flex flex-col gap-1 w-full p-4"
+            >
+              {navItems.map((item) => (
+                <motion.div key={item.href} variants={itemVariants}>
+                  <Button
+                    variant="ghost"
+                    className="w-full justify-start text-md py-3"
+                    onClick={() => handleNavigate(item.href)}
+                  >
+                    {item.label}
+                  </Button>
+                </motion.div>
+              ))}
+            </motion.nav>
+          )}
+        </AnimatePresence>
       </motion.div>
     </div>
   );
