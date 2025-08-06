@@ -65,9 +65,9 @@ export const SettingsMenu = () => {
           <AnimatePresence mode="wait" initial={false}>
             <motion.div
               key={isOpen ? "x" : "settings"}
-              initial={{ opacity: 0, rotate: -90 }}
-              animate={{ opacity: 1, rotate: 0 }}
-              exit={{ opacity: 0, rotate: 90 }}
+              initial={{ opacity: 0, scale: 0.5 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.5 }}
               transition={{ duration: 0.2, ease: "easeInOut" }}
               className="absolute"
             >

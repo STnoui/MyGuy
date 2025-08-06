@@ -16,6 +16,8 @@ import { useI18n } from "./hooks/use-i18n";
 import { MobileNav } from "./components/MobileNav";
 import { SettingsMenu } from "./components/SettingsMenu";
 import { useTheme } from "next-themes";
+import { useState, useEffect } from "react";
+import { Loader } from "./components/Loader";
 
 const queryClient = new QueryClient();
 
@@ -39,40 +41,45 @@ const AppContent = () => {
   const location = useLocation();
   const { language } = useI18n();
   const { theme } = useTheme();
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setIsLoading(false), 500);
+    return () => clearTimeout(timer);
+  }, []);
 
   const showCallToAction = location.pathname === "/";
 
   return (
-    <motion.div
-      className="flex flex-col h-screen bg-background"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.5, ease: "easeInOut" }}
-    >
-      <MobileNav />
-      <SettingsMenu />
-      <main className="flex-1">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={location.pathname + language + theme}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.4 }}
-            className="h-full"
-          >
-            <Routes location={location}>
-              <Route path="/" element={<Index />} />
-              <Route path="/contact" element={<Contact />} />
-              <Route path="/about" element={<About />} />
-              <Route path="/test" element={<Test />} />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </motion.div>
-        </AnimatePresence>
-      </main>
-      {showCallToAction && <CallToAction />}
-    </motion.div>
+    <>
+      <AnimatePresence>{isLoading && <Loader />}</AnimatePresence>
+
+      <div className="flex flex-col h-screen bg-background">
+        <MobileNav />
+        <SettingsMenu />
+        <main className="flex-1">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={location.pathname + language + theme}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.4 }}
+              className="h-full"
+            >
+              <Routes location={location}>
+                <Route path="/" element={<Index />} />
+                <Route path="/contact" element={<Contact />} />
+                <Route path="/about" element={<About />} />
+                <Route path="/test" element={<Test />} />
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </motion.div>
+          </AnimatePresence>
+        </main>
+        {showCallToAction && <CallToAction />}
+      </div>
+    </>
   );
 };
 
