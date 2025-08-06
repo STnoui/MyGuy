@@ -21,10 +21,10 @@ export const CallToAction = () => {
           className={cn(
             "pointer-events-auto inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
             "bg-primary text-primary-foreground hover:bg-primary/90",
-            "h-12 px-8 text-xl font-bold rounded-2xl"
+            "h-14 px-10 text-2xl font-bold rounded-2xl"
           )}
         >
-          <Phone className="mr-3 h-6 w-6" />
+          <Phone className="mr-4 h-7 w-7" />
           {t("orderButton")}
         </a>
       </motion.div>

@@ -62,7 +62,7 @@ export const SettingsMenu = () => {
       <div ref={menuRef} className="fixed top-4 right-4 z-50">
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="w-12 h-12 flex items-center justify-center focus:outline-none"
+          className="w-12 h-12 relative z-10 flex items-center justify-center focus:outline-none"
           aria-label={t("aria.toggleSettings")}
         >
           {isOpen ? <X className="h-6 w-6" /> : <Settings className="h-6 w-6" />}
