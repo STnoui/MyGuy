@@ -29,7 +29,7 @@ export const translations = {
       callUs: "Call us directly",
     },
     about: {
-      title: "About MyGuy",
+      titlePrefix: "About ",
       p1: "MyGuy is your reliable partner for all night-time needs in Sofia. We started with a simple idea: to provide a fast, friendly, and dependable delivery service when most of the city is asleep.",
       p2: "Whether you need a late-night snack, medicine from the pharmacy, or a special delivery to surprise a loved one, we are here for you from 20:00 to 06:00 every night.",
     },
@@ -86,7 +86,7 @@ export const translations = {
       callUs: "Обадете ни се директно",
     },
     about: {
-      title: "За MyGuy",
+      titlePrefix: "За ",
       p1: "MyGuy е вашият надежден партньор за всички нощни нужди в София. Започнахме с проста идея: да предоставим бърза, приятелска и надеждна услуга за доставка, когато по-голямата част от града спи.",
       p2: "Независимо дали имате нужда от късна закуска, лекарства от аптеката или специална доставка, за да изненадате любим човек, ние сме тук за вас от 20:00 до 06:00 всяка вечер.",
     },
