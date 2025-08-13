@@ -56,10 +56,10 @@ const AppContent = () => {
       <NativeThemeHandler />
 
       <motion.div
-        className="contents"
+        className="flex-1 flex flex-col overflow-hidden"
         initial={{ opacity: 0 }}
         animate={{ opacity: isLoading ? 0 : 1 }}
-        transition={{ duration: 0.8, ease: "easeInOut", delay: 0.4 }}
+        transition={{ duration: 0.5, delay: 0.8 }}
       >
         <MobileNav />
         <SettingsMenu />

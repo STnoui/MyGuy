@@ -95,29 +95,17 @@ const Index = () => {
         <div className="text-center px-4 pt-8">
           <motion.div
             layoutId="logo-container"
-            layout
-            transition={{ layout: { duration: 0.8, ease: [0.645, 0.045, 0.355, 1] } }}
+            transition={{ type: "spring", stiffness: 300, damping: 30 }}
           >
             <Logo />
           </motion.div>
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.5, duration: 0.4 }}
-          >
-            <div className={cn("inline-block text-md font-semibold text-muted-foreground", "rounded-full px-4 py-2")}>
-              <span>{t("operatingHours.label")} </span>
-              <span className="text-secondary font-bold">{t("operatingHours.time")}</span>
-            </div>
-          </motion.div>
+          <div className={cn("inline-block text-md font-semibold text-muted-foreground", "rounded-full px-4 py-2")}>
+            <span>{t("operatingHours.label")} </span>
+            <span className="text-secondary font-bold">{t("operatingHours.time")}</span>
+          </div>
         </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.6, duration: 0.5 }}
-          className="flex-1 flex flex-col items-center justify-start pt-20 relative"
-        >
+        <div className="flex-1 flex flex-col items-center justify-start pt-20 relative">
           <h2 className="text-3xl font-bold tracking-tight mb-6">{t("servicesTitle")}</h2>
           <div className="relative w-full max-w-[19.5rem] mx-auto h-[250px]">
             <AnimatePresence>
@@ -162,7 +150,7 @@ const Index = () => {
               );
             })}
           </div>
-        </motion.div>
+        </div>
       </div>
     </div>
   );

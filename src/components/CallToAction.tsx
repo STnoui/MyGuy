@@ -12,12 +12,9 @@ export const CallToAction = () => {
     <div className="fixed bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-background to-transparent pointer-events-none flex justify-center">
       <motion.a
         href={`tel:${phoneNumber}`}
-        initial={{ opacity: 0, y: 20 }}
-        animate={{
-          opacity: 1,
-          y: 0,
-        }}
-        transition={{ duration: 0.5, delay: 0.6 }}
+        initial={{ y: 40 }}
+        animate={{ y: 0 }}
+        transition={{ type: "spring", stiffness: 200, damping: 25, delay: 0.2 }}
         whileTap={{ scale: 0.97 }}
         className={cn(
           "pointer-events-auto inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
