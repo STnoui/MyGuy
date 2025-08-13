@@ -87,7 +87,7 @@ export const MobileNav = ({ activeMenu, setActiveMenu }: MobileNavProps) => {
             animate={{ height: "45vh" }}
             exit={{ height: 0 }}
             transition={{ type: "spring", stiffness: 400, damping: 40 }}
-            className="fixed top-0 left-0 w-full bg-background/50 backdrop-blur-lg z-40 overflow-auto no-scrollbar"
+            className="fixed top-0 left-0 w-full bg-background/80 backdrop-blur-lg z-40 overflow-auto no-scrollbar rounded-b-3xl"
           >
             <motion.nav
               variants={listVariants}
@@ -104,7 +104,7 @@ export const MobileNav = ({ activeMenu, setActiveMenu }: MobileNavProps) => {
                   <Button
                     variant="ghost"
                     className={cn(
-                      "w-full justify-center text-2xl py-8 rounded-xl focus-visible:ring-secondary",
+                      "w-full justify-center text-2xl py-8 rounded-xl focus-visible:outline-none focus-visible:ring-0",
                       location.pathname === item.href
                         ? "bg-accent text-secondary"
                         : "hover:bg-accent"

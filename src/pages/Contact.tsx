@@ -15,7 +15,7 @@ const Contact = () => {
   return (
     <div className="h-full overflow-y-auto">
       <div className="container mx-auto px-4 pt-28 pb-12">
-        <Card className="max-w-lg mx-auto bg-card/50 backdrop-blur-2xl border border-border/50 shadow-2xl rounded-3xl">
+        <Card className="max-w-lg mx-auto bg-white/80 dark:bg-black/50 backdrop-blur-2xl border border-black/[.08] dark:border-white/[.08] shadow-[0_4px_12px_rgba(0,0,0,0.08)] dark:shadow-2xl rounded-3xl">
           <CardHeader className="text-center">
             <CardTitle className="text-3xl font-bold">{t("contact.title")}</CardTitle>
             <CardDescription className="text-foreground/80">{t("contact.description")}</CardDescription>
