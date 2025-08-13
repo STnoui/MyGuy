@@ -82,7 +82,7 @@ const Index = () => {
   return (
     <div className="h-full">
       <div
-        className="flex flex-col h-full w-full pt-4 pb-28 overflow-hidden"
+        className="flex flex-col h-full w-full pt-[5vh] pb-28 overflow-hidden"
         onWheel={isReady ? handleWheel : undefined}
         onTouchStart={isReady ? handleTouchStart : undefined}
         onTouchMove={isReady ? handleTouchMove : undefined}
