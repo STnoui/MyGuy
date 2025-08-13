@@ -5,7 +5,11 @@ import { cn } from "@/lib/utils";
 
 const phoneNumber = "+359888309898";
 
-export const CallToAction = () => {
+interface CallToActionProps {
+  isLoading: boolean;
+}
+
+export const CallToAction = ({ isLoading }: CallToActionProps) => {
   const { t } = useI18n();
 
   return (
@@ -13,8 +17,11 @@ export const CallToAction = () => {
       <motion.a
         href={`tel:${phoneNumber}`}
         initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.5 }}
+        animate={{
+          opacity: isLoading ? 0 : 1,
+          y: isLoading ? 20 : 0,
+        }}
+        transition={{ duration: 0.5, delay: 1.0 }}
         whileTap={{ scale: 0.97 }}
         className={cn(
           "pointer-events-auto inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",

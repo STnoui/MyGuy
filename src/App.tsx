@@ -45,7 +45,7 @@ const AppContent = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 1200); // Increased to 1.2s for the new animation
+    }, 1200);
 
     return () => clearTimeout(timer);
   }, []);
@@ -54,40 +54,31 @@ const AppContent = () => {
     <div className="flex flex-col h-screen bg-background">
       <AnimatePresence>{isLoading && <Loader />}</AnimatePresence>
       <NativeThemeHandler />
-      
-      <AnimatePresence>
-        {!isLoading && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="contents"
-          >
-            <MobileNav />
-            <SettingsMenu />
-            <main className="flex-1 h-full overflow-hidden">
-              <AnimatePresence mode="wait" initial={false}>
-                <motion.div
-                  key={`${location.pathname}-${language}`}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.3, ease: "easeInOut" }}
-                  className="h-full"
-                >
-                  <Routes location={location}>
-                    <Route path="/" element={<Index />} />
-                    <Route path="/contact" element={<Contact />} />
-                    <Route path="/about" element={<About />} />
-                    <Route path="*" element={<NotFound />} />
-                  </Routes>
-                </motion.div>
-              </AnimatePresence>
-            </main>
-            {showCallToAction && <CallToAction />}
-          </motion.div>
-        )}
-      </AnimatePresence>
+
+      <div className="contents" style={{ opacity: isLoading ? 0 : 1, transition: "opacity .5s .8s" }}>
+        <MobileNav />
+        <SettingsMenu />
+        <main className="flex-1 h-full overflow-hidden">
+          <AnimatePresence mode="wait" initial={false}>
+            <motion.div
+              key={`${location.pathname}-${language}`}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3, ease: "easeInOut" }}
+              className="h-full"
+            >
+              <Routes location={location}>
+                <Route path="/" element={<Index isLoading={isLoading} />} />
+                <Route path="/contact" element={<Contact />} />
+                <Route path="/about" element={<About />} />
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </motion.div>
+          </AnimatePresence>
+        </main>
+        {showCallToAction && <CallToAction isLoading={isLoading} />}
+      </div>
     </div>
   );
 };

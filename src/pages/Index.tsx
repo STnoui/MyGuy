@@ -11,16 +11,20 @@ const SCALE_FACTOR = 0.06;
 const VISIBLE_CARDS = 4;
 const ANIMATION_DURATION_MS = 500;
 
-const Index = () => {
+interface IndexProps {
+  isLoading: boolean;
+}
+
+const Index = ({ isLoading }: IndexProps) => {
   const { t } = useI18n();
   const [activeIndex, setActiveIndex] = useState(0);
   const [isReady, setIsReady] = useState(false);
-  const [isAnimationEnabled, setIsAnimationEnabled] = useState(false);
   const isScrolling = useRef(false);
   const touchStartY = useRef(0);
   const isSwiping = useRef(false);
 
   useEffect(() => {
+    // This pre-warming logic now runs while the loader is visible
     const primeTimer = setTimeout(() => {
       setActiveIndex(1);
       const resetTimer = setTimeout(() => {
@@ -30,12 +34,7 @@ const Index = () => {
       return () => clearTimeout(resetTimer);
     }, 100);
 
-    const animationEnableTimer = setTimeout(() => setIsAnimationEnabled(true), 600);
-
-    return () => {
-      clearTimeout(primeTimer);
-      clearTimeout(animationEnableTimer);
-    };
+    return () => clearTimeout(primeTimer);
   }, []);
 
   const services = [
@@ -92,13 +91,17 @@ const Index = () => {
     <div className="h-full">
       <div
         className="flex flex-col h-full w-full pt-16 pb-28 overflow-hidden"
-        onWheel={isAnimationEnabled ? handleWheel : undefined}
-        onTouchStart={isAnimationEnabled ? handleTouchStart : undefined}
-        onTouchMove={isAnimationEnabled ? handleTouchMove : undefined}
-        onTouchEnd={isAnimationEnabled ? handleTouchEnd : undefined}
+        onWheel={!isLoading ? handleWheel : undefined}
+        onTouchStart={!isLoading ? handleTouchStart : undefined}
+        onTouchMove={!isLoading ? handleTouchMove : undefined}
+        onTouchEnd={!isLoading ? handleTouchEnd : undefined}
       >
         <div className="text-center px-4 pt-8">
-          <motion.div layoutId="logo-container">
+          <motion.div
+            layoutId="logo-container"
+            layout
+            transition={{ duration: 0.8, ease: [0.645, 0.045, 0.355, 1] }}
+          >
             <Logo />
           </motion.div>
           <motion.div
