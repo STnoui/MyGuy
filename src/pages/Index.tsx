@@ -1,7 +1,7 @@
 import { Logo } from "@/components/Logo";
 import { ServiceCard } from "@/components/ServiceCard";
 import { useI18n } from "@/hooks/use-i18n";
-import { ShoppingBag, Wallet, Package, Flower2 } from "lucide-react";
+import { ShoppingBag, Wallet, Package, Flower2, ChevronDown } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useRef, useEffect } from "react";
 import { cn } from "@/lib/utils";
@@ -15,12 +15,12 @@ const Index = () => {
   const { t } = useI18n();
   const [activeIndex, setActiveIndex] = useState(0);
   const [isReady, setIsReady] = useState(false);
+  const [hasScrolled, setHasScrolled] = useState(false);
   const isScrolling = useRef(false);
   const touchStartY = useRef(0);
   const isSwiping = useRef(false);
 
   useEffect(() => {
-    // This pre-warming logic now runs while the loader is visible
     const primeTimer = setTimeout(() => {
       setActiveIndex(1);
       const resetTimer = setTimeout(() => {
@@ -41,18 +41,24 @@ const Index = () => {
   ];
   const numServices = services.length;
 
-  const handleWheel = (e: React.WheelEvent) => {
-    e.preventDefault();
+  const handleScroll = (direction: 'up' | 'down') => {
     if (isScrolling.current) return;
     isScrolling.current = true;
-    if (e.deltaY > 0) {
-      setActiveIndex((prev) => (prev + 1) % numServices);
-    } else {
+    setHasScrolled(true);
+
+    if (direction === 'down') {
       setActiveIndex((prev) => (prev - 1 + numServices) % numServices);
+    } else {
+      setActiveIndex((prev) => (prev + 1) % numServices);
     }
     setTimeout(() => {
       isScrolling.current = false;
     }, ANIMATION_DURATION_MS);
+  };
+
+  const handleWheel = (e: React.WheelEvent) => {
+    e.preventDefault();
+    handleScroll(e.deltaY > 0 ? 'down' : 'up');
   };
 
   const handleTouchStart = (e: React.TouchEvent) => {
@@ -66,16 +72,8 @@ const Index = () => {
     const deltaY = touchStartY.current - touchEndY;
     const swipeThreshold = 50;
     if (Math.abs(deltaY) > swipeThreshold) {
-      isScrolling.current = true;
       isSwiping.current = true;
-      if (deltaY > 0) {
-        setActiveIndex((prev) => (prev + 1) % numServices);
-      } else {
-        setActiveIndex((prev) => (prev - 1 + numServices) % numServices);
-      }
-      setTimeout(() => {
-        isScrolling.current = false;
-      }, ANIMATION_DURATION_MS);
+      handleScroll(deltaY > 0 ? 'up' : 'down');
     }
   };
 
@@ -150,6 +148,20 @@ const Index = () => {
               );
             })}
           </div>
+          <AnimatePresence>
+            {isReady && !hasScrolled && (
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 10 }}
+                transition={{ delay: 0.5 }}
+                className="absolute bottom-4 flex flex-col items-center text-muted-foreground"
+              >
+                <p className="text-xs">Scroll</p>
+                <ChevronDown className="w-4 h-4" />
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       </div>
     </div>

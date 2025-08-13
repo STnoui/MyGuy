@@ -19,7 +19,7 @@ export const CallToAction = () => {
         className={cn(
           "pointer-events-auto inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors disabled:pointer-events-none disabled:opacity-50",
           "bg-primary text-primary-foreground hover:bg-primary/90",
-          "h-16 px-10 text-2xl font-bold rounded-2xl w-full max-w-sm border border-primary-foreground/20",
+          "min-h-16 py-4 px-10 text-2xl font-bold rounded-2xl w-full max-w-sm border border-primary-foreground/20",
           "focus-visible:outline-none"
         )}
       >

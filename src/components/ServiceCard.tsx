@@ -14,7 +14,7 @@ export const ServiceCard = ({ icon, title, description, activeIndex, totalServic
   return (
     <Card
       className={cn(
-        "h-48 text-card-foreground transition-all",
+        "min-h-48 text-card-foreground transition-all",
         "bg-white/60 dark:bg-[rgba(18,20,26,0.6)] backdrop-blur-xl",
         "border border-black/[.06] dark:border-white/[.08]",
         "shadow-[0_4px_12px_rgba(0,0,0,0.08)] dark:shadow-2xl rounded-2xl"
@@ -27,7 +27,7 @@ export const ServiceCard = ({ icon, title, description, activeIndex, totalServic
           </div>
           <div className="text-left flex-1">
             <CardTitle className="mb-1 text-lg">{title}</CardTitle>
-            <CardDescription className="text-slate-600 dark:text-slate-300 text-sm h-10 overflow-hidden">
+            <CardDescription className="text-slate-600 dark:text-slate-300 text-sm">
               {description}
             </CardDescription>
           </div>
