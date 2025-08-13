@@ -15,7 +15,7 @@ const logoVariants: Variants = {
     transition: {
       delay: 0.2,
       duration: 0.6,
-      ease: [0.6, 0.05, -0.01, 0.9], // easeInOutCubic
+      ease: [0.645, 0.045, 0.355, 1], // Corrected easeInOutCubic
     },
   },
 };
