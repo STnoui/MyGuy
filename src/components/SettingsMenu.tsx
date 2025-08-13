@@ -48,7 +48,7 @@ export const SettingsMenu = ({ activeMenu, setActiveMenu }: SettingsMenuProps) =
   const hoverClass = "hover:bg-accent";
 
   return (
-    <div ref={settingsContainerRef} className="md:hidden fixed top-[5%] right-4 z-50">
+    <div ref={settingsContainerRef} className="md:hidden fixed top-0 right-0 bottom-0 z-50 pointer-events-none">
       <AnimatePresence>
         {!isOtherMenuOpen && (
           <motion.button
@@ -56,7 +56,7 @@ export const SettingsMenu = ({ activeMenu, setActiveMenu }: SettingsMenuProps) =
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.9 }}
             onClick={() => setActiveMenu(isOpen ? null : 'settings')}
-            className="w-12 h-12 flex items-center justify-center focus:outline-none glass-effect rounded-full shadow-lg"
+            className="pointer-events-auto absolute top-[5%] right-4 w-12 h-12 flex items-center justify-center focus:outline-none"
             aria-label={t("aria.toggleSettings")}
             style={{ WebkitTapHighlightColor: "transparent" }}
           >
@@ -79,20 +79,20 @@ export const SettingsMenu = ({ activeMenu, setActiveMenu }: SettingsMenuProps) =
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ width: 0, height: 0, opacity: 0 }}
-            animate={{ width: "200px", height: "auto", opacity: 1 }}
-            exit={{ width: 0, height: 0, opacity: 0, transition: { duration: 0.2 } }}
-            transition={{ type: "spring", stiffness: 400, damping: 30 }}
-            className="absolute top-0 right-0 overflow-hidden glass-effect shadow-2xl rounded-2xl"
+            initial={{ x: "100%" }}
+            animate={{ x: "0%" }}
+            exit={{ x: "100%" }}
+            transition={{ type: "spring", stiffness: 400, damping: 40 }}
+            className="pointer-events-auto absolute top-0 right-0 h-full w-2/3 max-w-xs glass-effect shadow-2xl"
           >
             <motion.div
               variants={listVariants}
               initial="closed"
               animate="open"
               exit="closed"
-              className="flex flex-col items-center gap-4 w-full p-4 pt-16 pb-4"
+              className="flex flex-col items-center gap-8 w-full p-4 pt-24 h-full"
             >
-              <motion.p variants={itemVariants} className="text-xl font-bold text-foreground/80 mb-2 text-center">
+              <motion.p variants={itemVariants} className="text-2xl font-bold text-foreground/80 text-center">
                 {t("settings.title")}
               </motion.p>
               {mounted && (
@@ -104,7 +104,7 @@ export const SettingsMenu = ({ activeMenu, setActiveMenu }: SettingsMenuProps) =
                         size="sm"
                         variant="ghost"
                         onClick={() => setTheme("light")}
-                        className={cn("h-12 rounded-lg focus:ring-0 focus:ring-offset-0 focus-visible:outline-none focus-visible:ring-0", hoverClass, resolvedTheme === "light" && activeClass)}
+                        className={cn("h-12 rounded-lg focus:ring-0 focus:ring-offset-0 focus-visible:outline-none focus-visible:ring-0 focus-visible:shadow-none", hoverClass, resolvedTheme === "light" && activeClass)}
                         style={{ WebkitTapHighlightColor: "transparent" }}
                       >
                         <Sun className="h-5 w-5" />
@@ -113,7 +113,7 @@ export const SettingsMenu = ({ activeMenu, setActiveMenu }: SettingsMenuProps) =
                         size="sm"
                         variant="ghost"
                         onClick={() => setTheme("dark")}
-                        className={cn("h-12 rounded-lg focus:ring-0 focus:ring-offset-0 focus-visible:outline-none focus-visible:ring-0", hoverClass, resolvedTheme === "dark" && activeClass)}
+                        className={cn("h-12 rounded-lg focus:ring-0 focus:ring-offset-0 focus-visible:outline-none focus-visible:ring-0 focus-visible:shadow-none", hoverClass, resolvedTheme === "dark" && activeClass)}
                         style={{ WebkitTapHighlightColor: "transparent" }}
                       >
                         <Moon className="h-5 w-5" />
@@ -127,7 +127,7 @@ export const SettingsMenu = ({ activeMenu, setActiveMenu }: SettingsMenuProps) =
                         size="sm"
                         variant="ghost"
                         onClick={() => setLanguage("en")}
-                        className={cn("h-12 rounded-lg font-bold focus:ring-0 focus:ring-offset-0 focus-visible:outline-none focus-visible:ring-0", hoverClass, language === "en" && activeClass)}
+                        className={cn("h-12 rounded-lg font-bold focus:ring-0 focus:ring-offset-0 focus-visible:outline-none focus-visible:ring-0 focus-visible:shadow-none", hoverClass, language === "en" && activeClass)}
                         style={{ WebkitTapHighlightColor: "transparent" }}
                       >
                         EN
@@ -136,7 +136,7 @@ export const SettingsMenu = ({ activeMenu, setActiveMenu }: SettingsMenuProps) =
                         size="sm"
                         variant="ghost"
                         onClick={() => setLanguage("bg")}
-                        className={cn("h-12 rounded-lg font-bold focus:ring-0 focus:ring-offset-0 focus-visible:outline-none focus-visible:ring-0", hoverClass, language === "bg" && activeClass)}
+                        className={cn("h-12 rounded-lg font-bold focus:ring-0 focus:ring-offset-0 focus-visible:outline-none focus-visible:ring-0 focus-visible:shadow-none", hoverClass, language === "bg" && activeClass)}
                         style={{ WebkitTapHighlightColor: "transparent" }}
                       >
                         BG

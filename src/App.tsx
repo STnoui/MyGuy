@@ -46,7 +46,7 @@ const AppContent = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 1200);
+    }, 1000); // Adjusted for a 1s animation
 
     return () => clearTimeout(timer);
   }, []);
@@ -58,9 +58,9 @@ const AppContent = () => {
 
       <motion.div
         className="flex-1 flex flex-col overflow-hidden"
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: isLoading ? 0 : 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.8, ease: [0.645, 0.045, 0.355, 1] }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: isLoading ? 0 : 1 }}
+        transition={{ duration: 0.4, delay: 0.8, ease: [0.645, 0.045, 0.355, 1] }}
       >
         <MobileNav activeMenu={activeMenu} setActiveMenu={setActiveMenu} />
         <SettingsMenu activeMenu={activeMenu} setActiveMenu={setActiveMenu} />

@@ -52,7 +52,7 @@ export const MobileNav = ({ activeMenu, setActiveMenu }: MobileNavProps) => {
   };
 
   return (
-    <div ref={navContainerRef} className="md:hidden fixed top-[5%] left-4 z-50">
+    <div ref={navContainerRef} className="md:hidden fixed top-0 left-0 bottom-0 z-50 pointer-events-none">
       <AnimatePresence>
         {!isOtherMenuOpen && (
           <motion.button
@@ -60,7 +60,7 @@ export const MobileNav = ({ activeMenu, setActiveMenu }: MobileNavProps) => {
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.9 }}
             onClick={() => setActiveMenu(isOpen ? null : 'nav')}
-            className="w-12 h-12 flex items-center justify-center focus:outline-none glass-effect rounded-full shadow-lg"
+            className="pointer-events-auto absolute top-[5%] left-4 w-12 h-12 flex items-center justify-center focus:outline-none"
             aria-label={t("aria.toggleNav")}
             style={{ WebkitTapHighlightColor: "transparent" }}
           >
@@ -83,20 +83,20 @@ export const MobileNav = ({ activeMenu, setActiveMenu }: MobileNavProps) => {
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ width: 0, height: 0, opacity: 0 }}
-            animate={{ width: "224px", height: "auto", opacity: 1 }}
-            exit={{ width: 0, height: 0, opacity: 0, transition: { duration: 0.2 } }}
-            transition={{ type: "spring", stiffness: 400, damping: 30 }}
-            className="absolute top-0 left-0 overflow-hidden glass-effect shadow-2xl rounded-2xl"
+            initial={{ x: "-100%" }}
+            animate={{ x: "0%" }}
+            exit={{ x: "-100%" }}
+            transition={{ type: "spring", stiffness: 400, damping: 40 }}
+            className="pointer-events-auto absolute top-0 left-0 h-full w-2/3 max-w-xs glass-effect shadow-2xl"
           >
             <motion.nav
               variants={listVariants}
               initial="closed"
               animate="open"
               exit="closed"
-              className="flex flex-col items-center gap-4 w-full p-4 pt-16 pb-4"
+              className="flex flex-col items-center gap-4 w-full p-4 pt-24 h-full"
             >
-              <motion.p variants={itemVariants} className="text-xl font-bold text-foreground/80 mb-2 text-center">
+              <motion.p variants={itemVariants} className="text-2xl font-bold text-foreground/80 mb-4 text-center">
                 Menu
               </motion.p>
               {navItems.map((item) => (
@@ -104,9 +104,9 @@ export const MobileNav = ({ activeMenu, setActiveMenu }: MobileNavProps) => {
                   <Button
                     variant="ghost"
                     className={cn(
-                      "w-full justify-center text-xl py-6 rounded-xl focus:ring-0 focus:ring-offset-0 focus-visible:outline-none focus-visible:ring-0",
+                      "w-full justify-center text-xl py-6 rounded-xl focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0 focus-visible:shadow-none",
                       location.pathname === item.href
-                        ? "bg-accent text-secondary"
+                        ? "text-secondary"
                         : "hover:bg-accent"
                     )}
                     onClick={() => handleNavigate(item.href)}
