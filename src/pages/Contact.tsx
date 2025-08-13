@@ -15,12 +15,12 @@ const Contact = () => {
   return (
     <div className="h-full overflow-y-auto">
       <div className="container mx-auto px-4 pt-28 pb-12">
-        <Card className="max-w-lg mx-auto bg-white/60 dark:bg-[rgba(18,20,26,0.6)] backdrop-blur-xl border border-black/[.06] dark:border-white/[.08] shadow-[0_4px_12px_rgba(0,0,0,0.08)] dark:shadow-2xl rounded-2xl">
+        <Card className="max-w-lg mx-auto glass-effect shadow-lg rounded-2xl">
           <CardHeader className="text-center">
             <CardTitle className="text-3xl font-bold">{t("contact.title")}</CardTitle>
             <CardDescription className="text-foreground/80">{t("contact.description")}</CardDescription>
           </CardHeader>
-          <CardContent className="flex flex-col gap-4">
+          <CardContent className="flex flex-col gap-4 p-8">
             <Button asChild variant="ghost" className={cn(buttonBaseClasses, buttonLayoutClasses)}>
               <a href={`tel:${phoneNumber}`}>
                 <Phone className="mr-2 h-5 w-5" />

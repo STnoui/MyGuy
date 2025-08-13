@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { motion, Variants, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { useI18n } from "@/hooks/use-i18n";
@@ -17,12 +17,17 @@ export const MobileNav = ({ activeMenu, setActiveMenu }: MobileNavProps) => {
   const { t } = useI18n();
   const navigate = useNavigate();
   const location = useLocation();
+  const navContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!isOpen) return;
-    const handleScroll = () => setActiveMenu(null);
-    document.addEventListener("scroll", handleScroll, true);
-    return () => document.removeEventListener("scroll", handleScroll, true);
+    const handleClickOutside = (event: MouseEvent) => {
+      if (navContainerRef.current && !navContainerRef.current.contains(event.target as Node)) {
+        setActiveMenu(null);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [isOpen, setActiveMenu]);
 
   const navItems = [
@@ -37,14 +42,8 @@ export const MobileNav = ({ activeMenu, setActiveMenu }: MobileNavProps) => {
   };
 
   const listVariants: Variants = {
-    open: {
-      opacity: 1,
-      transition: { staggerChildren: 0.07, delayChildren: 0.2 },
-    },
-    closed: {
-      opacity: 0,
-      transition: { staggerChildren: 0.05, staggerDirection: -1, when: "afterChildren" },
-    },
+    open: { opacity: 1, transition: { staggerChildren: 0.07, delayChildren: 0.2 } },
+    closed: { opacity: 0, transition: { staggerChildren: 0.05, staggerDirection: -1, when: "afterChildren" } },
   };
 
   const itemVariants: Variants = {
@@ -53,7 +52,7 @@ export const MobileNav = ({ activeMenu, setActiveMenu }: MobileNavProps) => {
   };
 
   return (
-    <div className="md:hidden">
+    <div ref={navContainerRef} className="md:hidden fixed top-[5%] left-4 z-50">
       <AnimatePresence>
         {!isOtherMenuOpen && (
           <motion.button
@@ -61,7 +60,7 @@ export const MobileNav = ({ activeMenu, setActiveMenu }: MobileNavProps) => {
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.9 }}
             onClick={() => setActiveMenu(isOpen ? null : 'nav')}
-            className="fixed top-[5%] left-4 z-50 w-12 h-12 flex items-center justify-center focus:outline-none"
+            className="w-12 h-12 flex items-center justify-center focus:outline-none glass-effect rounded-full shadow-lg"
             aria-label={t("aria.toggleNav")}
             style={{ WebkitTapHighlightColor: "transparent" }}
           >
@@ -83,51 +82,42 @@ export const MobileNav = ({ activeMenu, setActiveMenu }: MobileNavProps) => {
 
       <AnimatePresence>
         {isOpen && (
-          <>
-            <motion.div
-              className="fixed inset-0 z-30"
-              onClick={() => setActiveMenu(null)}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-            />
-            <motion.div
-              initial={{ height: 0 }}
-              animate={{ height: "45vh" }}
-              exit={{ height: 0 }}
-              transition={{ type: "spring", stiffness: 400, damping: 40 }}
-              className="fixed top-0 left-0 w-full bg-white/60 dark:bg-[rgba(18,20,26,0.6)] backdrop-blur-xl z-40 overflow-auto no-scrollbar rounded-b-3xl border-b border-black/[.06] dark:border-white/[.08]"
+          <motion.div
+            initial={{ width: 0, height: 0, opacity: 0 }}
+            animate={{ width: "224px", height: "auto", opacity: 1 }}
+            exit={{ width: 0, height: 0, opacity: 0, transition: { duration: 0.2 } }}
+            transition={{ type: "spring", stiffness: 400, damping: 30 }}
+            className="absolute top-0 left-0 overflow-hidden glass-effect shadow-2xl rounded-2xl"
+          >
+            <motion.nav
+              variants={listVariants}
+              initial="closed"
+              animate="open"
+              exit="closed"
+              className="flex flex-col items-center gap-4 w-full p-4 pt-16 pb-4"
             >
-              <motion.nav
-                variants={listVariants}
-                initial="closed"
-                animate="open"
-                exit="closed"
-                className="flex flex-col items-center gap-4 w-full max-w-sm mx-auto p-8 pt-24 pb-12"
-              >
-                <motion.p variants={itemVariants} className="text-2xl font-bold text-foreground/80 mb-4 text-center">
-                  Menu
-                </motion.p>
-                {navItems.map((item) => (
-                  <motion.div key={item.href} variants={itemVariants} className="w-full">
-                    <Button
-                      variant="ghost"
-                      className={cn(
-                        "w-full justify-center text-2xl py-8 rounded-xl focus-visible:outline-none focus-visible:ring-0",
-                        location.pathname === item.href
-                          ? "bg-accent text-secondary"
-                          : "hover:bg-accent"
-                      )}
-                      onClick={() => handleNavigate(item.href)}
-                      style={{ WebkitTapHighlightColor: "transparent" }}
-                    >
-                      {item.label}
-                    </Button>
-                  </motion.div>
-                ))}
-              </motion.nav>
-            </motion.div>
-          </>
+              <motion.p variants={itemVariants} className="text-xl font-bold text-foreground/80 mb-2 text-center">
+                Menu
+              </motion.p>
+              {navItems.map((item) => (
+                <motion.div key={item.href} variants={itemVariants} className="w-full">
+                  <Button
+                    variant="ghost"
+                    className={cn(
+                      "w-full justify-center text-xl py-6 rounded-xl focus:ring-0 focus:ring-offset-0 focus-visible:outline-none focus-visible:ring-0",
+                      location.pathname === item.href
+                        ? "bg-accent text-secondary"
+                        : "hover:bg-accent"
+                    )}
+                    onClick={() => handleNavigate(item.href)}
+                    style={{ WebkitTapHighlightColor: "transparent" }}
+                  >
+                    {item.label}
+                  </Button>
+                </motion.div>
+              ))}
+            </motion.nav>
+          </motion.div>
         )}
       </AnimatePresence>
     </div>

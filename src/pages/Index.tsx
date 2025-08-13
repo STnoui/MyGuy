@@ -20,7 +20,6 @@ const Index = () => {
   const isSwiping = useRef(false);
 
   useEffect(() => {
-    // This pre-warming logic now runs while the loader is visible
     const primeTimer = setTimeout(() => {
       setActiveIndex(1);
       const resetTimer = setTimeout(() => {
@@ -107,7 +106,7 @@ const Index = () => {
 
         <div className="flex-1 flex flex-col items-center justify-start pt-20 relative">
           <h2 className="text-3xl font-bold tracking-tight mb-6">{t("servicesTitle")}</h2>
-          <div className="relative w-full max-w-[19.5rem] mx-auto h-[250px]">
+          <div className="relative w-full max-w-[19.5rem] mx-auto h-[250px] [scroll-snap-type:y_mandatory]">
             <AnimatePresence>
               {!isReady && (
                 <motion.div
@@ -136,7 +135,7 @@ const Index = () => {
                     right: 0,
                     transformOrigin: "center",
                   }}
-                  className="w-full will-change-transform"
+                  className="w-full will-change-transform [scroll-snap-align:start]"
                 >
                   <ServiceCard
                     icon={service.icon}

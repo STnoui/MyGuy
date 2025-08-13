@@ -14,14 +14,11 @@ export const ServiceCard = ({ icon, title, description, activeIndex, totalServic
   return (
     <Card
       className={cn(
-        "h-48 text-card-foreground transition-all",
-        "bg-white/60 dark:bg-[rgba(18,20,26,0.6)] backdrop-blur-xl",
-        "border border-black/[.06] dark:border-white/[.08]",
-        "shadow-[0_4px_12px_rgba(0,0,0,0.08)] dark:shadow-2xl rounded-2xl"
+        "h-48 text-card-foreground transition-all glass-effect shadow-lg rounded-2xl"
       )}
     >
-      <CardHeader className="flex flex-row items-center justify-between p-6 h-full gap-4">
-        <div className="flex items-center gap-4">
+      <CardHeader className="flex flex-row items-center justify-between p-6 h-full gap-6">
+        <div className="flex items-center gap-6">
           <div className="flex items-center justify-center h-16 w-16 rounded-full bg-secondary/20 text-secondary shrink-0">
             {icon}
           </div>

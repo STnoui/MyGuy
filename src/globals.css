@@ -64,6 +64,9 @@
 }
 
 @layer utilities {
+  .glass-effect {
+    @apply bg-white/65 backdrop-blur-[18px] border border-black/[0.06] dark:bg-[rgba(18,20,26,0.6)] dark:border-white/[0.08];
+  }
   .no-scrollbar::-webkit-scrollbar {
     display: none;
   }
