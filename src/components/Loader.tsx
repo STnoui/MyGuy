@@ -8,7 +8,7 @@ const loaderVariants: Variants = {
 };
 
 const logoVariants: Variants = {
-  initial: { scale: 0.9, opacity: 0 },
+  initial: { scale: 0.98, opacity: 0 },
   animate: {
     scale: 1,
     opacity: 1,
