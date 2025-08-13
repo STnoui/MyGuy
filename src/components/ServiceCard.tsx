@@ -15,7 +15,7 @@ export const ServiceCard = ({ icon, title, description, activeIndex, totalServic
     <Card
       className={cn(
         "h-48 text-card-foreground transition-all",
-        "bg-card/80 dark:bg-black/30 backdrop-blur-lg",
+        "bg-card/50 dark:bg-black/30 backdrop-blur-lg",
         "border border-black/10 dark:border-white/10",
         "shadow-lg dark:shadow-2xl rounded-3xl"
       )}

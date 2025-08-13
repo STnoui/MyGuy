@@ -84,19 +84,19 @@ export const MobileNav = ({ activeMenu, setActiveMenu }: MobileNavProps) => {
         {isOpen && (
           <motion.div
             initial={{ height: 0 }}
-            animate={{ height: "auto" }}
+            animate={{ height: "45vh" }}
             exit={{ height: 0 }}
             transition={{ type: "spring", stiffness: 400, damping: 40 }}
-            className="fixed top-0 left-0 w-full bg-background/80 backdrop-blur-lg z-40 overflow-hidden"
+            className="fixed top-0 left-0 w-full bg-background/50 backdrop-blur-lg z-40 overflow-auto no-scrollbar"
           >
             <motion.nav
               variants={listVariants}
               initial="closed"
               animate="open"
               exit="closed"
-              className="flex flex-col items-center gap-4 w-full max-w-sm mx-auto p-8 pt-20 pb-12"
+              className="flex flex-col items-center gap-4 w-full max-w-sm mx-auto p-8 pt-24 pb-12"
             >
-              <motion.p variants={itemVariants} className="text-2xl font-bold text-foreground/80 mb-4">
+              <motion.p variants={itemVariants} className="text-2xl font-bold text-foreground/80 mb-4 text-center">
                 Menu
               </motion.p>
               {navItems.map((item) => (
@@ -104,7 +104,7 @@ export const MobileNav = ({ activeMenu, setActiveMenu }: MobileNavProps) => {
                   <Button
                     variant="ghost"
                     className={cn(
-                      "w-full justify-center text-xl py-6 rounded-xl",
+                      "w-full justify-center text-2xl py-8 rounded-xl focus-visible:ring-secondary",
                       location.pathname === item.href
                         ? "bg-accent text-secondary"
                         : "hover:bg-accent"

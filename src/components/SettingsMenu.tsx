@@ -22,6 +22,13 @@ export const SettingsMenu = ({ activeMenu, setActiveMenu }: SettingsMenuProps) =
     setMounted(true);
   }, []);
 
+  useEffect(() => {
+    if (!isOpen) return;
+    const handleScroll = () => setActiveMenu(null);
+    document.addEventListener("scroll", handleScroll, true);
+    return () => document.removeEventListener("scroll", handleScroll, true);
+  }, [isOpen, setActiveMenu]);
+
   const listVariants: Variants = {
     open: {
       opacity: 1,
@@ -73,17 +80,17 @@ export const SettingsMenu = ({ activeMenu, setActiveMenu }: SettingsMenuProps) =
         {isOpen && (
           <motion.div
             initial={{ height: 0 }}
-            animate={{ height: "auto" }}
+            animate={{ height: "45vh" }}
             exit={{ height: 0 }}
             transition={{ type: "spring", stiffness: 400, damping: 40 }}
-            className="fixed top-0 left-0 w-full bg-background/80 backdrop-blur-lg z-40 overflow-hidden"
+            className="fixed top-0 left-0 w-full bg-background/50 backdrop-blur-lg z-40 overflow-auto no-scrollbar"
           >
             <motion.div
               variants={listVariants}
               initial="closed"
               animate="open"
               exit="closed"
-              className="flex flex-col items-center gap-8 w-full max-w-sm mx-auto p-8 pt-20 pb-12"
+              className="flex flex-col items-center gap-8 w-full max-w-sm mx-auto p-8 pt-24 pb-12"
             >
               <motion.p variants={itemVariants} className="text-2xl font-bold text-foreground/80 text-center">
                 {t("settings.title")}
@@ -97,7 +104,7 @@ export const SettingsMenu = ({ activeMenu, setActiveMenu }: SettingsMenuProps) =
                         size="sm"
                         variant="ghost"
                         onClick={() => setTheme("light")}
-                        className={cn("h-12 rounded-lg", hoverClass, resolvedTheme === "light" && activeClass)}
+                        className={cn("h-12 rounded-lg focus-visible:ring-secondary", hoverClass, resolvedTheme === "light" && activeClass)}
                       >
                         <Sun className="h-5 w-5" />
                       </Button>
@@ -105,7 +112,7 @@ export const SettingsMenu = ({ activeMenu, setActiveMenu }: SettingsMenuProps) =
                         size="sm"
                         variant="ghost"
                         onClick={() => setTheme("dark")}
-                        className={cn("h-12 rounded-lg", hoverClass, resolvedTheme === "dark" && activeClass)}
+                        className={cn("h-12 rounded-lg focus-visible:ring-secondary", hoverClass, resolvedTheme === "dark" && activeClass)}
                       >
                         <Moon className="h-5 w-5" />
                       </Button>
@@ -118,7 +125,7 @@ export const SettingsMenu = ({ activeMenu, setActiveMenu }: SettingsMenuProps) =
                         size="sm"
                         variant="ghost"
                         onClick={() => setLanguage("en")}
-                        className={cn("h-12 rounded-lg font-bold", hoverClass, language === "en" && activeClass)}
+                        className={cn("h-12 rounded-lg font-bold focus-visible:ring-secondary", hoverClass, language === "en" && activeClass)}
                       >
                         EN
                       </Button>
@@ -126,7 +133,7 @@ export const SettingsMenu = ({ activeMenu, setActiveMenu }: SettingsMenuProps) =
                         size="sm"
                         variant="ghost"
                         onClick={() => setLanguage("bg")}
-                        className={cn("h-12 rounded-lg font-bold", hoverClass, language === "bg" && activeClass)}
+                        className={cn("h-12 rounded-lg font-bold focus-visible:ring-secondary", hoverClass, language === "bg" && activeClass)}
                       >
                         BG
                       </Button>
