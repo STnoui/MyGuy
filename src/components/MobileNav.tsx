@@ -96,7 +96,7 @@ export const MobileNav = ({ activeMenu, setActiveMenu }: MobileNavProps) => {
               animate={{ height: "45vh" }}
               exit={{ height: 0 }}
               transition={{ type: "spring", stiffness: 400, damping: 40 }}
-              className="fixed top-0 left-0 w-full bg-white/60 dark:bg-[rgba(18,20,26,0.6)] backdrop-blur-xl z-40 overflow-auto no-scrollbar rounded-b-3xl border-b border-black/[.06] dark:border-white/[.08]"
+              className="fixed top-0 left-0 w-full bg-white/50 dark:bg-[rgba(18,20,26,0.6)] backdrop-blur-xl z-40 overflow-auto no-scrollbar rounded-b-3xl border-b border-black/[.06] dark:border-white/[.08]"
             >
               <motion.nav
                 variants={listVariants}
