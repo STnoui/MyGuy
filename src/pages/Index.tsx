@@ -21,11 +21,22 @@ const Index = () => {
   const isSwiping = useRef(false);
 
   useEffect(() => {
-    const readyTimer = setTimeout(() => setIsReady(true), 400);
-    const animationTimer = setTimeout(() => setIsAnimationEnabled(true), 600);
+    // This effect runs once on mount to "pre-warm" the animation.
+    // This happens while the loader is still visible.
+    const primeTimer = setTimeout(() => {
+      setActiveIndex(1);
+      const resetTimer = setTimeout(() => {
+        setActiveIndex(0);
+        setIsReady(true); // Mark as ready after priming
+      }, 100);
+      return () => clearTimeout(resetTimer);
+    }, 100);
+
+    const animationEnableTimer = setTimeout(() => setIsAnimationEnabled(true), 600);
+
     return () => {
-      clearTimeout(readyTimer);
-      clearTimeout(animationTimer);
+      clearTimeout(primeTimer);
+      clearTimeout(animationEnableTimer);
     };
   }, []);
 
