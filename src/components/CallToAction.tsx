@@ -20,7 +20,7 @@ export const CallToAction = () => {
           "pointer-events-auto inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors disabled:pointer-events-none disabled:opacity-50",
           "bg-primary text-primary-foreground hover:bg-primary/90",
           "h-16 px-10 text-2xl font-bold rounded-2xl w-full max-w-sm border border-primary-foreground/20",
-          "focus-visible:outline-none focus-visible:ring-0"
+          "focus-visible:outline-none"
         )}
       >
         <Phone className="mr-4 h-8 w-8" />

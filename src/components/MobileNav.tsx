@@ -103,7 +103,7 @@ export const MobileNav = ({ activeMenu, setActiveMenu }: MobileNavProps) => {
                 initial="closed"
                 animate="open"
                 exit="closed"
-                className="flex flex-col items-center gap-4 w-full max-w-sm mx-auto p-8 pt-24 pb-12"
+                className="flex flex-col items-center gap-4 w-full max-w-sm mx-auto p-8 pt-12 pb-12"
               >
                 <motion.p variants={itemVariants} className="text-2xl font-bold text-foreground/80 mb-4 text-center">
                   Menu
@@ -113,7 +113,7 @@ export const MobileNav = ({ activeMenu, setActiveMenu }: MobileNavProps) => {
                     <Button
                       variant="ghost"
                       className={cn(
-                        "w-full justify-center text-2xl py-8 rounded-xl focus-visible:outline-none focus-visible:ring-0",
+                        "w-full justify-center text-2xl py-8 rounded-xl focus-visible:outline-none",
                         location.pathname === item.href
                           ? "bg-accent text-secondary"
                           : "hover:bg-accent"

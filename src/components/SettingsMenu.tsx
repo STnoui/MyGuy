@@ -99,7 +99,7 @@ export const SettingsMenu = ({ activeMenu, setActiveMenu }: SettingsMenuProps) =
                 initial="closed"
                 animate="open"
                 exit="closed"
-                className="flex flex-col items-center gap-8 w-full max-w-sm mx-auto p-8 pt-24 pb-12"
+                className="flex flex-col items-center gap-8 w-full max-w-sm mx-auto p-8 pt-12 pb-12"
               >
                 <motion.p variants={itemVariants} className="text-2xl font-bold text-foreground/80 text-center">
                   {t("settings.title")}
@@ -113,7 +113,7 @@ export const SettingsMenu = ({ activeMenu, setActiveMenu }: SettingsMenuProps) =
                           size="sm"
                           variant="ghost"
                           onClick={() => setTheme("light")}
-                          className={cn("h-12 rounded-lg focus-visible:outline-none focus-visible:ring-0", hoverClass, resolvedTheme === "light" && activeClass)}
+                          className={cn("h-12 rounded-lg focus-visible:outline-none", hoverClass, resolvedTheme === "light" && activeClass)}
                           style={{ WebkitTapHighlightColor: "transparent" }}
                         >
                           <Sun className="h-5 w-5" />
@@ -122,7 +122,7 @@ export const SettingsMenu = ({ activeMenu, setActiveMenu }: SettingsMenuProps) =
                           size="sm"
                           variant="ghost"
                           onClick={() => setTheme("dark")}
-                          className={cn("h-12 rounded-lg focus-visible:outline-none focus-visible:ring-0", hoverClass, resolvedTheme === "dark" && activeClass)}
+                          className={cn("h-12 rounded-lg focus-visible:outline-none", hoverClass, resolvedTheme === "dark" && activeClass)}
                           style={{ WebkitTapHighlightColor: "transparent" }}
                         >
                           <Moon className="h-5 w-5" />
@@ -136,7 +136,7 @@ export const SettingsMenu = ({ activeMenu, setActiveMenu }: SettingsMenuProps) =
                           size="sm"
                           variant="ghost"
                           onClick={() => setLanguage("en")}
-                          className={cn("h-12 rounded-lg font-bold focus-visible:outline-none focus-visible:ring-0", hoverClass, language === "en" && activeClass)}
+                          className={cn("h-12 rounded-lg font-bold focus-visible:outline-none", hoverClass, language === "en" && activeClass)}
                           style={{ WebkitTapHighlightColor: "transparent" }}
                         >
                           EN
@@ -145,7 +145,7 @@ export const SettingsMenu = ({ activeMenu, setActiveMenu }: SettingsMenuProps) =
                           size="sm"
                           variant="ghost"
                           onClick={() => setLanguage("bg")}
-                          className={cn("h-12 rounded-lg font-bold focus-visible:outline-none focus-visible:ring-0", hoverClass, language === "bg" && activeClass)}
+                          className={cn("h-12 rounded-lg font-bold focus-visible:outline-none", hoverClass, language === "bg" && activeClass)}
                           style={{ WebkitTapHighlightColor: "transparent" }}
                         >
                           BG
