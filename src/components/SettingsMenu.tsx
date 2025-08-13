@@ -48,7 +48,7 @@ export const SettingsMenu = ({ activeMenu, setActiveMenu }: SettingsMenuProps) =
   const hoverClass = "hover:bg-accent";
 
   return (
-    <div ref={settingsContainerRef} className="md:hidden fixed top-0 right-0 bottom-0 z-50 pointer-events-none">
+    <div ref={settingsContainerRef} className="md:hidden fixed top-[5%] right-4 z-50">
       <AnimatePresence>
         {!isOtherMenuOpen && (
           <motion.button
@@ -56,7 +56,7 @@ export const SettingsMenu = ({ activeMenu, setActiveMenu }: SettingsMenuProps) =
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.9 }}
             onClick={() => setActiveMenu(isOpen ? null : 'settings')}
-            className="pointer-events-auto absolute top-[5%] right-4 w-12 h-12 flex items-center justify-center focus:outline-none"
+            className="w-12 h-12 flex items-center justify-center focus:outline-none glass-effect rounded-full shadow-lg"
             aria-label={t("aria.toggleSettings")}
             style={{ WebkitTapHighlightColor: "transparent" }}
           >
@@ -83,21 +83,21 @@ export const SettingsMenu = ({ activeMenu, setActiveMenu }: SettingsMenuProps) =
             animate={{ x: "0%" }}
             exit={{ x: "100%" }}
             transition={{ type: "spring", stiffness: 400, damping: 40 }}
-            className="pointer-events-auto absolute top-0 right-0 h-full w-2/3 max-w-xs glass-effect shadow-2xl"
+            className="pointer-events-auto fixed top-0 right-0 h-full w-full glass-effect shadow-2xl"
           >
             <motion.div
               variants={listVariants}
               initial="closed"
               animate="open"
               exit="closed"
-              className="flex flex-col items-center gap-8 w-full p-4 pt-24 h-full"
+              className="flex flex-col items-center justify-center gap-8 w-full p-4 h-full"
             >
               <motion.p variants={itemVariants} className="text-2xl font-bold text-foreground/80 text-center">
                 {t("settings.title")}
               </motion.p>
               {mounted && (
                 <>
-                  <motion.div variants={itemVariants} className="w-full space-y-2">
+                  <motion.div variants={itemVariants} className="w-full max-w-xs space-y-2">
                     <p className="text-lg font-medium text-center">{t("settings.theme")}</p>
                     <div className="grid grid-cols-2 gap-2 p-1 bg-black/5 dark:bg-white/5 rounded-xl">
                       <Button
@@ -120,7 +120,7 @@ export const SettingsMenu = ({ activeMenu, setActiveMenu }: SettingsMenuProps) =
                       </Button>
                     </div>
                   </motion.div>
-                  <motion.div variants={itemVariants} className="w-full space-y-2">
+                  <motion.div variants={itemVariants} className="w-full max-w-xs space-y-2">
                     <p className="text-lg font-medium text-center">{t("settings.language")}</p>
                     <div className="grid grid-cols-2 gap-2 p-1 bg-black/5 dark:bg-white/5 rounded-xl">
                       <Button

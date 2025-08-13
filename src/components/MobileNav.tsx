@@ -52,7 +52,7 @@ export const MobileNav = ({ activeMenu, setActiveMenu }: MobileNavProps) => {
   };
 
   return (
-    <div ref={navContainerRef} className="md:hidden fixed top-0 left-0 bottom-0 z-50 pointer-events-none">
+    <div ref={navContainerRef} className="md:hidden fixed top-[5%] left-4 z-50">
       <AnimatePresence>
         {!isOtherMenuOpen && (
           <motion.button
@@ -60,7 +60,7 @@ export const MobileNav = ({ activeMenu, setActiveMenu }: MobileNavProps) => {
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.9 }}
             onClick={() => setActiveMenu(isOpen ? null : 'nav')}
-            className="pointer-events-auto absolute top-[5%] left-4 w-12 h-12 flex items-center justify-center focus:outline-none"
+            className="w-12 h-12 flex items-center justify-center focus:outline-none glass-effect rounded-full shadow-lg"
             aria-label={t("aria.toggleNav")}
             style={{ WebkitTapHighlightColor: "transparent" }}
           >
@@ -87,26 +87,26 @@ export const MobileNav = ({ activeMenu, setActiveMenu }: MobileNavProps) => {
             animate={{ x: "0%" }}
             exit={{ x: "-100%" }}
             transition={{ type: "spring", stiffness: 400, damping: 40 }}
-            className="pointer-events-auto absolute top-0 left-0 h-full w-2/3 max-w-xs glass-effect shadow-2xl"
+            className="pointer-events-auto fixed top-0 left-0 h-full w-full glass-effect shadow-2xl"
           >
             <motion.nav
               variants={listVariants}
               initial="closed"
               animate="open"
               exit="closed"
-              className="flex flex-col items-center gap-4 w-full p-4 pt-24 h-full"
+              className="flex flex-col items-center justify-center gap-4 w-full p-4 h-full"
             >
               <motion.p variants={itemVariants} className="text-2xl font-bold text-foreground/80 mb-4 text-center">
                 Menu
               </motion.p>
               {navItems.map((item) => (
-                <motion.div key={item.href} variants={itemVariants} className="w-full">
+                <motion.div key={item.href} variants={itemVariants} className="w-full max-w-xs">
                   <Button
                     variant="ghost"
                     className={cn(
                       "w-full justify-center text-xl py-6 rounded-xl focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0 focus-visible:shadow-none",
                       location.pathname === item.href
-                        ? "text-secondary"
+                        ? "bg-accent text-secondary"
                         : "hover:bg-accent"
                     )}
                     onClick={() => handleNavigate(item.href)}
