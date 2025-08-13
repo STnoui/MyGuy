@@ -49,7 +49,7 @@ export const SettingsMenu = ({ activeMenu, setActiveMenu }: SettingsMenuProps) =
   const hoverClass = "hover:bg-accent";
 
   return (
-    <div className="md:hidden">
+    <div>
       <AnimatePresence>
         {!isOtherMenuOpen && (
           <motion.button
