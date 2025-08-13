@@ -3,13 +3,13 @@ import { ServiceCard } from "@/components/ServiceCard";
 import { useI18n } from "@/hooks/use-i18n";
 import { ShoppingBag, Wallet, Package, Flower2 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { useState, useEffect, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { cn } from "@/lib/utils";
 
 const CARD_OFFSET = 24;
 const SCALE_FACTOR = 0.06;
 const VISIBLE_CARDS = 4;
-const SCROLL_TIMEOUT = 500;
+const ANIMATION_DURATION_MS = 500;
 
 const Index = () => {
   const { t } = useI18n();
@@ -17,63 +17,70 @@ const Index = () => {
   const [isReady, setIsReady] = useState(false);
   const isScrolling = useRef(false);
   const touchStartY = useRef(0);
-  const isTouchDragging = useRef(false);
+  const isSwiping = useRef(false);
 
   useEffect(() => {
-    const timer = setTimeout(() => setIsReady(true), 100);
-    return () => clearTimeout(timer);
+    // This pre-warming logic now runs while the loader is visible
+    const primeTimer = setTimeout(() => {
+      setActiveIndex(1);
+      const resetTimer = setTimeout(() => {
+        setActiveIndex(0);
+        setIsReady(true);
+      }, 100);
+      return () => clearTimeout(resetTimer);
+    }, 100);
+
+    return () => clearTimeout(primeTimer);
   }, []);
 
   const services = [
-    { icon: <ShoppingBag className="h-10 w-10" />, key: "deliveries" },
-    { icon: <Wallet className="h-10 w-10" />, key: "easypay" },
-    { icon: <Package className="h-10 w-10" />, key: "parcels" },
-    { icon: <Flower2 className="h-10 w-10" />, key: "flowers" },
+    { icon: <ShoppingBag className="h-8 w-8" />, key: "deliveries" },
+    { icon: <Wallet className="h-8 w-8" />, key: "easypay" },
+    { icon: <Package className="h-8 w-8" />, key: "parcels" },
+    { icon: <Flower2 className="h-8 w-8" />, key: "flowers" },
   ];
-  const totalServices = services.length;
+  const numServices = services.length;
 
   const handleWheel = (e: React.WheelEvent) => {
     e.preventDefault();
     if (isScrolling.current) return;
     isScrolling.current = true;
-
     if (e.deltaY > 0) {
-      setActiveIndex((prev) => (prev + 1) % totalServices);
+      setActiveIndex((prev) => (prev + 1) % numServices);
     } else {
-      setActiveIndex((prev) => (prev - 1 + totalServices) % totalServices);
+      setActiveIndex((prev) => (prev - 1 + numServices) % numServices);
     }
-
     setTimeout(() => {
       isScrolling.current = false;
-    }, SCROLL_TIMEOUT);
+    }, ANIMATION_DURATION_MS);
   };
 
   const handleTouchStart = (e: React.TouchEvent) => {
     touchStartY.current = e.touches[0].clientY;
-    isTouchDragging.current = false;
+    isSwiping.current = false;
   };
 
   const handleTouchMove = (e: React.TouchEvent) => {
-    if (isScrolling.current || isTouchDragging.current) return;
+    if (isScrolling.current || isSwiping.current) return;
     const touchEndY = e.touches[0].clientY;
     const deltaY = touchStartY.current - touchEndY;
-
-    if (Math.abs(deltaY) > 50) {
+    const swipeThreshold = 50;
+    if (Math.abs(deltaY) > swipeThreshold) {
       isScrolling.current = true;
-      isTouchDragging.current = true;
+      isSwiping.current = true;
       if (deltaY > 0) {
-        setActiveIndex((prev) => (prev + 1) % totalServices);
+        setActiveIndex((prev) => (prev + 1) % numServices);
       } else {
-        setActiveIndex((prev) => (prev - 1 + totalServices) % totalServices);
+        setActiveIndex((prev) => (prev - 1 + numServices) % numServices);
       }
       setTimeout(() => {
         isScrolling.current = false;
-      }, SCROLL_TIMEOUT);
+      }, ANIMATION_DURATION_MS);
     }
   };
 
   const handleTouchEnd = () => {
-    isTouchDragging.current = false;
+    isSwiping.current = false;
   };
 
   return (
@@ -110,27 +117,34 @@ const Index = () => {
                 />
               )}
             </AnimatePresence>
-            {services.map((service, index) => {
-              const relativeIndex = (index - activeIndex + totalServices) % totalServices;
+
+            {services.map((service, i) => {
+              const stackPosition = (i - activeIndex + numServices) % numServices;
               return (
                 <motion.div
                   key={service.key}
                   animate={{
-                    top: relativeIndex * CARD_OFFSET,
-                    scale: 1 - relativeIndex * SCALE_FACTOR,
-                    zIndex: totalServices - relativeIndex,
-                    opacity: relativeIndex < VISIBLE_CARDS ? 1 : 0,
+                    top: stackPosition * CARD_OFFSET,
+                    scale: 1 - stackPosition * SCALE_FACTOR,
+                    zIndex: numServices - stackPosition,
+                    opacity: stackPosition < VISIBLE_CARDS ? 1 : 0,
                   }}
                   transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                  className="absolute w-full will-change-transform"
+                  style={{
+                    position: "absolute",
+                    left: 0,
+                    right: 0,
+                    transformOrigin: "center",
+                  }}
+                  className="w-full will-change-transform"
                 >
                   <ServiceCard
                     icon={service.icon}
                     title={t(`services.${service.key}.title`)}
                     description={t(`services.${service.key}.description`)}
-                    index={index}
+                    index={i}
                     activeIndex={activeIndex}
-                    totalServices={totalServices}
+                    totalServices={numServices}
                   />
                 </motion.div>
               );

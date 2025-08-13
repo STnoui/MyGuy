@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { motion, Variants, AnimatePresence } from "framer-motion";
 import { Settings, X, Sun, Moon } from "lucide-react";
 import { useI18n } from "@/hooks/use-i18n";
@@ -17,7 +17,6 @@ export const SettingsMenu = ({ activeMenu, setActiveMenu }: SettingsMenuProps) =
   const { t, language, setLanguage } = useI18n();
   const { setTheme, resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
-  const settingsContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setMounted(true);
@@ -25,18 +24,20 @@ export const SettingsMenu = ({ activeMenu, setActiveMenu }: SettingsMenuProps) =
 
   useEffect(() => {
     if (!isOpen) return;
-    const handleClickOutside = (event: MouseEvent) => {
-      if (settingsContainerRef.current && !settingsContainerRef.current.contains(event.target as Node)) {
-        setActiveMenu(null);
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
+    const handleScroll = () => setActiveMenu(null);
+    document.addEventListener("scroll", handleScroll, true);
+    return () => document.removeEventListener("scroll", handleScroll, true);
   }, [isOpen, setActiveMenu]);
 
   const listVariants: Variants = {
-    open: { opacity: 1, transition: { staggerChildren: 0.07, delayChildren: 0.2 } },
-    closed: { opacity: 0, transition: { staggerChildren: 0.05, staggerDirection: -1, when: "afterChildren" } },
+    open: {
+      opacity: 1,
+      transition: { staggerChildren: 0.07, delayChildren: 0.2 },
+    },
+    closed: {
+      opacity: 0,
+      transition: { staggerChildren: 0.05, staggerDirection: -1, when: "afterChildren" },
+    },
   };
 
   const itemVariants: Variants = {
@@ -45,10 +46,10 @@ export const SettingsMenu = ({ activeMenu, setActiveMenu }: SettingsMenuProps) =
   };
 
   const activeClass = "bg-accent text-secondary";
-  const hoverClass = "hover:bg-accent/50";
+  const hoverClass = "hover:bg-accent";
 
   return (
-    <div ref={settingsContainerRef} className="md:hidden">
+    <div className="md:hidden">
       <AnimatePresence>
         {!isOtherMenuOpen && (
           <motion.button
@@ -56,16 +57,15 @@ export const SettingsMenu = ({ activeMenu, setActiveMenu }: SettingsMenuProps) =
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.9 }}
             onClick={() => setActiveMenu(isOpen ? null : 'settings')}
-            className="fixed top-[5%] right-4 w-12 h-12 z-60 flex items-center justify-center focus:outline-none"
+            className="fixed top-[5%] right-4 z-50 w-12 h-12 flex items-center justify-center focus:outline-none"
             aria-label={t("aria.toggleSettings")}
-            style={{ WebkitTapHighlightColor: "transparent" }}
           >
             <AnimatePresence initial={false} mode="wait">
               <motion.div
                 key={isOpen ? "x" : "settings"}
-                initial={{ rotate: 90, opacity: 0 }}
+                initial={{ rotate: -90, opacity: 0 }}
                 animate={{ rotate: 0, opacity: 1 }}
-                exit={{ rotate: -90, opacity: 0 }}
+                exit={{ rotate: 90, opacity: 0 }}
                 transition={{ duration: 0.2 }}
                 className="absolute"
               >
@@ -79,33 +79,32 @@ export const SettingsMenu = ({ activeMenu, setActiveMenu }: SettingsMenuProps) =
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ y: "-100%" }}
-            animate={{ y: "0%" }}
-            exit={{ y: "-100%" }}
+            initial={{ height: 0 }}
+            animate={{ height: "45vh" }}
+            exit={{ height: 0 }}
             transition={{ type: "spring", stiffness: 400, damping: 40 }}
-            className="pointer-events-auto fixed top-0 right-0 h-2/5 w-full glass-effect shadow-2xl z-50"
+            className="fixed top-0 left-0 w-full bg-background/50 backdrop-blur-lg z-40 overflow-auto no-scrollbar"
           >
             <motion.div
               variants={listVariants}
               initial="closed"
               animate="open"
               exit="closed"
-              className="relative flex flex-col items-center justify-center gap-8 w-full p-4 h-full translate-y-[5%]"
+              className="flex flex-col items-center gap-8 w-full max-w-sm mx-auto p-8 pt-24 pb-12"
             >
-              <motion.p variants={itemVariants} className="absolute top-[5%] left-0 right-0 h-12 flex items-center justify-center text-2xl font-bold text-foreground/80">
+              <motion.p variants={itemVariants} className="text-2xl font-bold text-foreground/80 text-center">
                 {t("settings.title")}
               </motion.p>
               {mounted && (
                 <>
-                  <motion.div variants={itemVariants} className="w-full max-w-xs space-y-2">
+                  <motion.div variants={itemVariants} className="w-full space-y-2">
                     <p className="text-lg font-medium text-center">{t("settings.theme")}</p>
-                    <div className="grid grid-cols-2 gap-2 p-1 bg-black/5 dark:bg-white/5 rounded-xl">
+                    <div className="grid grid-cols-2 gap-2 p-1 bg-black/5 dark:bg-white/5 backdrop-blur-sm rounded-xl">
                       <Button
                         size="sm"
                         variant="ghost"
                         onClick={() => setTheme("light")}
-                        className={cn("h-12 rounded-lg focus:ring-0 focus:ring-offset-0 focus-visible:outline-none focus-visible:ring-0 focus-visible:shadow-none", hoverClass, resolvedTheme === "light" && activeClass)}
-                        style={{ WebkitTapHighlightColor: "transparent" }}
+                        className={cn("h-12 rounded-lg focus-visible:ring-secondary", hoverClass, resolvedTheme === "light" && activeClass)}
                       >
                         <Sun className="h-5 w-5" />
                       </Button>
@@ -113,22 +112,20 @@ export const SettingsMenu = ({ activeMenu, setActiveMenu }: SettingsMenuProps) =
                         size="sm"
                         variant="ghost"
                         onClick={() => setTheme("dark")}
-                        className={cn("h-12 rounded-lg focus:ring-0 focus:ring-offset-0 focus-visible:outline-none focus-visible:ring-0 focus-visible:shadow-none", hoverClass, resolvedTheme === "dark" && activeClass)}
-                        style={{ WebkitTapHighlightColor: "transparent" }}
+                        className={cn("h-12 rounded-lg focus-visible:ring-secondary", hoverClass, resolvedTheme === "dark" && activeClass)}
                       >
                         <Moon className="h-5 w-5" />
                       </Button>
                     </div>
                   </motion.div>
-                  <motion.div variants={itemVariants} className="w-full max-w-xs space-y-2">
+                  <motion.div variants={itemVariants} className="w-full space-y-2">
                     <p className="text-lg font-medium text-center">{t("settings.language")}</p>
-                    <div className="grid grid-cols-2 gap-2 p-1 bg-black/5 dark:bg-white/5 rounded-xl">
+                    <div className="grid grid-cols-2 gap-2 p-1 bg-black/5 dark:bg-white/5 backdrop-blur-sm rounded-xl">
                       <Button
                         size="sm"
                         variant="ghost"
                         onClick={() => setLanguage("en")}
-                        className={cn("h-12 rounded-lg font-bold focus:ring-0 focus:ring-offset-0 focus-visible:outline-none focus-visible:ring-0 focus-visible:shadow-none", hoverClass, language === "en" && activeClass)}
-                        style={{ WebkitTapHighlightColor: "transparent" }}
+                        className={cn("h-12 rounded-lg font-bold focus-visible:ring-secondary", hoverClass, language === "en" && activeClass)}
                       >
                         EN
                       </Button>
@@ -136,8 +133,7 @@ export const SettingsMenu = ({ activeMenu, setActiveMenu }: SettingsMenuProps) =
                         size="sm"
                         variant="ghost"
                         onClick={() => setLanguage("bg")}
-                        className={cn("h-12 rounded-lg font-bold focus:ring-0 focus:ring-offset-0 focus-visible:outline-none focus-visible:ring-0 focus-visible:shadow-none", hoverClass, language === "bg" && activeClass)}
-                        style={{ WebkitTapHighlightColor: "transparent" }}
+                        className={cn("h-12 rounded-lg font-bold focus-visible:ring-secondary", hoverClass, language === "bg" && activeClass)}
                       >
                         BG
                       </Button>
