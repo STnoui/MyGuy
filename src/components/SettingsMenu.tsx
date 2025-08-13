@@ -48,7 +48,7 @@ export const SettingsMenu = ({ activeMenu, setActiveMenu }: SettingsMenuProps) =
   const hoverClass = "hover:bg-accent/50";
 
   return (
-    <div ref={settingsContainerRef} className="md:hidden fixed top-[5%] right-4 z-60">
+    <div ref={settingsContainerRef} className="md:hidden">
       <AnimatePresence>
         {!isOtherMenuOpen && (
           <motion.button
@@ -56,7 +56,7 @@ export const SettingsMenu = ({ activeMenu, setActiveMenu }: SettingsMenuProps) =
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.9 }}
             onClick={() => setActiveMenu(isOpen ? null : 'settings')}
-            className="w-12 h-12 relative z-10 flex items-center justify-center focus:outline-none"
+            className="fixed top-[5%] right-4 w-12 h-12 z-60 flex items-center justify-center focus:outline-none"
             aria-label={t("aria.toggleSettings")}
             style={{ WebkitTapHighlightColor: "transparent" }}
           >
