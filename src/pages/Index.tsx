@@ -34,10 +34,10 @@ const Index = () => {
   }, []);
 
   const services = [
-    { icon: <ShoppingBag className="h-8 w-8" />, key: "deliveries" },
-    { icon: <Wallet className="h-8 w-8" />, key: "easypay" },
-    { icon: <Package className="h-8 w-8" />, key: "parcels" },
-    { icon: <Flower2 className="h-8 w-8" />, key: "flowers" },
+    { icon: <ShoppingBag className="h-10 w-10" />, key: "deliveries" },
+    { icon: <Wallet className="h-10 w-10" />, key: "easypay" },
+    { icon: <Package className="h-10 w-10" />, key: "parcels" },
+    { icon: <Flower2 className="h-10 w-10" />, key: "flowers" },
   ];
   const numServices = services.length;
 

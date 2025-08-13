@@ -104,7 +104,7 @@ export const MobileNav = ({ activeMenu, setActiveMenu }: MobileNavProps) => {
                   <Button
                     variant="ghost"
                     className={cn(
-                      "w-full justify-center text-2xl py-8 rounded-xl focus-visible:ring-2 focus-visible:ring-secondary focus-visible:ring-offset-0",
+                      "w-full justify-center text-2xl py-8 rounded-xl focus-visible:outline-none focus-visible:ring-0",
                       location.pathname === item.href
                         ? "bg-accent text-secondary"
                         : "hover:bg-accent"

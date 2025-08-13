@@ -104,7 +104,7 @@ export const SettingsMenu = ({ activeMenu, setActiveMenu }: SettingsMenuProps) =
                         size="sm"
                         variant="ghost"
                         onClick={() => setTheme("light")}
-                        className={cn("h-12 rounded-lg focus-visible:ring-2 focus-visible:ring-secondary focus-visible:ring-offset-0", hoverClass, resolvedTheme === "light" && activeClass)}
+                        className={cn("h-12 rounded-lg focus-visible:outline-none focus-visible:ring-0", hoverClass, resolvedTheme === "light" && activeClass)}
                       >
                         <Sun className="h-5 w-5" />
                       </Button>
@@ -112,7 +112,7 @@ export const SettingsMenu = ({ activeMenu, setActiveMenu }: SettingsMenuProps) =
                         size="sm"
                         variant="ghost"
                         onClick={() => setTheme("dark")}
-                        className={cn("h-12 rounded-lg focus-visible:ring-2 focus-visible:ring-secondary focus-visible:ring-offset-0", hoverClass, resolvedTheme === "dark" && activeClass)}
+                        className={cn("h-12 rounded-lg focus-visible:outline-none focus-visible:ring-0", hoverClass, resolvedTheme === "dark" && activeClass)}
                       >
                         <Moon className="h-5 w-5" />
                       </Button>
@@ -125,7 +125,7 @@ export const SettingsMenu = ({ activeMenu, setActiveMenu }: SettingsMenuProps) =
                         size="sm"
                         variant="ghost"
                         onClick={() => setLanguage("en")}
-                        className={cn("h-12 rounded-lg font-bold focus-visible:ring-2 focus-visible:ring-secondary focus-visible:ring-offset-0", hoverClass, language === "en" && activeClass)}
+                        className={cn("h-12 rounded-lg font-bold focus-visible:outline-none focus-visible:ring-0", hoverClass, language === "en" && activeClass)}
                       >
                         EN
                       </Button>
@@ -133,7 +133,7 @@ export const SettingsMenu = ({ activeMenu, setActiveMenu }: SettingsMenuProps) =
                         size="sm"
                         variant="ghost"
                         onClick={() => setLanguage("bg")}
-                        className={cn("h-12 rounded-lg font-bold focus-visible:ring-2 focus-visible:ring-secondary focus-visible:ring-offset-0", hoverClass, language === "bg" && activeClass)}
+                        className={cn("h-12 rounded-lg font-bold focus-visible:outline-none focus-visible:ring-0", hoverClass, language === "bg" && activeClass)}
                       >
                         BG
                       </Button>
