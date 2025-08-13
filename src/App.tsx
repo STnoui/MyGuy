@@ -15,6 +15,8 @@ import { MobileNav } from "./components/MobileNav";
 import { SettingsMenu } from "./components/SettingsMenu";
 import { AnimatePresence, motion } from "framer-motion";
 import { NativeThemeHandler } from "./components/NativeThemeHandler";
+import { useState, useEffect } from "react";
+import { Loader } from "./components/Loader";
 
 const queryClient = new QueryClient();
 
@@ -38,9 +40,19 @@ const AppContent = () => {
   const location = useLocation();
   const { language } = useI18n();
   const showCallToAction = location.pathname === "/";
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 1000); // Hide glitch behind loader
+
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <div className="flex flex-col h-screen bg-background">
+      <AnimatePresence>{isLoading && <Loader />}</AnimatePresence>
       <NativeThemeHandler />
       <MobileNav />
       <SettingsMenu />

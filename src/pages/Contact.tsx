@@ -9,13 +9,13 @@ const phoneNumber = "+359888309898";
 const Contact = () => {
   const { t } = useI18n();
   const buttonBaseClasses =
-    "bg-muted border hover:bg-accent text-foreground";
+    "bg-black/10 dark:bg-white/10 backdrop-blur-lg border border-neutral-200 dark:border-white/10 hover:bg-black/20 dark:hover:bg-white/20 text-foreground";
   const buttonLayoutClasses = "h-14 rounded-3xl text-base";
 
   return (
     <div className="h-full overflow-y-auto">
       <div className="container mx-auto px-4 pt-28 pb-12">
-        <Card className="max-w-lg mx-auto bg-muted shadow-2xl rounded-3xl">
+        <Card className="max-w-lg mx-auto bg-black/5 dark:bg-white/5 backdrop-blur-2xl border border-neutral-200 dark:border-white/10 shadow-2xl rounded-3xl">
           <CardHeader className="text-center">
             <CardTitle className="text-3xl font-bold">{t("contact.title")}</CardTitle>
             <CardDescription className="text-foreground/80">{t("contact.description")}</CardDescription>
