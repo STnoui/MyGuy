@@ -55,7 +55,12 @@ const AppContent = () => {
       <AnimatePresence>{isLoading && <Loader />}</AnimatePresence>
       <NativeThemeHandler />
 
-      <div className="contents" style={{ opacity: isLoading ? 0 : 1, transition: "opacity .5s .8s" }}>
+      <motion.div
+        className="contents"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: isLoading ? 0 : 1 }}
+        transition={{ duration: 0.8, ease: "easeInOut", delay: 0.4 }}
+      >
         <MobileNav />
         <SettingsMenu />
         <main className="flex-1 h-full overflow-hidden">
@@ -69,7 +74,7 @@ const AppContent = () => {
               className="h-full"
             >
               <Routes location={location}>
-                <Route path="/" element={<Index isLoading={isLoading} />} />
+                <Route path="/" element={<Index />} />
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/about" element={<About />} />
                 <Route path="*" element={<NotFound />} />
@@ -77,8 +82,8 @@ const AppContent = () => {
             </motion.div>
           </AnimatePresence>
         </main>
-        {showCallToAction && <CallToAction isLoading={isLoading} />}
-      </div>
+        {showCallToAction && <CallToAction />}
+      </motion.div>
     </div>
   );
 };

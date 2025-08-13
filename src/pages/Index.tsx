@@ -11,11 +11,7 @@ const SCALE_FACTOR = 0.06;
 const VISIBLE_CARDS = 4;
 const ANIMATION_DURATION_MS = 500;
 
-interface IndexProps {
-  isLoading: boolean;
-}
-
-const Index = ({ isLoading }: IndexProps) => {
+const Index = () => {
   const { t } = useI18n();
   const [activeIndex, setActiveIndex] = useState(0);
   const [isReady, setIsReady] = useState(false);
@@ -91,16 +87,16 @@ const Index = ({ isLoading }: IndexProps) => {
     <div className="h-full">
       <div
         className="flex flex-col h-full w-full pt-16 pb-28 overflow-hidden"
-        onWheel={!isLoading ? handleWheel : undefined}
-        onTouchStart={!isLoading ? handleTouchStart : undefined}
-        onTouchMove={!isLoading ? handleTouchMove : undefined}
-        onTouchEnd={!isLoading ? handleTouchEnd : undefined}
+        onWheel={isReady ? handleWheel : undefined}
+        onTouchStart={isReady ? handleTouchStart : undefined}
+        onTouchMove={isReady ? handleTouchMove : undefined}
+        onTouchEnd={isReady ? handleTouchEnd : undefined}
       >
         <div className="text-center px-4 pt-8">
           <motion.div
             layoutId="logo-container"
             layout
-            transition={{ duration: 0.8, ease: [0.645, 0.045, 0.355, 1] }}
+            transition={{ layout: { duration: 0.8, ease: [0.645, 0.045, 0.355, 1] } }}
           >
             <Logo />
           </motion.div>
