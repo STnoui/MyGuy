@@ -79,11 +79,11 @@ export const SettingsMenu = ({ activeMenu, setActiveMenu }: SettingsMenuProps) =
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ x: "100%" }}
-            animate={{ x: "0%" }}
-            exit={{ x: "100%" }}
+            initial={{ y: "-100%" }}
+            animate={{ y: "0%" }}
+            exit={{ y: "-100%" }}
             transition={{ type: "spring", stiffness: 400, damping: 40 }}
-            className="pointer-events-auto fixed top-0 right-0 h-full w-full glass-effect shadow-2xl"
+            className="pointer-events-auto fixed top-0 right-0 h-1/3 w-full glass-effect shadow-2xl"
           >
             <motion.div
               variants={listVariants}
