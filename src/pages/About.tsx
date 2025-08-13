@@ -15,7 +15,7 @@ const About = () => {
               <span className="text-primary">Guy</span>
             </CardTitle>
           </CardHeader>
-          <CardContent className="flex-grow flex flex-col justify-center space-y-4 text-foreground/80 text-center">
+          <CardContent className="flex-grow flex flex-col justify-center space-y-4 text-foreground/80 text-center px-10">
             <p>{t("about.p1")}</p>
             <p>{t("about.p2")}</p>
           </CardContent>
