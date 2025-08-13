@@ -48,7 +48,7 @@ export const SettingsMenu = ({ activeMenu, setActiveMenu }: SettingsMenuProps) =
   const hoverClass = "hover:bg-accent/50";
 
   return (
-    <div ref={settingsContainerRef} className="md:hidden fixed top-[5%] right-4 z-50">
+    <div ref={settingsContainerRef} className="md:hidden fixed top-[5%] right-4 z-60">
       <AnimatePresence>
         {!isOtherMenuOpen && (
           <motion.button
@@ -83,16 +83,16 @@ export const SettingsMenu = ({ activeMenu, setActiveMenu }: SettingsMenuProps) =
             animate={{ y: "0%" }}
             exit={{ y: "-100%" }}
             transition={{ type: "spring", stiffness: 400, damping: 40 }}
-            className="pointer-events-auto fixed top-0 right-0 h-2/5 w-full glass-effect shadow-2xl"
+            className="pointer-events-auto fixed top-0 right-0 h-2/5 w-full glass-effect shadow-2xl z-50"
           >
             <motion.div
               variants={listVariants}
               initial="closed"
               animate="open"
               exit="closed"
-              className="flex flex-col items-center justify-start gap-8 w-full p-4 h-full pt-20"
+              className="relative flex flex-col items-center justify-center gap-8 w-full p-4 h-full translate-y-[5%]"
             >
-              <motion.p variants={itemVariants} className="text-2xl font-bold text-foreground/80 text-center">
+              <motion.p variants={itemVariants} className="absolute top-[5%] left-0 right-0 h-12 flex items-center justify-center text-2xl font-bold text-foreground/80">
                 {t("settings.title")}
               </motion.p>
               {mounted && (
