@@ -17,7 +17,6 @@ import { AnimatePresence, motion } from "framer-motion";
 import { NativeThemeHandler } from "./components/NativeThemeHandler";
 import { useState, useEffect } from "react";
 import { Loader } from "./components/Loader";
-import { useIsMobile } from "./hooks/use-mobile";
 
 const queryClient = new QueryClient();
 
@@ -43,7 +42,6 @@ const AppContent = () => {
   const showCallToAction = location.pathname === "/";
   const [isLoading, setIsLoading] = useState(true);
   const [activeMenu, setActiveMenu] = useState<'nav' | 'settings' | null>(null);
-  const isMobile = useIsMobile();
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -64,8 +62,8 @@ const AppContent = () => {
         animate={{ opacity: isLoading ? 0 : 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.8, ease: [0.645, 0.045, 0.355, 1] }}
       >
-        {isMobile && <MobileNav activeMenu={activeMenu} setActiveMenu={setActiveMenu} />}
-        {isMobile && <SettingsMenu activeMenu={activeMenu} setActiveMenu={setActiveMenu} />}
+        <MobileNav activeMenu={activeMenu} setActiveMenu={setActiveMenu} />
+        <SettingsMenu activeMenu={activeMenu} setActiveMenu={setActiveMenu} />
         <main className="flex-1 h-full overflow-hidden">
           <AnimatePresence mode="wait" initial={false}>
             <motion.div

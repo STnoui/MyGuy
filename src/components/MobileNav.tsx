@@ -53,7 +53,7 @@ export const MobileNav = ({ activeMenu, setActiveMenu }: MobileNavProps) => {
   };
 
   return (
-    <div>
+    <div className="md:hidden">
       <AnimatePresence>
         {!isOtherMenuOpen && (
           <motion.button
