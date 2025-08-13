@@ -15,7 +15,7 @@ const logoVariants: Variants = {
     transition: {
       delay: 0.2,
       duration: 0.6,
-      ease: [0.645, 0.045, 0.355, 1], // Corrected easeInOutCubic
+      ease: [0.645, 0.045, 0.355, 1], // easeInOutCubic
     },
   },
 };
@@ -29,7 +29,7 @@ export const Loader = () => {
       animate="animate"
       exit="exit"
     >
-      <motion.div variants={logoVariants}>
+      <motion.div layoutId="logo-container" variants={logoVariants}>
         <Logo />
       </motion.div>
     </motion.div>

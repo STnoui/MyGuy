@@ -21,13 +21,11 @@ const Index = () => {
   const isSwiping = useRef(false);
 
   useEffect(() => {
-    // This effect runs once on mount to "pre-warm" the animation.
-    // This happens while the loader is still visible.
     const primeTimer = setTimeout(() => {
       setActiveIndex(1);
       const resetTimer = setTimeout(() => {
         setActiveIndex(0);
-        setIsReady(true); // Mark as ready after priming
+        setIsReady(true);
       }, 100);
       return () => clearTimeout(resetTimer);
     }, 100);
@@ -51,15 +49,12 @@ const Index = () => {
   const handleWheel = (e: React.WheelEvent) => {
     e.preventDefault();
     if (isScrolling.current) return;
-
     isScrolling.current = true;
-
     if (e.deltaY > 0) {
       setActiveIndex((prev) => (prev + 1) % numServices);
     } else {
       setActiveIndex((prev) => (prev - 1 + numServices) % numServices);
     }
-
     setTimeout(() => {
       isScrolling.current = false;
     }, ANIMATION_DURATION_MS);
@@ -72,21 +67,17 @@ const Index = () => {
 
   const handleTouchMove = (e: React.TouchEvent) => {
     if (isScrolling.current || isSwiping.current) return;
-
     const touchEndY = e.touches[0].clientY;
     const deltaY = touchStartY.current - touchEndY;
     const swipeThreshold = 50;
-
     if (Math.abs(deltaY) > swipeThreshold) {
       isScrolling.current = true;
       isSwiping.current = true;
-
       if (deltaY > 0) {
         setActiveIndex((prev) => (prev + 1) % numServices);
       } else {
         setActiveIndex((prev) => (prev - 1 + numServices) % numServices);
       }
-
       setTimeout(() => {
         isScrolling.current = false;
       }, ANIMATION_DURATION_MS);
@@ -107,14 +98,27 @@ const Index = () => {
         onTouchEnd={isAnimationEnabled ? handleTouchEnd : undefined}
       >
         <div className="text-center px-4 pt-8">
-          <Logo />
-          <div className={cn("inline-block text-md font-semibold text-muted-foreground", "rounded-full px-4 py-2")}>
-            <span>{t("operatingHours.label")} </span>
-            <span className="text-secondary font-bold">{t("operatingHours.time")}</span>
-          </div>
+          <motion.div layoutId="logo-container">
+            <Logo />
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.5, duration: 0.4 }}
+          >
+            <div className={cn("inline-block text-md font-semibold text-muted-foreground", "rounded-full px-4 py-2")}>
+              <span>{t("operatingHours.label")} </span>
+              <span className="text-secondary font-bold">{t("operatingHours.time")}</span>
+            </div>
+          </motion.div>
         </div>
 
-        <div className="flex-1 flex flex-col items-center justify-start pt-20 relative">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.6, duration: 0.5 }}
+          className="flex-1 flex flex-col items-center justify-start pt-20 relative"
+        >
           <h2 className="text-3xl font-bold tracking-tight mb-6">{t("servicesTitle")}</h2>
           <div className="relative w-full max-w-[19.5rem] mx-auto h-[250px]">
             <AnimatePresence>
@@ -159,7 +163,7 @@ const Index = () => {
               );
             })}
           </div>
-        </div>
+        </motion.div>
       </div>
     </div>
   );
