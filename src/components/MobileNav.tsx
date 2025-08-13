@@ -63,6 +63,7 @@ export const MobileNav = ({ activeMenu, setActiveMenu }: MobileNavProps) => {
             onClick={() => setActiveMenu(isOpen ? null : 'nav')}
             className="fixed top-[5%] left-4 z-50 w-12 h-12 flex items-center justify-center focus:outline-none"
             aria-label={t("aria.toggleNav")}
+            style={{ WebkitTapHighlightColor: "transparent" }}
           >
             <AnimatePresence initial={false} mode="wait">
               <motion.div
@@ -82,41 +83,51 @@ export const MobileNav = ({ activeMenu, setActiveMenu }: MobileNavProps) => {
 
       <AnimatePresence>
         {isOpen && (
-          <motion.div
-            initial={{ height: 0 }}
-            animate={{ height: "45vh" }}
-            exit={{ height: 0 }}
-            transition={{ type: "spring", stiffness: 400, damping: 40 }}
-            className="fixed top-0 left-0 w-full bg-background/80 backdrop-blur-lg z-40 overflow-auto no-scrollbar rounded-b-3xl"
-          >
-            <motion.nav
-              variants={listVariants}
-              initial="closed"
-              animate="open"
-              exit="closed"
-              className="flex flex-col items-center gap-4 w-full max-w-sm mx-auto p-8 pt-24 pb-12"
+          <>
+            <motion.div
+              className="fixed inset-0 z-30"
+              onClick={() => setActiveMenu(null)}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+            />
+            <motion.div
+              initial={{ height: 0 }}
+              animate={{ height: "45vh" }}
+              exit={{ height: 0 }}
+              transition={{ type: "spring", stiffness: 400, damping: 40 }}
+              className="fixed top-0 left-0 w-full bg-white/60 dark:bg-[rgba(18,20,26,0.6)] backdrop-blur-xl z-40 overflow-auto no-scrollbar rounded-b-3xl border-b border-black/[.06] dark:border-white/[.08]"
             >
-              <motion.p variants={itemVariants} className="text-2xl font-bold text-foreground/80 mb-4 text-center">
-                Menu
-              </motion.p>
-              {navItems.map((item) => (
-                <motion.div key={item.href} variants={itemVariants} className="w-full">
-                  <Button
-                    variant="ghost"
-                    className={cn(
-                      "w-full justify-center text-2xl py-8 rounded-xl focus-visible:outline-none focus-visible:ring-0",
-                      location.pathname === item.href
-                        ? "bg-accent text-secondary"
-                        : "hover:bg-accent"
-                    )}
-                    onClick={() => handleNavigate(item.href)}
-                  >
-                    {item.label}
-                  </Button>
-                </motion.div>
-              ))}
-            </motion.nav>
-          </motion.div>
+              <motion.nav
+                variants={listVariants}
+                initial="closed"
+                animate="open"
+                exit="closed"
+                className="flex flex-col items-center gap-4 w-full max-w-sm mx-auto p-8 pt-24 pb-12"
+              >
+                <motion.p variants={itemVariants} className="text-2xl font-bold text-foreground/80 mb-4 text-center">
+                  Menu
+                </motion.p>
+                {navItems.map((item) => (
+                  <motion.div key={item.href} variants={itemVariants} className="w-full">
+                    <Button
+                      variant="ghost"
+                      className={cn(
+                        "w-full justify-center text-2xl py-8 rounded-xl focus-visible:outline-none focus-visible:ring-0",
+                        location.pathname === item.href
+                          ? "bg-accent text-secondary"
+                          : "hover:bg-accent"
+                      )}
+                      onClick={() => handleNavigate(item.href)}
+                      style={{ WebkitTapHighlightColor: "transparent" }}
+                    >
+                      {item.label}
+                    </Button>
+                  </motion.div>
+                ))}
+              </motion.nav>
+            </motion.div>
+          </>
         )}
       </AnimatePresence>
     </div>
