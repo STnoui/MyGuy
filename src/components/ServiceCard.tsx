@@ -14,13 +14,15 @@ export const ServiceCard = ({ icon, title, description, activeIndex, totalServic
   return (
     <Card
       className={cn(
-        "h-44 text-card-foreground bg-black/10 dark:bg-white/10 backdrop-blur-2xl border border-neutral-200 dark:border-white/10 shadow-2xl rounded-3xl"
+        "h-48 text-card-foreground transition-all",
+        "bg-card/80 dark:bg-black/30 backdrop-blur-lg",
+        "border border-black/10 dark:border-white/10",
+        "shadow-lg dark:shadow-2xl rounded-3xl"
       )}
     >
-      <CardHeader className="flex flex-row items-center justify-between p-4 h-full gap-4">
-        {/* Left side: Icon and Text */}
+      <CardHeader className="flex flex-row items-center justify-between p-6 h-full gap-4">
         <div className="flex items-center gap-4">
-          <div className="flex items-center justify-center h-14 w-14 rounded-full bg-secondary/20 text-secondary shrink-0">
+          <div className="flex items-center justify-center h-16 w-16 rounded-full bg-secondary/20 text-secondary shrink-0">
             {icon}
           </div>
           <div className="text-left flex-1">
@@ -31,7 +33,6 @@ export const ServiceCard = ({ icon, title, description, activeIndex, totalServic
           </div>
         </div>
 
-        {/* Right side: Dot Indicators */}
         <div className="flex flex-col justify-center items-center gap-2">
           {Array.from({ length: totalServices }).map((_, dotIndex) => (
             <div

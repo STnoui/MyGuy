@@ -45,7 +45,7 @@ const AppContent = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 1000); // Hide glitch behind loader
+    }, 1200); // Increased to 1.2s for the new animation
 
     return () => clearTimeout(timer);
   }, []);
@@ -54,28 +54,40 @@ const AppContent = () => {
     <div className="flex flex-col h-screen bg-background">
       <AnimatePresence>{isLoading && <Loader />}</AnimatePresence>
       <NativeThemeHandler />
-      <MobileNav />
-      <SettingsMenu />
-      <main className="flex-1 h-full overflow-hidden">
-        <AnimatePresence mode="wait" initial={false}>
+      
+      <AnimatePresence>
+        {!isLoading && (
           <motion.div
-            key={`${location.pathname}-${language}`}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3, ease: "easeInOut" }}
-            className="h-full"
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="contents"
           >
-            <Routes location={location}>
-              <Route path="/" element={<Index />} />
-              <Route path="/contact" element={<Contact />} />
-              <Route path="/about" element={<About />} />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
+            <MobileNav />
+            <SettingsMenu />
+            <main className="flex-1 h-full overflow-hidden">
+              <AnimatePresence mode="wait" initial={false}>
+                <motion.div
+                  key={`${location.pathname}-${language}`}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.3, ease: "easeInOut" }}
+                  className="h-full"
+                >
+                  <Routes location={location}>
+                    <Route path="/" element={<Index />} />
+                    <Route path="/contact" element={<Contact />} />
+                    <Route path="/about" element={<About />} />
+                    <Route path="*" element={<NotFound />} />
+                  </Routes>
+                </motion.div>
+              </AnimatePresence>
+            </main>
+            {showCallToAction && <CallToAction />}
           </motion.div>
-        </AnimatePresence>
-      </main>
-      {showCallToAction && <CallToAction />}
+        )}
+      </AnimatePresence>
     </div>
   );
 };

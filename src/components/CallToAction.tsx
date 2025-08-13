@@ -9,25 +9,22 @@ export const CallToAction = () => {
   const { t } = useI18n();
 
   return (
-    <div className="fixed bottom-[7%] left-0 right-0 p-4 bg-gradient-to-t from-background to-transparent pointer-events-none">
-      <motion.div
+    <div className="fixed bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-background to-transparent pointer-events-none flex justify-center">
+      <motion.a
+        href={`tel:${phoneNumber}`}
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.5 }}
-        className="flex justify-center"
+        whileTap={{ scale: 0.97 }}
+        className={cn(
+          "pointer-events-auto inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
+          "bg-primary text-primary-foreground hover:bg-primary/90",
+          "h-16 px-10 text-2xl font-bold rounded-2xl w-full max-w-sm"
+        )}
       >
-        <a
-          href={`tel:${phoneNumber}`}
-          className={cn(
-            "pointer-events-auto inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
-            "bg-primary text-primary-foreground hover:bg-primary/90",
-            "h-14 px-10 text-2xl font-bold rounded-2xl"
-          )}
-        >
-          <Phone className="mr-4 h-7 w-7" />
-          {t("orderButton")}
-        </a>
-      </motion.div>
+        <Phone className="mr-4 h-8 w-8" />
+        {t("orderButton")}
+      </motion.a>
     </div>
   );
 };
