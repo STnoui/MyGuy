@@ -45,7 +45,7 @@ export const SettingsMenu = ({ activeMenu, setActiveMenu }: SettingsMenuProps) =
   };
 
   const activeClass = "bg-accent text-secondary";
-  const hoverClass = "hover:bg-accent";
+  const hoverClass = "hover:bg-accent/50";
 
   return (
     <div ref={settingsContainerRef} className="md:hidden fixed top-[5%] right-4 z-50">
@@ -56,7 +56,7 @@ export const SettingsMenu = ({ activeMenu, setActiveMenu }: SettingsMenuProps) =
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.9 }}
             onClick={() => setActiveMenu(isOpen ? null : 'settings')}
-            className="w-12 h-12 flex items-center justify-center focus:outline-none glass-effect rounded-full shadow-lg"
+            className="w-12 h-12 relative z-10 flex items-center justify-center focus:outline-none"
             aria-label={t("aria.toggleSettings")}
             style={{ WebkitTapHighlightColor: "transparent" }}
           >
@@ -83,14 +83,14 @@ export const SettingsMenu = ({ activeMenu, setActiveMenu }: SettingsMenuProps) =
             animate={{ y: "0%" }}
             exit={{ y: "-100%" }}
             transition={{ type: "spring", stiffness: 400, damping: 40 }}
-            className="pointer-events-auto fixed top-0 right-0 h-1/3 w-full glass-effect shadow-2xl"
+            className="pointer-events-auto fixed top-0 right-0 h-2/5 w-full glass-effect shadow-2xl"
           >
             <motion.div
               variants={listVariants}
               initial="closed"
               animate="open"
               exit="closed"
-              className="flex flex-col items-center justify-center gap-8 w-full p-4 h-full"
+              className="flex flex-col items-center justify-start gap-8 w-full p-4 h-full pt-20"
             >
               <motion.p variants={itemVariants} className="text-2xl font-bold text-foreground/80 text-center">
                 {t("settings.title")}

@@ -60,7 +60,7 @@ export const MobileNav = ({ activeMenu, setActiveMenu }: MobileNavProps) => {
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.9 }}
             onClick={() => setActiveMenu(isOpen ? null : 'nav')}
-            className="w-12 h-12 flex items-center justify-center focus:outline-none glass-effect rounded-full shadow-lg"
+            className="w-12 h-12 relative z-10 flex items-center justify-center focus:outline-none"
             aria-label={t("aria.toggleNav")}
             style={{ WebkitTapHighlightColor: "transparent" }}
           >
@@ -87,14 +87,14 @@ export const MobileNav = ({ activeMenu, setActiveMenu }: MobileNavProps) => {
             animate={{ y: "0%" }}
             exit={{ y: "-100%" }}
             transition={{ type: "spring", stiffness: 400, damping: 40 }}
-            className="pointer-events-auto fixed top-0 left-0 h-1/3 w-full glass-effect shadow-2xl"
+            className="pointer-events-auto fixed top-0 left-0 h-2/5 w-full glass-effect shadow-2xl"
           >
             <motion.nav
               variants={listVariants}
               initial="closed"
               animate="open"
               exit="closed"
-              className="flex flex-col items-center justify-center gap-4 w-full p-4 h-full"
+              className="flex flex-col items-center justify-start gap-4 w-full p-4 h-full pt-20"
             >
               <motion.p variants={itemVariants} className="text-2xl font-bold text-foreground/80 mb-4 text-center">
                 Menu
@@ -104,10 +104,10 @@ export const MobileNav = ({ activeMenu, setActiveMenu }: MobileNavProps) => {
                   <Button
                     variant="ghost"
                     className={cn(
-                      "w-full justify-center text-xl py-6 rounded-xl focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0 focus-visible:shadow-none",
+                      "w-full justify-center text-xl py-3 rounded-xl focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0 focus-visible:shadow-none",
                       location.pathname === item.href
-                        ? "bg-accent text-secondary"
-                        : "hover:bg-accent"
+                        ? "text-secondary"
+                        : "hover:bg-accent/50"
                     )}
                     onClick={() => handleNavigate(item.href)}
                     style={{ WebkitTapHighlightColor: "transparent" }}
