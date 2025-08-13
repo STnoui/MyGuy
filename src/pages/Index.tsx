@@ -1,7 +1,7 @@
 import { Logo } from "@/components/Logo";
 import { ServiceCard } from "@/components/ServiceCard";
 import { useI18n } from "@/hooks/use-i18n";
-import { ShoppingBag, Wallet, Package, Flower2, ChevronDown } from "lucide-react";
+import { ShoppingBag, Wallet, Package, Flower2 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useRef, useEffect } from "react";
 import { cn } from "@/lib/utils";
@@ -15,7 +15,6 @@ const Index = () => {
   const { t } = useI18n();
   const [activeIndex, setActiveIndex] = useState(0);
   const [isReady, setIsReady] = useState(false);
-  const [hasScrolled, setHasScrolled] = useState(false);
   const isScrolling = useRef(false);
   const touchStartY = useRef(0);
   const isSwiping = useRef(false);
@@ -44,7 +43,6 @@ const Index = () => {
   const handleScroll = (direction: 'up' | 'down') => {
     if (isScrolling.current) return;
     isScrolling.current = true;
-    setHasScrolled(true);
 
     if (direction === 'down') {
       setActiveIndex((prev) => (prev - 1 + numServices) % numServices);
@@ -84,13 +82,13 @@ const Index = () => {
   return (
     <div className="h-full">
       <div
-        className="flex flex-col h-full w-full pt-16 pb-28 overflow-hidden"
+        className="flex flex-col h-full w-full pt-4 pb-28 overflow-hidden"
         onWheel={isReady ? handleWheel : undefined}
         onTouchStart={isReady ? handleTouchStart : undefined}
         onTouchMove={isReady ? handleTouchMove : undefined}
         onTouchEnd={isReady ? handleTouchEnd : undefined}
       >
-        <div className="text-center px-4 pt-8">
+        <div className="text-center px-4">
           <motion.div
             layoutId="logo-container"
             transition={{ type: "spring", stiffness: 300, damping: 30 }}
@@ -103,7 +101,7 @@ const Index = () => {
           </div>
         </div>
 
-        <div className="flex-1 flex flex-col items-center justify-start pt-20 relative">
+        <div className="flex-1 flex flex-col items-center justify-start pt-10 relative">
           <h2 className="text-3xl font-bold tracking-tight mb-6">{t("servicesTitle")}</h2>
           <div className="relative w-full max-w-[19.5rem] mx-auto h-[250px]">
             <AnimatePresence>
@@ -148,20 +146,6 @@ const Index = () => {
               );
             })}
           </div>
-          <AnimatePresence>
-            {isReady && !hasScrolled && (
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 10 }}
-                transition={{ delay: 0.5 }}
-                className="absolute bottom-4 flex flex-col items-center text-muted-foreground"
-              >
-                <p className="text-xs">Scroll</p>
-                <ChevronDown className="w-4 h-4" />
-              </motion.div>
-            )}
-          </AnimatePresence>
         </div>
       </div>
     </div>
