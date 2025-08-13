@@ -11,20 +11,7 @@ export const MobileNav = () => {
   const { t } = useI18n();
   const navigate = useNavigate();
   const location = useLocation();
-  const navRef = useRef<HTMLDivElement>(null);
-
-  // Close menu on click outside
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (isOpen && navRef.current && !navRef.current.contains(event.target as Node)) {
-        setIsOpen(false);
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [isOpen]);
+  const buttonRef = useRef<HTMLButtonElement>(null);
 
   // Close menu on scroll
   useEffect(() => {
@@ -45,87 +32,83 @@ export const MobileNav = () => {
     setIsOpen(false);
   };
 
-  const navListVariants: Variants = {
+  const listVariants: Variants = {
     open: {
       opacity: 1,
       transition: { staggerChildren: 0.07, delayChildren: 0.2 },
     },
     closed: {
       opacity: 0,
-      transition: { staggerChildren: 0.05, staggerDirection: -1, duration: 0.1 },
+      transition: { staggerChildren: 0.05, staggerDirection: -1, when: "afterChildren" },
     },
   };
 
-  const navItemVariants: Variants = {
+  const itemVariants: Variants = {
     open: { y: 0, opacity: 1 },
-    closed: { y: 10, opacity: 0 },
+    closed: { y: 20, opacity: 0 },
   };
 
   return (
     <div className="md:hidden">
-      <div ref={navRef} className="fixed top-[5%] left-4 z-50">
-        <button
-          onClick={() => setIsOpen(!isOpen)}
-          className="w-12 h-12 relative z-10 flex items-center justify-center focus:outline-none"
-          aria-label={t("aria.toggleNav")}
-        >
-          <AnimatePresence initial={false} mode="wait">
-            <motion.div
-              key={isOpen ? "x" : "menu"}
-              initial={{ rotate: -90, opacity: 0 }}
-              animate={{ rotate: 0, opacity: 1 }}
-              exit={{ rotate: 90, opacity: 0 }}
-              transition={{ duration: 0.2 }}
-              className="absolute"
-            >
-              {isOpen ? <X className="h-7 w-7" /> : <Menu className="h-7 w-7" />}
-            </motion.div>
-          </AnimatePresence>
-        </button>
+      <button
+        ref={buttonRef}
+        onClick={() => setIsOpen(!isOpen)}
+        className="fixed top-[5%] left-4 z-50 w-12 h-12 flex items-center justify-center focus:outline-none"
+        aria-label={t("aria.toggleNav")}
+      >
+        <AnimatePresence initial={false} mode="wait">
+          <motion.div
+            key={isOpen ? "x" : "menu"}
+            initial={{ rotate: -90, opacity: 0 }}
+            animate={{ rotate: 0, opacity: 1 }}
+            exit={{ rotate: 90, opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="absolute"
+          >
+            {isOpen ? <X className="h-7 w-7" /> : <Menu className="h-7 w-7" />}
+          </motion.div>
+        </AnimatePresence>
+      </button>
 
-        <AnimatePresence>
-          {isOpen && (
-            <motion.div
-              initial={{ width: 0, height: 0, opacity: 0 }}
-              animate={{ width: "224px", height: "196px", opacity: 1 }}
-              exit={{ width: 0, height: 0, opacity: 0, transition: { duration: 0.2 } }}
-              transition={{ type: "spring", stiffness: 400, damping: 30 }}
-              className="absolute top-0 left-0 overflow-hidden bg-black/5 dark:bg-white/5 backdrop-blur-2xl border border-neutral-200 dark:border-white/10 shadow-2xl rounded-2xl"
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ height: 0 }}
+            animate={{ height: "66.66vh" }}
+            exit={{ height: 0 }}
+            transition={{ type: "spring", stiffness: 400, damping: 40 }}
+            className="fixed top-0 left-0 w-full bg-background/80 backdrop-blur-lg z-40 overflow-auto no-scrollbar"
+          >
+            <motion.nav
+              variants={listVariants}
+              initial="closed"
+              animate="open"
+              exit="closed"
+              className="flex flex-col gap-4 w-full max-w-sm mx-auto p-8 pt-24"
             >
-              <motion.p
-                initial={{ x: -20, opacity: 0 }}
-                animate={{ x: 0, opacity: 1, transition: { delay: 0.1, ease: "easeOut", duration: 0.3 } }}
-                exit={{ x: -20, opacity: 0, transition: { duration: 0.1, ease: "easeIn" } }}
-                className="absolute top-0 left-14 h-12 flex items-center text-lg font-bold pointer-events-none"
-              >
+              <motion.p variants={itemVariants} className="text-2xl font-bold text-foreground/80 mb-4">
                 Menu
               </motion.p>
-              <motion.nav
-                variants={navListVariants}
-                initial="closed"
-                animate="open"
-                exit="closed"
-                className="flex flex-col gap-1 w-full pt-12 p-4"
-              >
-                {navItems.map((item) => (
-                  <motion.div key={item.href} variants={navItemVariants}>
-                    <Button
-                      variant="ghost"
-                      className={cn(
-                        "w-full justify-start text-md py-3 rounded-md hover:bg-black/15 dark:hover:bg-white/15 hover:backdrop-blur-xl",
-                        location.pathname === item.href && "text-secondary"
-                      )}
-                      onClick={() => handleNavigate(item.href)}
-                    >
-                      {item.label}
-                    </Button>
-                  </motion.div>
-                ))}
-              </motion.nav>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </div>
+              {navItems.map((item) => (
+                <motion.div key={item.href} variants={itemVariants}>
+                  <Button
+                    variant="ghost"
+                    className={cn(
+                      "w-full justify-start text-2xl py-8 rounded-xl",
+                      location.pathname === item.href
+                        ? "bg-secondary/20 text-secondary"
+                        : "hover:bg-black/10 dark:hover:bg-white/10"
+                    )}
+                    onClick={() => handleNavigate(item.href)}
+                  >
+                    {item.label}
+                  </Button>
+                </motion.div>
+              ))}
+            </motion.nav>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };
