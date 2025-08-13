@@ -41,6 +41,7 @@ const AppContent = () => {
   const { language } = useI18n();
   const showCallToAction = location.pathname === "/";
   const [isLoading, setIsLoading] = useState(true);
+  const [activeMenu, setActiveMenu] = useState<'nav' | 'settings' | null>(null);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -61,8 +62,8 @@ const AppContent = () => {
         animate={{ opacity: isLoading ? 0 : 1 }}
         transition={{ duration: 0.5, delay: 0.8 }}
       >
-        <MobileNav />
-        <SettingsMenu />
+        <MobileNav activeMenu={activeMenu} setActiveMenu={setActiveMenu} />
+        <SettingsMenu activeMenu={activeMenu} setActiveMenu={setActiveMenu} />
         <main className="flex-1 h-full overflow-hidden">
           <AnimatePresence mode="wait" initial={false}>
             <motion.div

@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { motion, Variants, AnimatePresence } from "framer-motion";
 import { Settings, X, Sun, Moon } from "lucide-react";
 import { useI18n } from "@/hooks/use-i18n";
@@ -6,24 +6,21 @@ import { useTheme } from "next-themes";
 import { Button } from "./ui/button";
 import { cn } from "@/lib/utils";
 
-export const SettingsMenu = () => {
-  const [isOpen, setIsOpen] = useState(false);
+interface SettingsMenuProps {
+  activeMenu: 'nav' | 'settings' | null;
+  setActiveMenu: (menu: 'nav' | 'settings' | null) => void;
+}
+
+export const SettingsMenu = ({ activeMenu, setActiveMenu }: SettingsMenuProps) => {
+  const isOpen = activeMenu === 'settings';
+  const isOtherMenuOpen = activeMenu !== null && !isOpen;
   const { t, language, setLanguage } = useI18n();
   const { setTheme, resolvedTheme } = useTheme();
-  const buttonRef = useRef<HTMLButtonElement>(null);
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setMounted(true);
   }, []);
-
-  // Close menu on scroll
-  useEffect(() => {
-    if (!isOpen) return;
-    const handleScroll = () => setIsOpen(false);
-    document.addEventListener("scroll", handleScroll, true);
-    return () => document.removeEventListener("scroll", handleScroll, true);
-  }, [isOpen]);
 
   const listVariants: Variants = {
     open: {
@@ -41,53 +38,59 @@ export const SettingsMenu = () => {
     closed: { y: 20, opacity: 0 },
   };
 
-  const activeClass = "bg-black/15 dark:bg-white/15 backdrop-blur-xl text-secondary";
-  const hoverClass = "hover:bg-black/15 dark:hover:bg-white/15 hover:backdrop-blur-xl";
+  const activeClass = "bg-accent text-secondary";
+  const hoverClass = "hover:bg-accent";
 
   return (
     <div className="md:hidden">
-      <button
-        ref={buttonRef}
-        onClick={() => setIsOpen(!isOpen)}
-        className="fixed top-[5%] right-4 z-50 w-12 h-12 flex items-center justify-center focus:outline-none"
-        aria-label={t("aria.toggleSettings")}
-      >
-        <AnimatePresence initial={false} mode="wait">
-          <motion.div
-            key={isOpen ? "x" : "settings"}
-            initial={{ rotate: -90, opacity: 0 }}
-            animate={{ rotate: 0, opacity: 1 }}
-            exit={{ rotate: 90, opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            className="absolute"
+      <AnimatePresence>
+        {!isOtherMenuOpen && (
+          <motion.button
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.9 }}
+            onClick={() => setActiveMenu(isOpen ? null : 'settings')}
+            className="fixed top-[5%] right-4 z-50 w-12 h-12 flex items-center justify-center focus:outline-none"
+            aria-label={t("aria.toggleSettings")}
           >
-            {isOpen ? <X className="h-6 w-6" /> : <Settings className="h-6 w-6" />}
-          </motion.div>
-        </AnimatePresence>
-      </button>
+            <AnimatePresence initial={false} mode="wait">
+              <motion.div
+                key={isOpen ? "x" : "settings"}
+                initial={{ rotate: -90, opacity: 0 }}
+                animate={{ rotate: 0, opacity: 1 }}
+                exit={{ rotate: 90, opacity: 0 }}
+                transition={{ duration: 0.2 }}
+                className="absolute"
+              >
+                {isOpen ? <X className="h-6 w-6" /> : <Settings className="h-6 w-6" />}
+              </motion.div>
+            </AnimatePresence>
+          </motion.button>
+        )}
+      </AnimatePresence>
 
       <AnimatePresence>
         {isOpen && (
           <motion.div
             initial={{ height: 0 }}
-            animate={{ height: "66.66vh" }}
+            animate={{ height: "auto" }}
             exit={{ height: 0 }}
             transition={{ type: "spring", stiffness: 400, damping: 40 }}
-            className="fixed top-0 left-0 w-full bg-background/80 backdrop-blur-lg z-40 overflow-auto no-scrollbar"
+            className="fixed top-0 left-0 w-full bg-background/80 backdrop-blur-lg z-40 overflow-hidden"
           >
             <motion.div
               variants={listVariants}
               initial="closed"
               animate="open"
               exit="closed"
-              className="flex flex-col gap-8 w-full max-w-sm mx-auto p-8 pt-24"
+              className="flex flex-col items-center gap-8 w-full max-w-sm mx-auto p-8 pt-20 pb-12"
             >
               <motion.p variants={itemVariants} className="text-2xl font-bold text-foreground/80 text-center">
                 {t("settings.title")}
               </motion.p>
               {mounted && (
                 <>
-                  <motion.div variants={itemVariants} className="space-y-2">
+                  <motion.div variants={itemVariants} className="w-full space-y-2">
                     <p className="text-lg font-medium text-center">{t("settings.theme")}</p>
                     <div className="grid grid-cols-2 gap-2 p-1 bg-black/5 dark:bg-white/5 backdrop-blur-sm rounded-xl">
                       <Button
@@ -108,7 +111,7 @@ export const SettingsMenu = () => {
                       </Button>
                     </div>
                   </motion.div>
-                  <motion.div variants={itemVariants} className="space-y-2">
+                  <motion.div variants={itemVariants} className="w-full space-y-2">
                     <p className="text-lg font-medium text-center">{t("settings.language")}</p>
                     <div className="grid grid-cols-2 gap-2 p-1 bg-black/5 dark:bg-white/5 backdrop-blur-sm rounded-xl">
                       <Button
